@@ -11,6 +11,7 @@
 @interface LAMIconManager : NSObject <NSCollectionViewDelegate, NSTableViewDelegate, NSTableViewDataSource>
 
 @property (nonatomic,strong) NSMutableArray* allIcons;
+@property (nonatomic,strong) IBOutlet NSArrayController* allIconsCtl;
 @property (nonatomic,strong) NSMutableArray* iconGroups;
 @property (nonatomic,strong) IBOutlet NSArrayController* iconGroupsCtl;
 

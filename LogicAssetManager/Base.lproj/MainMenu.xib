@@ -744,6 +744,7 @@
                                                         </tableColumns>
                                                         <connections>
                                                             <binding destination="Z0H-RM-ewo" name="content" keyPath="arrangedObjects" id="89R-zA-F7d"/>
+                                                            <binding destination="Z0H-RM-ewo" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="89R-zA-F7d" id="n7w-zJ-cNe"/>
                                                         </connections>
                                                     </tableView>
                                                 </subviews>
@@ -797,6 +798,7 @@
         </window>
         <customObject id="FqK-Cd-cJA" customClass="LAMIconManager">
             <connections>
+                <outlet property="allIconsCtl" destination="fgo-zt-Eop" id="KhD-Lf-TUz"/>
                 <outlet property="groupsTableView" destination="RPy-qi-rnA" id="sS1-pY-xbi"/>
                 <outlet property="iconGroupsCtl" destination="Z0H-RM-ewo" id="kzH-zW-fqd"/>
                 <outlet property="iconsView" destination="9tU-bl-4UM" id="HyO-Zt-W4R"/>

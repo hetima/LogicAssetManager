@@ -276,6 +276,19 @@
     [[self mutableArrayValueForKey:@"iconGroups"]addObject:dic];
 }
 
+#pragma mark - delegate
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification
+{
+    NSDictionary* selectedGroup=[[self.iconGroupsCtl selectedObjects]firstObject];
+    NSString* groupName=selectedGroup[@"name"];
+    if ([groupName length]) {
+        NSPredicate* predi=[NSPredicate predicateWithFormat:@"group==%@", groupName];
+        [self.allIconsCtl setFilterPredicate:predi];
+    }else{
+        [self.allIconsCtl setFilterPredicate:nil];
+    }
+}
 
 #pragma mark - drag and drop
 
