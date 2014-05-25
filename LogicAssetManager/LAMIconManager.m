@@ -73,10 +73,9 @@
 
 
         //test
-        [_iconGroups addObject:@{@"name":@"tes", @"label":@"tes", @"canDelete":@(YES)} ];
-        [_iconGroups addObject:@{@"name":@"tes1", @"label":@"tes1", @"canDelete":@(YES)} ];
-        [_iconGroups addObject:@{@"name":@"tes2", @"label":@"tes2", @"canDelete":@(YES)} ];
-        [_iconGroups addObject:@{@"name":@"tes3", @"label":@"tes3", @"canDelete":@(YES)} ];
+        [self addGroupWithName:@"tes"];
+        [self addGroupWithName:@"tes1"];
+        [self addGroupWithName:@"tes2"];
     }
     return self;
 }
@@ -93,7 +92,7 @@
     
     //group
     if (dic[@"iconGroups"]) {
-        [self.iconGroups addObjectsFromArray:dic[@"iconGroups"]];
+        [_iconGroups addObjectsFromArray:dic[@"iconGroups"]];
     }
     
     //icon
@@ -110,7 +109,7 @@
         }
         if(!iconPath || imageId<kImageIdMin) continue;
         
-        iconPath=[self.imageFolderPath stringByAppendingPathComponent:iconPath];
+        iconPath=[_imageFolderPath stringByAppendingPathComponent:iconPath];
         
         NSImage* image=[[NSImage alloc]initWithContentsOfFile:iconPath];
         if(!image) continue;
@@ -121,7 +120,7 @@
         icon[@"image"]=image;
         icon[@"group"]=groupName;
         icon[@"id"]=@(imageId);
-        [self.allIcons addObject:icon];
+        [_allIcons addObject:icon];
         
         [_imageIdIndexSet addIndex:imageId];
     }
