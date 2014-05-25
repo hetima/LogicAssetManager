@@ -48,7 +48,7 @@
 {
     NSMutableDictionary* dic=[[NSMutableDictionary alloc]initWithContentsOfFile:self.settingFilePath];
     if (dic[@"iconGroups"]) {
-        self.iconGroups=dic[@"iconGroups"];
+        [self.iconGroups addObjectsFromArray:dic[@"iconGroups"]];
     }
     
 }
@@ -56,7 +56,8 @@
 
 - (void)saveSetting
 {
-    NSDictionary* dic=@{@"iconGroups": self.iconGroups};
+    NSArray* result=[self.iconGroups filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"canDelete==%@", @(YES)]];
+    NSDictionary* dic=@{@"iconGroups": result};
     [dic writeToFile:self.settingFilePath atomically:YES];
 }
 
