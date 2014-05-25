@@ -391,6 +391,15 @@
     if ([pb availableTypeFromArray:@[_iconDragType]]){
         
     }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]){
+        NSDictionary* group=[[self.iconGroupsCtl selectedObjects]firstObject];
+        NSString* groupName=group[@"name"];
+        NSArray* draggedImages=[self imageFilesInDrop:pb];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for (NSString* filePath in draggedImages) {
+                [self addIconWithFile:filePath group:groupName];
+            }
+        });
+        return YES;
         
     }
     
