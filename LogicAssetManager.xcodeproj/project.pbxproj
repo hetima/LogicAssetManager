@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA7EDDE81931EBE6004BD7D7 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7EDDE71931EBE5004BD7D7 /* Quartz.framework */; };
 		AA85377219306F6800064DE2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA85377119306F6800064DE2 /* Cocoa.framework */; };
 		AA85377E19306F6800064DE2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA85377C19306F6800064DE2 /* InfoPlist.strings */; };
 		AA85378019306F6800064DE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA85377F19306F6800064DE2 /* main.m */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA7EDDE71931EBE5004BD7D7 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		AA85376E19306F6800064DE2 /* LogicAssetManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogicAssetManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA85377119306F6800064DE2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AA85377419306F6800064DE2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -66,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA7EDDE81931EBE6004BD7D7 /* Quartz.framework in Frameworks */,
 				AA85377219306F6800064DE2 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,6 +107,7 @@
 		AA85377019306F6800064DE2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA7EDDE71931EBE5004BD7D7 /* Quartz.framework */,
 				AA85377119306F6800064DE2 /* Cocoa.framework */,
 				AA85379119306F6900064DE2 /* XCTest.framework */,
 				AA85377319306F6800064DE2 /* Other Frameworks */,
@@ -485,6 +489,7 @@
 				AA8537A419306F6900064DE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AA8537A519306F6900064DE2 /* Build configuration list for PBXNativeTarget "LogicAssetManagerTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +498,7 @@
 				AA8537A719306F6900064DE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

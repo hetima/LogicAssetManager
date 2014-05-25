@@ -16,10 +16,19 @@
     BOOL _awaken;
 }
 
+
++ (NSArray*)imageExtensions
+{
+    return @[@"png", @"tif", @"tiff", @"icns"];
+
+}
+
 + (NSString*)defaultIconGroupName
 {
     return @"BasicSetOther";
 }
+
+
 + (NSArray*)defaultIconGroups
 {
     return @[@{@"name":@"BasicSetDrums", @"label":@"Drums", @"canDelete":@(NO)},
@@ -65,8 +74,17 @@
 - (void)loadSetting
 {
     NSMutableDictionary* dic=[[NSMutableDictionary alloc]initWithContentsOfFile:self.settingFilePath];
+    
+    //group
     if (dic[@"iconGroups"]) {
         [self.iconGroups addObjectsFromArray:dic[@"iconGroups"]];
+    }
+    
+    //icon
+    NSArray* icons=dic[@"icons"];
+    for (NSDictionary* dic in icons) {
+
+        NSString* name=dic[@"name"];
     }
     
 }
@@ -74,8 +92,19 @@
 
 - (void)saveSetting
 {
+    //group
     NSArray* result=[self.iconGroups filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"canDelete==%@", @(YES)]];
-    NSDictionary* dic=@{@"iconGroups": result};
+    
+    //icon
+    NSArray* allIcons=self.allIcons;
+    NSMutableArray* icons=[[NSMutableArray alloc]initWithCapacity:[allIcons count]];
+    for (NSDictionary* dic in allIcons) {
+        NSDictionary* copy=@{@"name": dic[@"name"],@"group": dic[@"group"]};
+        //imageid
+        [icons addObject:copy];
+    }
+    
+    NSDictionary* dic=@{@"iconGroups": result, @"icons": icons};
     [dic writeToFile:self.settingFilePath atomically:YES];
 }
 
@@ -89,14 +118,76 @@
         [self.groupsTableView setDataSource:self];
         [self.iconsView registerForDraggedTypes:@[_iconDragType, NSFilenamesPboardType]];
         [self.groupsTableView registerForDraggedTypes:@[_groupDragType, _iconDragType, NSFilenamesPboardType]];
-        LOG(@"%@", _iconDragType);
     }
 }
 
 #pragma mark -
 
+/*!
+ ファイル名を渡すと、icon フォルダから同名のものを探して見つかれば返す。見つからなければ nil。拡張子は無視する。
+ 例：image.tiff を渡して image.png があると image.png を返す。
+*/
+- (NSString*)iconNameWithFileName:(NSString*)name
+{
+    name=[name stringByDeletingPathExtension];
+    NSArray* alloedExt=[LAMIconManager imageExtensions];
+    
+    for (NSString* ext in alloedExt) {
+        NSString* candidateName=[name stringByAppendingPathExtension:ext];
+        NSString* candidatePath=[self.imageFolderPath stringByAppendingPathComponent:candidateName];
+        if ([[NSFileManager defaultManager]fileExistsAtPath:candidatePath]) {
+            return candidateName;
+        }
+    }
+    return nil;
+}
+
+- (NSString*)uniqueIconName:(NSString*)name
+{
+    NSString* fileName=[name lastPathComponent];
+    NSString* ext=[fileName pathExtension];
+    NSString* base=[fileName stringByDeletingPathExtension];
+    NSString* candidateName=fileName;
+    NSInteger i=0;
+    do {
+        NSString* result=[self iconNameWithFileName:candidateName];
+        if (!result) {
+            return candidateName;
+        }
+        candidateName=[NSString stringWithFormat:@"%@-%ld.%@", base, ++i, ext];
+    } while (1);
+    
+    return nil;
+}
+
 - (void)addIconWithFile:(NSString*)filePath group:(NSString*)groupName
 {
+    if (![groupName length]) {
+        groupName=[LAMIconManager defaultIconGroupName];
+    }
+    
+    NSString* iconName=[self uniqueIconName:filePath];
+    NSString* iconPath=[self.imageFolderPath stringByAppendingPathComponent:iconName];
+    
+    if (![[NSFileManager defaultManager]fileExistsAtPath:self.imageFolderPath]) {
+        [[NSFileManager defaultManager]createDirectoryAtPath:self.imageFolderPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    [[NSFileManager defaultManager]copyItemAtPath:filePath toPath:iconPath error:nil];
+    
+    NSMutableDictionary* icon=[[NSMutableDictionary alloc]init];
+    NSImage* image=[[NSImage alloc]initWithContentsOfFile:iconPath];
+    
+    if (iconPath||!image) {
+        return;
+    }
+    //imageid
+    
+    icon[@"name"]=iconName;
+    icon[@"path"]=iconPath;
+    icon[@"image"]=image;
+    icon[@"group"]=groupName;
+    NSMutableArray* ary=[self mutableArrayValueForKey:@"allIcons"];
+    [ary addObject:icon];
     
 }
 
@@ -136,7 +227,7 @@
 {
     id files= [pb propertyListForType:NSFilenamesPboardType];
     NSMutableArray* allowedFiles=[NSMutableArray arrayWithCapacity:1];
-    NSArray* alloedExt=@[@"png", @"tif", @"tiff", @"icns"];
+    NSArray* alloedExt=[LAMIconManager imageExtensions];
     for (NSString* path in files) {
         if ([alloedExt containsObject:[path pathExtension]]) {
             [allowedFiles addObject:path];
@@ -152,12 +243,10 @@
 }
 
 
-
-
 - (BOOL)collectionView:(NSCollectionView *)collectionView writeItemsAtIndexes:(NSIndexSet *)indexes toPasteboard:(NSPasteboard *)pasteboard
 {
     if([indexes count]>1)    return NO;
-    [pasteboard setString:[NSString stringWithFormat: @"%ld",[indexes firstIndex]] forType:_iconDragType];
+    [pasteboard setString:[NSString stringWithFormat: @"%ld", [indexes firstIndex]] forType:_iconDragType];
     return YES;
 }
 
@@ -273,10 +362,13 @@
     }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]){
         NSDictionary* group=[self.iconGroups objectAtIndex:row];
         NSString* groupName=group[@"name"];
-        if (![groupName length]) {
-            groupName=[LAMIconManager defaultIconGroupName];
-        }
         NSArray* draggedImages=[self imageFilesInDrop:pb];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for (NSString* filePath in draggedImages) {
+                [self addIconWithFile:filePath group:groupName];
+            }
+        });
+        return YES;
     }
     return NO;
 
