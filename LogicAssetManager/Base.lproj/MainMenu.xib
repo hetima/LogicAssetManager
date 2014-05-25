@@ -769,13 +769,14 @@
                                                 <rect key="frame" x="1" y="1" width="329" height="276"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <collectionView id="9tU-bl-4UM">
+                                                    <collectionView selectable="YES" id="9tU-bl-4UM">
                                                         <rect key="frame" x="0.0" y="0.0" width="329" height="276"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <connections>
                                                             <binding destination="fgo-zt-Eop" name="content" keyPath="arrangedObjects" id="eae-If-dHa"/>
                                                             <binding destination="fgo-zt-Eop" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="eae-If-dHa" id="wyt-6B-Osz"/>
+                                                            <outlet property="delegate" destination="FqK-Cd-cJA" id="NLU-vp-7hn"/>
                                                             <outlet property="itemPrototype" destination="gPI-V8-8j4" id="7Fp-dh-iOZ"/>
                                                         </connections>
                                                     </collectionView>
@@ -801,6 +802,7 @@
         <customObject id="FqK-Cd-cJA" customClass="LAMIconManager">
             <connections>
                 <outlet property="groupsTableView" destination="RPy-qi-rnA" id="sS1-pY-xbi"/>
+                <outlet property="iconGroupsCtl" destination="Z0H-RM-ewo" id="kzH-zW-fqd"/>
                 <outlet property="iconsView" destination="9tU-bl-4UM" id="HyO-Zt-W4R"/>
             </connections>
         </customObject>

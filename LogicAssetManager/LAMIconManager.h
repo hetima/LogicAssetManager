@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LAMIconManager : NSObject
+@interface LAMIconManager : NSObject <NSCollectionViewDelegate, NSTableViewDelegate, NSTableViewDataSource>
 
 @property (nonatomic,strong) NSMutableArray* allIcons;
 @property (nonatomic,strong) NSMutableArray* iconGroups;
+@property (nonatomic,strong) IBOutlet NSArrayController* iconGroupsCtl;
 
 @property (nonatomic,strong) NSString* imageFolderPath;
 @property (nonatomic,strong) NSString* settingFilePath;
