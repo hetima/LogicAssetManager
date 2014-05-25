@@ -434,7 +434,7 @@
     
     if ([pb availableTypeFromArray:@[_groupDragType]]) {
         NSInteger droppedIndex=-1;
-        NSInteger draggedIndex = [[pb stringForType: _groupDragType]integerValue];
+        NSInteger draggedIndex = [[pb stringForType:_groupDragType]integerValue];
         if(draggedIndex==row) return NO;
         
         NSMutableArray* ary=[self mutableArrayValueForKey:@"iconGroups"];
@@ -469,6 +469,20 @@
         return YES;
 
     }else if ([pb availableTypeFromArray:@[_iconDragType]]){
+        if ([draggingInfo draggingSource]!=self.iconsView) {
+            return NO;
+        }
+        NSInteger draggedIndex=[[pb stringForType:_iconDragType]integerValue];
+        NSMutableDictionary* icon=[[self.iconsView content]objectAtIndex:draggedIndex];
+        
+        NSDictionary* group=[self.iconGroups objectAtIndex:row];
+        NSString* groupName=group[@"name"];
+        if (![groupName isEqualToString:icon[@"group"]]) {
+            icon[@"group"]=groupName;
+            [self.allIconsCtl rearrangeObjects];
+        }
+        
+        return YES;
         
     }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]){
         NSDictionary* group=[self.iconGroups objectAtIndex:row];
