@@ -9,11 +9,17 @@
 #import "LAMIconManager.h"
 #import "LAMAppDelegate.h"
 
+#define kImageIdMin 1000
+#define kImageIdMax 4000
+
 @implementation LAMIconManager{
     NSInteger _immutableGroupsCount;
     NSString* _iconDragType;
     NSString* _groupDragType;
     BOOL _awaken;
+    NSInteger _lastImageId;
+    NSMutableIndexSet* _imageIdIndexSet;
+
 }
 
 
@@ -49,6 +55,8 @@
     self = [super init];
     if (self) {
         _awaken=NO;
+        _lastImageId=kImageIdMin;
+        _imageIdIndexSet=[[NSMutableIndexSet alloc]init];
         _iconDragType=[NSString stringWithFormat:@"LAMIconManagerIcon_%p_pbType", self];
         _groupDragType=[NSString stringWithFormat:@"LAMIconManagerGroup_%p_pbType", self];
         
@@ -84,7 +92,26 @@
     NSArray* icons=dic[@"icons"];
     for (NSDictionary* dic in icons) {
 
-        NSString* name=dic[@"name"];
+        NSString* iconName=dic[@"name"];
+        NSString* groupName=dic[@"group"];
+        NSString* iconPath=[self iconNameWithFileName:iconName];
+
+        NSInteger imageId=[dic[@"id"] integerValue];
+        if (imageId>_lastImageId) {
+            _lastImageId=imageId;
+        }
+        if(!iconPath || imageId<kImageIdMin) continue;
+        
+        NSImage* image=[[NSImage alloc]initWithContentsOfFile:iconPath];
+        NSMutableDictionary* icon=[[NSMutableDictionary alloc]initWithCapacity:5];
+        icon[@"name"]=iconName;
+        icon[@"path"]=iconPath;
+        icon[@"image"]=image;
+        icon[@"group"]=groupName;
+        icon[@"id"]=@(imageId);
+        [self.allIcons addObject:icon];
+        
+        [_imageIdIndexSet addIndex:imageId];
     }
     
 }
@@ -99,8 +126,7 @@
     NSArray* allIcons=self.allIcons;
     NSMutableArray* icons=[[NSMutableArray alloc]initWithCapacity:[allIcons count]];
     for (NSDictionary* dic in allIcons) {
-        NSDictionary* copy=@{@"name": dic[@"name"],@"group": dic[@"group"]};
-        //imageid
+        NSDictionary* copy=@{@"name": dic[@"name"], @"group": dic[@"group"], @"id": dic[@"id"]};
         [icons addObject:copy];
     }
     
@@ -160,6 +186,21 @@
     return nil;
 }
 
+/*!
+ 使われていない imageId を探す
+ */
+- (NSInteger)vacantImageId
+{
+    NSInteger i;
+    for (i=kImageIdMin; i<=kImageIdMax; i++) {
+        if (![_imageIdIndexSet containsIndex:i]) {
+            return i;
+        }
+    }
+    
+    return 0;
+}
+
 - (void)addIconWithFile:(NSString*)filePath group:(NSString*)groupName
 {
     if (![groupName length]) {
@@ -180,15 +221,28 @@
     if (iconPath||!image) {
         return;
     }
-    //imageid
     
+    //imageid
+    NSInteger imageId;
+    if (_lastImageId<=kImageIdMax) {
+        _lastImageId++;
+        imageId=_lastImageId;
+    }else{
+        imageId=[self vacantImageId];
+    }
+    if (imageId<kImageIdMin) {
+        //
+        return;
+    }
     icon[@"name"]=iconName;
     icon[@"path"]=iconPath;
     icon[@"image"]=image;
     icon[@"group"]=groupName;
+    icon[@"id"]=@(imageId);
     NSMutableArray* ary=[self mutableArrayValueForKey:@"allIcons"];
     [ary addObject:icon];
-    
+    [_imageIdIndexSet addIndex:imageId];
+
 }
 
 - (NSDictionary*)groupWithName:(NSString*)name
