@@ -68,6 +68,9 @@
         _imageFolderPath=[LAMAppDelegate applicationSupportSubDirectry:@"Icons"];
         _settingFilePath=[[LAMAppDelegate applicationSupportPath]stringByAppendingPathComponent:@"Icons.plist"];
         [self loadSetting];
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(appWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
+
 
         //test
         [_iconGroups addObject:@{@"name":@"tes", @"label":@"tes", @"canDelete":@(YES)} ];
@@ -78,6 +81,11 @@
     return self;
 }
 
+- (void)appWillTerminate:(NSNotification*)note
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self saveSetting];
+}
 
 - (void)loadSetting
 {
@@ -102,7 +110,11 @@
         }
         if(!iconPath || imageId<kImageIdMin) continue;
         
+        iconPath=[self.imageFolderPath stringByAppendingPathComponent:iconPath];
+        
         NSImage* image=[[NSImage alloc]initWithContentsOfFile:iconPath];
+        if(!image) continue;
+        
         NSMutableDictionary* icon=[[NSMutableDictionary alloc]initWithCapacity:5];
         icon[@"name"]=iconName;
         icon[@"path"]=iconPath;
@@ -218,7 +230,7 @@
     NSMutableDictionary* icon=[[NSMutableDictionary alloc]init];
     NSImage* image=[[NSImage alloc]initWithContentsOfFile:iconPath];
     
-    if (iconPath||!image) {
+    if (!iconPath||!image) {
         return;
     }
     
