@@ -16,6 +16,10 @@
     BOOL _awaken;
 }
 
++ (NSString*)defaultIconGroupName
+{
+    return @"BasicSetOther";
+}
 + (NSArray*)defaultIconGroups
 {
     return @[@{@"name":@"BasicSetDrums", @"label":@"Drums", @"canDelete":@(NO)},
@@ -90,6 +94,11 @@
 }
 
 #pragma mark -
+
+- (void)addIconWithFile:(NSString*)filePath group:(NSString*)groupName
+{
+    
+}
 
 - (NSDictionary*)groupWithName:(NSString*)name
 {
@@ -209,7 +218,7 @@
     }else if ([pb availableTypeFromArray:@[_iconDragType]]){
         if (operation == NSTableViewDropOn)return NSDragOperationCopy;
     }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]){
-        if ([self canAcceptFileDrop:pb]) {
+        if (operation == NSTableViewDropOn && [self canAcceptFileDrop:pb]) {
             return NSDragOperationCopy;
         };
         
@@ -217,6 +226,7 @@
     
     return NSDragOperationNone;
 }
+
 
 - (BOOL)tableView:(NSTableView*)tableView acceptDrop:(id <NSDraggingInfo>)draggingInfo row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
 {
@@ -261,7 +271,12 @@
     }else if ([pb availableTypeFromArray:@[_iconDragType]]){
         
     }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]){
-        
+        NSDictionary* group=[self.iconGroups objectAtIndex:row];
+        NSString* groupName=group[@"name"];
+        if (![groupName length]) {
+            groupName=[LAMIconManager defaultIconGroupName];
+        }
+        NSArray* draggedImages=[self imageFilesInDrop:pb];
     }
     return NO;
 
