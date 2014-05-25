@@ -36,7 +36,7 @@
         _iconGroups=[[LAMIconManager defaultIconGroups]mutableCopy];//[[NSMutableArray alloc]init];
         _immutableGroupsCount=[_iconGroups count];
         
-        _imageFolderPath=[[LAMAppDelegate applicationSupportPath]stringByAppendingPathComponent:@"Icons"];
+        _imageFolderPath=[LAMAppDelegate applicationSupportSubDirectry:@"Icons"];
         _settingFilePath=[[LAMAppDelegate applicationSupportPath]stringByAppendingPathComponent:@"Icons.plist"];
         [self loadSetting];
     }

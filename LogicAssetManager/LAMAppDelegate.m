@@ -23,9 +23,20 @@
     return path;
 }
 
-+ (NSString*)mergedResourcesPathForName:(NSString*)name
++ (NSString*)applicationSupportSubDirectry:(NSString*)name
 {
     NSString* path=[[self applicationSupportPath]stringByAppendingPathComponent:name];
+    if (![[NSFileManager defaultManager]fileExistsAtPath:path]) {
+        [[NSFileManager defaultManager]createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    return path;
+}
+
+
++ (NSString*)mergedResourcesPathForName:(NSString*)name
+{
+    NSString* path=[self applicationSupportSubDirectry:name];
     path=[path stringByAppendingPathComponent:@"Resources"];
     if (![[NSFileManager defaultManager]fileExistsAtPath:path]) {
         [[NSFileManager defaultManager]createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];

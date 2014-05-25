@@ -13,6 +13,8 @@
 @property (assign) IBOutlet NSWindow *window;
 
 + (NSString*)applicationSupportPath;
++ (NSString*)applicationSupportSubDirectry:(NSString*)name;
+
 + (NSString*)mergedResourcesPathForName:(NSString*)name;
 + (NSString*)mergedMAResourcesPath;
 
