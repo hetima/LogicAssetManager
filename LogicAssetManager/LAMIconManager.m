@@ -389,7 +389,29 @@
     NSPasteboard *pb = [draggingInfo draggingPasteboard];
     
     if ([pb availableTypeFromArray:@[_iconDragType]]){
+        if ([draggingInfo draggingSource]!=self.iconsView) {
+            return NO;
+        }
         
+        NSInteger droppedIndex=-1;
+        NSInteger draggedIndex = [[pb stringForType:_iconDragType]integerValue];
+        NSArray* currentIcons=[self.iconsView content];
+        NSMutableDictionary* draggedIcon=[currentIcons objectAtIndex:draggedIndex];
+
+        NSMutableArray* ary=[self mutableArrayValueForKey:@"allIcons"];
+        [ary removeObjectIdenticalTo:draggedIcon];
+        if (index>=[currentIcons count]) {
+            //insert last
+            [ary addObject:draggedIcon];
+        }else{
+            //insert before index
+            NSMutableDictionary* destIcon=[currentIcons objectAtIndex:index];
+            droppedIndex=[ary indexOfObjectIdenticalTo:destIcon];
+            [ary insertObject:draggedIcon atIndex:droppedIndex];
+        }
+
+        //[self.allIconsCtl rearrangeObjects];
+        return YES;
     }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]){
         NSDictionary* group=[[self.iconGroupsCtl selectedObjects]firstObject];
         NSString* groupName=group[@"name"];
