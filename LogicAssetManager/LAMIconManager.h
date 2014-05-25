@@ -17,6 +17,7 @@
 @property (nonatomic,strong) NSString* settingFilePath;
 
 @property (nonatomic,weak) IBOutlet NSTableView* groupsTableView;
+@property (nonatomic,weak) IBOutlet NSCollectionView* iconsView;
 
 + (NSArray*)defaultIconGroups;
 
