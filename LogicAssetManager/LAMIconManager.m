@@ -280,11 +280,39 @@
 
 #pragma mark - drag and drop
 
+- (NSString*)appIconPathInApplication:(NSString*)appPath
+{
+    NSString* infoPath=[appPath stringByAppendingPathComponent:@"Contents/Info.plist"];
+    if (![[NSFileManager defaultManager]fileExistsAtPath:infoPath]) {
+        return nil;
+    }
+    NSDictionary* appInfo=[[NSDictionary alloc]initWithContentsOfFile:infoPath];
+    NSString* iconName=appInfo[@"CFBundleIconFile"];
+    if ([iconName length]==0) {
+        return nil;
+    }
+    if (![iconName hasSuffix:@".icns"]) {
+        iconName=[iconName stringByAppendingString:@".icns"];
+    }
+    NSString* iconPath=[NSString stringWithFormat:@"Contents/Resources/%@", iconName];
+    iconPath=[appPath stringByAppendingPathComponent:iconPath];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:iconPath]) {
+        return iconPath;
+    }
+
+    return nil;
+}
+
 - (BOOL)canAcceptFileDrop:(NSPasteboard *)pb
 {
-    NSArray* allowedFiles=[self imageFilesInDrop:pb];
-    if ([allowedFiles count]) {
-        return YES;
+    id files= [pb propertyListForType:NSFilenamesPboardType];
+    NSArray* alloedExt=[LAMIconManager imageExtensions];
+    for (NSString* path in files) {
+        if ([alloedExt containsObject:[path pathExtension]]) {
+            return YES;
+        }else if([[path pathExtension]isEqualToString:@"app"]){
+            return YES;
+        }
     }
     return NO;
 }
@@ -292,11 +320,16 @@
 - (NSArray*)imageFilesInDrop:(NSPasteboard *)pb
 {
     id files= [pb propertyListForType:NSFilenamesPboardType];
-    NSMutableArray* allowedFiles=[NSMutableArray arrayWithCapacity:1];
+    NSMutableArray* allowedFiles=[[NSMutableArray alloc]init];
     NSArray* alloedExt=[LAMIconManager imageExtensions];
     for (NSString* path in files) {
         if ([alloedExt containsObject:[path pathExtension]]) {
             [allowedFiles addObject:path];
+        }else if([[path pathExtension]isEqualToString:@"app"]){
+            NSString* appIconPath=[self appIconPathInApplication:path];
+            if (appIconPath) {
+                [allowedFiles addObject:appIconPath];
+            }
         }
     }
     return allowedFiles;
@@ -370,9 +403,9 @@
         if (operation == NSTableViewDropOn || row == draggedRow || row == draggedRow + 1)return NSDragOperationNone;
         return NSDragOperationMove;
         
-    }else if ([pb availableTypeFromArray:@[_iconDragType]]){
+    }else if ([pb availableTypeFromArray:@[_iconDragType]]) {
         if (operation == NSTableViewDropOn)return NSDragOperationCopy;
-    }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]){
+    }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]) {
         if (operation == NSTableViewDropOn && [self canAcceptFileDrop:pb]) {
             return NSDragOperationCopy;
         };
