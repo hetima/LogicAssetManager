@@ -365,8 +365,8 @@
 
     if ([pb availableTypeFromArray:@[_iconDragType]]) {
         NSInteger draggedRow = [[pb stringForType:_iconDragType]integerValue];
-        
-        if (proposedDropOperation == NSTableViewDropOn || *proposedDropIndex == draggedRow || *proposedDropIndex == draggedRow + 1)
+
+        if (*proposedDropOperation == NSTableViewDropOn || *proposedDropIndex == draggedRow || *proposedDropIndex == draggedRow + 1)
             return NSDragOperationNone;
         return NSDragOperationMove;
         
@@ -406,6 +406,7 @@
             [ary insertObject:draggedIcon atIndex:droppedIndex];
         }
 
+        [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
         //[self.allIconsCtl rearrangeObjects];
         return YES;
     }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]){
@@ -418,7 +419,6 @@
             }
         });
         return YES;
-        
     }
     
     return NO;

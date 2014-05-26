@@ -840,27 +840,40 @@
         </arrayController>
         <collectionViewItem id="gPI-V8-8j4">
             <connections>
-                <outlet property="view" destination="nMX-af-fgu" id="tLl-49-sIa"/>
+                <outlet property="view" destination="b5z-nX-YBC" id="fCh-My-SOk"/>
             </connections>
         </collectionViewItem>
-        <view id="nMX-af-fgu">
-            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <subviews>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="nA8-Lx-pjs">
-                    <rect key="frame" x="8" y="8" width="64" height="64"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="nLy-sw-3aY"/>
-                    <connections>
-                        <binding destination="gPI-V8-8j4" name="value" keyPath="representedObject.image" id="izW-lV-226"/>
-                    </connections>
-                </imageView>
-            </subviews>
-        </view>
         <arrayController id="fgo-zt-Eop" userLabel="IconsAC">
             <connections>
                 <binding destination="FqK-Cd-cJA" name="contentArray" keyPath="allIcons" id="xLc-MF-Hd5"/>
             </connections>
         </arrayController>
+        <box autoresizesSubviews="NO" transparent="YES" boxType="custom" borderType="none" id="b5z-nX-YBC">
+            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView">
+                <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="nA8-Lx-pjs">
+                        <rect key="frame" x="8" y="8" width="64" height="64"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="nLy-sw-3aY"/>
+                        <connections>
+                            <binding destination="gPI-V8-8j4" name="value" keyPath="representedObject.image" id="izW-lV-226"/>
+                        </connections>
+                    </imageView>
+                </subviews>
+            </view>
+            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+            <color key="fillColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
+            <connections>
+                <binding destination="gPI-V8-8j4" name="transparent" keyPath="selected" id="kZO-XB-OLz">
+                    <dictionary key="options">
+                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                    </dictionary>
+                </binding>
+            </connections>
+        </box>
     </objects>
 </document>
