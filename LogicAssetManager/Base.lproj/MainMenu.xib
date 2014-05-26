@@ -826,6 +826,18 @@
                                                 <action selector="actAddGroup:" target="FqK-Cd-cJA" id="ka8-97-7bb"/>
                                             </connections>
                                         </button>
+                                        <button verticalHuggingPriority="750" id="RWW-dX-RGb">
+                                            <rect key="frame" x="29" y="6" width="22" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fa7-Dz-2nL">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="actRemoveGroup:" target="FqK-Cd-cJA" id="xde-kT-KjG"/>
+                                                <binding destination="Z0H-RM-ewo" name="enabled" keyPath="selection.canDelete" id="PGG-T9-Hdk"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -841,6 +853,9 @@
                 <outlet property="groupsTableView" destination="RPy-qi-rnA" id="sS1-pY-xbi"/>
                 <outlet property="iconGroupsCtl" destination="Z0H-RM-ewo" id="kzH-zW-fqd"/>
                 <outlet property="iconsView" destination="9tU-bl-4UM" id="HyO-Zt-W4R"/>
+                <outlet property="removeGroupConfirmField" destination="W8D-WV-V3R" id="2GX-f0-1Js"/>
+                <outlet property="removeGroupConfirmPopUp" destination="OB2-mq-CjR" id="2bh-Th-dzq"/>
+                <outlet property="removeGroupConfirmSheet" destination="grL-5t-oaI" id="Ztw-a8-afc"/>
             </connections>
         </customObject>
         <arrayController id="Z0H-RM-ewo" userLabel="GroupsAC">
@@ -885,8 +900,92 @@
                 </binding>
             </connections>
         </box>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="grL-5t-oaI">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="410" height="144"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <value key="minSize" type="size" width="410" height="120"/>
+            <view key="contentView" id="8Ht-eU-H1e">
+                <rect key="frame" x="0.0" y="0.0" width="410" height="144"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" tag="1000" id="POQ-3B-V3h">
+                        <rect key="frame" x="263" y="13" width="133" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Remove Group" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cZx-UC-fLd">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actEndSheet:" target="FqK-Cd-cJA" id="OPq-vd-nyx"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" tag="1001" id="vNj-WM-7AS">
+                        <rect key="frame" x="181" y="13" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C5v-nQ-zM0">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actEndSheet:" target="FqK-Cd-cJA" id="nss-fY-YZk"/>
+                        </connections>
+                    </button>
+                    <popUpButton verticalHuggingPriority="750" id="OB2-mq-CjR">
+                        <rect key="frame" x="173" y="55" width="220" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Vts-r0-vfT">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <menu key="menu" title="OtherViews" id="bwB-Rj-SQF">
+                                <items>
+                                    <menuItem title="Item 1" id="faZ-wB-Ugi"/>
+                                    <menuItem title="Item 2" id="H4e-sT-Z1P"/>
+                                    <menuItem title="Item 3" id="DUb-3I-AAJ"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="W8D-WV-V3R">
+                        <rect key="frame" x="71" y="88" width="321" height="42"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="tN3-o8-CnK">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">Multiline Label
+2
+3</string>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ajA-T2-GiI">
+                        <rect key="frame" x="12" y="88" width="42" height="42"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSCaution" id="9SD-Hg-5cX"/>
+                    </imageView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EH0-jh-Ifh">
+                        <rect key="frame" x="71" y="62" width="98" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Transfer to :" id="kV9-vZ-nO1">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+        </window>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="8" height="8"/>
+        <image name="NSCaution" width="32" height="32"/>
+        <image name="NSRemoveTemplate" width="8" height="8"/>
     </resources>
 </document>

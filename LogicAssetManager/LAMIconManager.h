@@ -22,6 +22,10 @@
 @property (nonatomic,weak) IBOutlet NSCollectionView* iconsView;
 @property (nonatomic,weak) IBOutlet NSTextField* groupNameField;
 
+@property (nonatomic,strong) IBOutlet NSWindow* removeGroupConfirmSheet;
+@property (nonatomic,weak) IBOutlet NSTextField* removeGroupConfirmField;
+@property (nonatomic,weak) IBOutlet NSPopUpButton* removeGroupConfirmPopUp;
+
 + (NSArray*)defaultIconGroups;
 
 - (void)loadSetting;
@@ -29,5 +33,8 @@
 
 - (IBAction)actRenameGroup:(id)sender;
 - (IBAction)actAddGroup:(id)sender;
+- (IBAction)actRemoveGroup:(id)sender;
+
+- (IBAction)actEndSheet:(id)sender;
 
 @end

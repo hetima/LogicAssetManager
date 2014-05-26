@@ -284,6 +284,20 @@
     [self.iconGroupsCtl addObject:dic];
 }
 
+-(NSMenu*)groupsListMenuWithExcludingGroup:(NSString*)name
+{
+    NSArray* groups=self.iconGroups;
+    NSMenu* menu=[[NSMenu alloc]initWithTitle:@""];
+    for (NSDictionary* group in groups) {
+        if (![group[@"name"] length] || [group[@"name"] isEqualToString:name]) {
+            continue;
+        }
+        NSMenuItem* item=[menu addItemWithTitle:group[@"label"] action:nil keyEquivalent:@""];
+        [item setRepresentedObject:group];
+    }
+    return menu;
+}
+
 #pragma mark - action
 
 -(void)removeIcon:(NSDictionary*)icon
@@ -307,6 +321,16 @@
     }
     group[@"name"]=name;
     group[@"label"]=name;
+}
+
+
+-(void)removeGroup:(NSMutableDictionary*)group
+{
+    //ラベル一括変更した場合 group の中身も変更されているため removeObject: では余計な group まで削除されてしまう
+    //[self.iconGroupsCtl removeObject:group];
+
+    NSMutableArray* ary=[self mutableArrayValueForKey:@"iconGroups"];
+    [ary removeObjectIdenticalTo:group];
 }
 
 
@@ -341,6 +365,47 @@
     
     [self.groupsTableView scrollRowToVisible:[self.groupsTableView selectedRow]];
     [self.groupNameField selectText:nil];
+}
+
+- (IBAction)actRemoveGroup:(id)sender
+{
+    NSMutableDictionary* selectedGroup=[[self.iconGroupsCtl selectedObjects]firstObject];
+    if (![selectedGroup[@"canDelete"] boolValue]) {
+        return;
+    }
+    NSArray* iconsInGroup=[self.allIcons filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"group==%@", selectedGroup[@"name"]]];
+    if ([iconsInGroup count]) {
+        //confirm
+        NSMenu* menu=[self groupsListMenuWithExcludingGroup:selectedGroup[@"name"]];
+        [menu insertItem:[NSMenuItem separatorItem] atIndex:0];
+        [menu insertItemWithTitle:@"Remove Icon" action:nil keyEquivalent:@"" atIndex:0];
+        
+        [self.removeGroupConfirmPopUp setMenu:menu];
+        NSString* informativeText=[NSString stringWithFormat:@"Group \"%@\" has %ld icons. Choose remove them or transfer to other group.", selectedGroup[@"name"], [iconsInGroup count]];
+        [self.removeGroupConfirmField setStringValue:informativeText];
+        [[sender window] beginSheet:self.removeGroupConfirmSheet completionHandler:^(NSModalResponse returnCode) {
+            if (returnCode==NSAlertFirstButtonReturn) {
+                NSDictionary* transfer=[[self.removeGroupConfirmPopUp selectedItem]representedObject];
+                if (transfer) {
+                    [self renameGroup:selectedGroup to:transfer[@"name"]];
+                }else{
+                    for (NSDictionary* icon in iconsInGroup) {
+                        [self removeIcon:icon];
+                    }
+                }
+                [self removeGroup:selectedGroup];
+            }
+        }];
+    }else{
+        [self removeGroup:selectedGroup];
+    }
+
+}
+
+- (IBAction)actEndSheet:(id)sender
+{
+    NSWindow *parentWindow=[[sender window]sheetParent];
+    [parentWindow endSheet:[sender window] returnCode:[sender tag]];
 }
 
 #pragma mark - delegate
