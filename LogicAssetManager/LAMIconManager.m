@@ -261,15 +261,27 @@
 
 - (void)addGroupWithName:(NSString*)name
 {
-    if ([self groupWithName:name]) {
-        return;
-    }
+    NSString* candidateName=name;
+    NSInteger i=0;
+    do {
+        NSDictionary* result=[self groupWithName:candidateName];
+        if (!result) {
+            break;
+        }
+        if (i>9999) {
+            return;
+        }
+        candidateName=[NSString stringWithFormat:@"%@-%ld", name, ++i];
+    } while (1);
+
+    
     NSMutableDictionary* dic=[[NSMutableDictionary alloc]init];
-    dic[@"name"]=name;
-    dic[@"label"]=name;
+    dic[@"name"]=candidateName;
+    dic[@"label"]=candidateName;
     dic[@"canDelete"]=@(YES);
     
-    [[self mutableArrayValueForKey:@"iconGroups"]addObject:dic];
+    //[[self mutableArrayValueForKey:@"iconGroups"]addObject:dic];
+    [self.iconGroupsCtl addObject:dic];
 }
 
 #pragma mark - action
@@ -309,6 +321,14 @@
     
     //表示の更新しなくても矛盾はしない
     
+}
+
+- (IBAction)actAddGroup:(id)sender
+{
+    [self addGroupWithName:@"New Group"];
+    
+    [self.groupsTableView scrollRowToVisible:[self.groupsTableView selectedRow]];
+    [self.groupNameField selectText:nil];
 }
 
 #pragma mark - delegate

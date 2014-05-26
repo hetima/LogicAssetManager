@@ -28,5 +28,6 @@
 - (void)saveSetting;
 
 - (IBAction)actRenameGroup:(id)sender;
+- (IBAction)actAddGroup:(id)sender;
 
 @end
