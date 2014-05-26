@@ -814,6 +814,7 @@
                                                 <font key="font" metaFont="smallSystem"/>
                                             </buttonCell>
                                             <connections>
+                                                <action selector="actRenameGroup:" target="FqK-Cd-cJA" id="lcZ-xx-iWF"/>
                                                 <binding destination="Z0H-RM-ewo" name="enabled" keyPath="selection.canDelete" id="1Nz-so-MiP"/>
                                             </connections>
                                         </button>
@@ -828,6 +829,7 @@
         <customObject id="FqK-Cd-cJA" customClass="LAMIconManager">
             <connections>
                 <outlet property="allIconsCtl" destination="fgo-zt-Eop" id="KhD-Lf-TUz"/>
+                <outlet property="groupNameField" destination="36w-CA-kIq" id="QWA-Ht-SIc"/>
                 <outlet property="groupsTableView" destination="RPy-qi-rnA" id="sS1-pY-xbi"/>
                 <outlet property="iconGroupsCtl" destination="Z0H-RM-ewo" id="kzH-zW-fqd"/>
                 <outlet property="iconsView" destination="9tU-bl-4UM" id="HyO-Zt-W4R"/>

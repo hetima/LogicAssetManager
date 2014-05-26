@@ -272,6 +272,45 @@
     [[self mutableArrayValueForKey:@"iconGroups"]addObject:dic];
 }
 
+#pragma mark - action
+
+-(void)renameGroup:(NSMutableDictionary*)group to:(NSString*)name
+{
+    NSPredicate* predi=[NSPredicate predicateWithFormat:@"group==%@", group[@"name"]];
+    NSArray* icons=[self.allIcons filteredArrayUsingPredicate:predi];
+    for (NSMutableDictionary* icon in icons) {
+        icon[@"group"]=name;
+    }
+    group[@"name"]=name;
+    group[@"label"]=name;
+}
+
+
+- (IBAction)actRenameGroup:(id)sender
+{
+    NSMutableDictionary* selectedGroup=[[self.iconGroupsCtl selectedObjects]firstObject];
+    if (![selectedGroup[@"canDelete"] boolValue]) {
+        return;
+    }
+    NSString* currentName=selectedGroup[@"name"];
+    NSString* newName=[self.groupNameField stringValue];
+    newName=[newName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    newName=[[newName componentsSeparatedByString:@"\n"]firstObject];
+    
+    if ([newName isEqualToString:currentName]) {
+        return;
+    }
+    if (![newName length] || [self groupWithName:newName]) {
+        NSBeep();
+        return;
+    }
+    
+    [self renameGroup:selectedGroup to:newName];
+    
+    //表示の更新しなくても矛盾はしない
+    
+}
+
 #pragma mark - delegate
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
@@ -281,8 +320,10 @@
     if ([groupName length]) {
         NSPredicate* predi=[NSPredicate predicateWithFormat:@"group==%@", groupName];
         [self.allIconsCtl setFilterPredicate:predi];
+        [self.groupNameField setStringValue:groupName];
     }else{
         [self.allIconsCtl setFilterPredicate:nil];
+        [self.groupNameField setStringValue:@""];
     }
 }
 

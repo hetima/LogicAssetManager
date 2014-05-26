@@ -20,10 +20,13 @@
 
 @property (nonatomic,weak) IBOutlet NSTableView* groupsTableView;
 @property (nonatomic,weak) IBOutlet NSCollectionView* iconsView;
+@property (nonatomic,weak) IBOutlet NSTextField* groupNameField;
 
 + (NSArray*)defaultIconGroups;
 
 - (void)loadSetting;
 - (void)saveSetting;
+
+- (IBAction)actRenameGroup:(id)sender;
 
 @end
