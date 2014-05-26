@@ -874,20 +874,32 @@
             </connections>
         </arrayController>
         <box autoresizesSubviews="NO" transparent="YES" boxType="custom" borderType="none" id="b5z-nX-YBC">
-            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+            <rect key="frame" x="0.0" y="0.0" width="88" height="86"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView">
-                <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                <rect key="frame" x="0.0" y="0.0" width="88" height="86"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="nA8-Lx-pjs">
-                        <rect key="frame" x="8" y="8" width="64" height="64"/>
+                        <rect key="frame" x="12" y="16" width="64" height="64"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="nLy-sw-3aY"/>
                         <connections>
                             <binding destination="gPI-V8-8j4" name="value" keyPath="representedObject.image" id="izW-lV-226"/>
                         </connections>
                     </imageView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="zqs-UR-nl4">
+                        <rect key="frame" x="1" y="2" width="86" height="11"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingHead" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="ci2-i1-tf3">
+                            <font key="font" metaFont="miniSystem"/>
+                            <color key="textColor" red="0.23401056172874143" green="0.3602622080897781" blue="0.51530612244897966" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="gPI-V8-8j4" name="value" keyPath="representedObject.group" id="71e-HB-uTw"/>
+                        </connections>
+                    </textField>
                 </subviews>
             </view>
             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
