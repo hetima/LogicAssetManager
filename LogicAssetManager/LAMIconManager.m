@@ -286,6 +286,18 @@
 
 #pragma mark - action
 
+-(void)removeIcon:(NSDictionary*)icon
+{
+    NSString* iconPath=icon[@"path"];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:iconPath]) {
+        [[NSFileManager defaultManager]removeItemAtPath:iconPath error:nil];
+    }
+    [_imageIdIndexSet removeIndex:[icon[@"id"] integerValue]];
+    
+    [self.allIconsCtl removeObject:icon];
+}
+
+
 -(void)renameGroup:(NSMutableDictionary*)group to:(NSString*)name
 {
     NSPredicate* predi=[NSPredicate predicateWithFormat:@"group==%@", group[@"name"]];
