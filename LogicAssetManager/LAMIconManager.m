@@ -17,7 +17,6 @@
     NSString* _iconDragType;
     NSString* _groupDragType;
     BOOL _awaken;
-    NSInteger _lastImageId;
     NSMutableIndexSet* _imageIdIndexSet;
 
 }
@@ -55,7 +54,7 @@
     self = [super init];
     if (self) {
         _awaken=NO;
-        _lastImageId=kImageIdMin;
+
         _imageIdIndexSet=[[NSMutableIndexSet alloc]init];
         _iconDragType=[NSString stringWithFormat:@"LAMIconManagerIcon_%p_pbType", self];
         _groupDragType=[NSString stringWithFormat:@"LAMIconManagerGroup_%p_pbType", self];
@@ -104,9 +103,7 @@
         NSString* iconPath=[self iconNameWithFileName:iconName];
 
         NSInteger imageId=[dic[@"id"] integerValue];
-        if (imageId>_lastImageId) {
-            _lastImageId=imageId;
-        }
+
         if(!iconPath || imageId<kImageIdMin) continue;
         
         iconPath=[_imageFolderPath stringByAppendingPathComponent:iconPath];
@@ -121,7 +118,6 @@
         icon[@"group"]=groupName;
         icon[@"id"]=@(imageId);
         [_allIcons addObject:icon];
-        
         [_imageIdIndexSet addIndex:imageId];
     }
     
@@ -203,6 +199,11 @@
 - (NSInteger)vacantImageId
 {
     NSInteger i;
+    i=[_imageIdIndexSet lastIndex];
+    if (i>=kImageIdMin && i<kImageIdMax) {
+        return i+1;
+    }
+    
     for (i=kImageIdMin; i<=kImageIdMax; i++) {
         if (![_imageIdIndexSet containsIndex:i]) {
             return i;
@@ -234,13 +235,8 @@
     }
     
     //imageid
-    NSInteger imageId;
-    if (_lastImageId<=kImageIdMax) {
-        _lastImageId++;
-        imageId=_lastImageId;
-    }else{
-        imageId=[self vacantImageId];
-    }
+    NSInteger imageId=[self vacantImageId];
+
     if (imageId<kImageIdMin) {
         //
         return;
