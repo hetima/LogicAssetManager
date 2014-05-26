@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AA7EDDE81931EBE6004BD7D7 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7EDDE71931EBE5004BD7D7 /* Quartz.framework */; };
+		AA7EDDEB19335504004BD7D7 /* LAMUserAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7EDDEA19335504004BD7D7 /* LAMUserAssetManager.m */; };
+		AA7EDDEE1933550E004BD7D7 /* LAMUserAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7EDDED1933550E004BD7D7 /* LAMUserAsset.m */; };
 		AA85377219306F6800064DE2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA85377119306F6800064DE2 /* Cocoa.framework */; };
 		AA85377E19306F6800064DE2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA85377C19306F6800064DE2 /* InfoPlist.strings */; };
 		AA85378019306F6800064DE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA85377F19306F6800064DE2 /* main.m */; };
@@ -35,6 +37,10 @@
 
 /* Begin PBXFileReference section */
 		AA7EDDE71931EBE5004BD7D7 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		AA7EDDE919335504004BD7D7 /* LAMUserAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAMUserAssetManager.h; sourceTree = "<group>"; };
+		AA7EDDEA19335504004BD7D7 /* LAMUserAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAMUserAssetManager.m; sourceTree = "<group>"; };
+		AA7EDDEC1933550E004BD7D7 /* LAMUserAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAMUserAsset.h; sourceTree = "<group>"; };
+		AA7EDDED1933550E004BD7D7 /* LAMUserAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAMUserAsset.m; sourceTree = "<group>"; };
 		AA85376E19306F6800064DE2 /* LogicAssetManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogicAssetManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA85377119306F6800064DE2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AA85377419306F6800064DE2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -134,6 +140,10 @@
 				AA8537A919306F9500064DE2 /* LAMResourcesCoordinator.m */,
 				AA8537AB1931762000064DE2 /* LAMIconManager.h */,
 				AA8537AC1931762000064DE2 /* LAMIconManager.m */,
+				AA7EDDE919335504004BD7D7 /* LAMUserAssetManager.h */,
+				AA7EDDEA19335504004BD7D7 /* LAMUserAssetManager.m */,
+				AA7EDDEC1933550E004BD7D7 /* LAMUserAsset.h */,
+				AA7EDDED1933550E004BD7D7 /* LAMUserAsset.m */,
 				AA85378719306F6800064DE2 /* MainMenu.xib */,
 				AA85378A19306F6800064DE2 /* Images.xcassets */,
 				AA85377819306F6800064DE2 /* Supporting Files */,
@@ -273,7 +283,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA7EDDEE1933550E004BD7D7 /* LAMUserAsset.m in Sources */,
 				AA85378019306F6800064DE2 /* main.m in Sources */,
+				AA7EDDEB19335504004BD7D7 /* LAMUserAssetManager.m in Sources */,
 				AA8537AD1931762000064DE2 /* LAMIconManager.m in Sources */,
 				AA8537AA19306F9500064DE2 /* LAMResourcesCoordinator.m in Sources */,
 				AA85378619306F6800064DE2 /* LAMAppDelegate.m in Sources */,
