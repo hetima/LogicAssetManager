@@ -27,6 +27,9 @@
 - (void)applySetting:(NSDictionary*)setting
 {
     NSArray* options=self.options;
+    
+    self.enabled=[setting[@"enabled"] boolValue];
+    
     for (NSMutableDictionary* option in options) {
         if ([option[@"type"] isEqualToString:@"option"]) {
             NSString* key=[NSString stringWithFormat:@"%@.enabled", option[@"name"]];
@@ -50,6 +53,8 @@
 {
     NSArray* options=self.options;
     NSMutableDictionary* setting=[[NSMutableDictionary alloc]initWithCapacity:[options count]];
+    
+    setting[@"enabled"]=@(self.enabled);
     
     for (NSDictionary* option in options) {
         if ([option[@"type"] isEqualToString:@"option"]) {

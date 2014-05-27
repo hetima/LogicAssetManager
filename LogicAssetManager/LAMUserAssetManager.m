@@ -63,7 +63,8 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
         NSString* assetPath=[_userAssetPath stringByAppendingPathComponent:fileName];
         if ([[NSFileManager defaultManager]fileExistsAtPath:assetPath]) {
             LAMUserAsset* asset=[[LAMUserAsset alloc]initWithAssetPath:assetPath];
-            asset.enabled=[dic[@"enabled"] boolValue];
+            [asset applySetting:dic[@"setting"]];
+            
             [_userAssets addObject:asset];
             [instantiatedAssets addObject:fileName];
         }
@@ -90,7 +91,7 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     NSMutableArray* assetDefinition=[[NSMutableArray alloc]initWithCapacity:[self.userAssets count]];
     NSArray* assets=self.userAssets;
     for (LAMUserAsset* asset in assets) {
-        NSDictionary* dic=@{@"name": asset.name, @"enabled":@(asset.enabled)};
+        NSDictionary* dic=@{@"name": asset.name, @"setting":[asset setting]};
         [assetDefinition addObject:dic];
     }
     NSDictionary* dic=@{@"assets": assetDefinition};
