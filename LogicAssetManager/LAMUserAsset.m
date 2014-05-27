@@ -24,6 +24,7 @@
     return self;
 }
 
+
 - (void)applySetting:(NSDictionary*)setting
 {
     NSArray* options=self.options;
@@ -116,6 +117,79 @@
     if (![_options count]) {
         [_options addObject:@{@"type": @"nooption"}];
     }
+}
+
+
+#pragma mark -
+
+
+/*!
+ Return full path or nil. Do not check exists.
+ */
+- (NSString*)pathForAsset:(NSDictionary*)asset
+{
+    NSString* directory=asset[@"directory"];
+    if (![directory length]) {
+        return nil;
+    }
+    return [self.assetPath stringByAppendingPathComponent:directory];
+}
+
+
+- (NSDictionary*)variantWithName:(NSString*)name forAsset:(NSDictionary*)asset
+{
+    if (![name length]) {
+        return nil;
+    }
+    NSArray* variants=asset[@"variants"];
+    for (NSMutableDictionary* variant in variants) {
+        
+        if ([name isEqualToString:variant[@"name"]]) {
+            return variant;
+        }
+    }
+    return nil;
+}
+
+
+/*!
+ Return array of full path or nil. Do not check exists.
+ */
+- (NSArray*)enabledAssetPaths
+{
+    if (!self.enabled) {
+        return nil;
+    }
+    
+    NSArray* assets=self.assets;
+    NSMutableArray* result=[[NSMutableArray alloc]initWithCapacity:[assets count]];
+    NSDictionary* setting=[self setting];
+    
+    for (NSDictionary* asset in assets) {
+        NSString* directoryName=nil;
+        if ([asset[@"type"] isEqualToString:@"option"]) {
+            NSString* key=[NSString stringWithFormat:@"%@.enabled", asset[@"name"]];
+            BOOL enabled=[setting[key] boolValue];
+            if (enabled) {
+                directoryName=[self pathForAsset:asset];
+            }
+        }else if([asset[@"type"] isEqualToString:@"variants"]){
+            NSString* key=[NSString stringWithFormat:@"%@.selectedName", asset[@"name"]];
+            NSString* selectedName=setting[key];
+            NSDictionary* selectedVariant=[self variantWithName:selectedName forAsset:asset];
+            if (selectedVariant) {
+                directoryName=[self pathForAsset:asset];
+            }
+        }else{
+            directoryName=[self pathForAsset:asset];
+        }
+        
+        if (directoryName) {
+            [result addObject:directoryName];
+        }
+    }
+    
+    return result;
 }
 
 

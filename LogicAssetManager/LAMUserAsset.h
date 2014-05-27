@@ -26,4 +26,6 @@
 - (void)applySetting:(NSDictionary*)setting;
 - (NSDictionary*)setting;
 
+- (NSArray*)enabledAssetPaths;
+
 @end
