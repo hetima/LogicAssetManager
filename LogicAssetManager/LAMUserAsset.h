@@ -23,4 +23,7 @@
 
 - (instancetype)initWithAssetPath:(NSString*)path;
 
+- (void)applySetting:(NSDictionary*)setting;
+- (NSDictionary*)setting;
+
 @end

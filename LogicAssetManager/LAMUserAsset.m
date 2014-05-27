@@ -24,6 +24,52 @@
     return self;
 }
 
+- (void)applySetting:(NSDictionary*)setting
+{
+    NSArray* options=self.options;
+    for (NSMutableDictionary* option in options) {
+        if ([option[@"type"] isEqualToString:@"option"]) {
+            NSString* key=[NSString stringWithFormat:@"%@.enabled", option[@"name"]];
+            id value=setting[key];
+            if (value) {
+                option[@"enabled"]=value;
+            }
+            
+        }else if ([option[@"type"] isEqualToString:@"variants"]) {
+            NSString* key=[NSString stringWithFormat:@"%@.selectedName", option[@"name"]];
+            id value=setting[key];
+            if (value) {
+                option[@"selectedName"]=value;
+            }
+        }
+    }
+}
+
+
+- (NSDictionary*)setting
+{
+    NSArray* options=self.options;
+    NSMutableDictionary* setting=[[NSMutableDictionary alloc]initWithCapacity:[options count]];
+    
+    for (NSDictionary* option in options) {
+        if ([option[@"type"] isEqualToString:@"option"]) {
+            NSString* key=[NSString stringWithFormat:@"%@.enabled", option[@"name"]];
+            id value=option[@"enabled"];
+            if (value) {
+                setting[key]=value;
+            }
+            
+        }else if ([option[@"type"] isEqualToString:@"variants"]) {
+            NSString* key=[NSString stringWithFormat:@"%@.selectedName", option[@"name"]];
+            id value=option[@"selectedName"];
+            if (value) {
+                setting[key]=value;
+            }
+        }
+    }
+    return setting;
+}
+
 
 - (void)loadInfo
 {
