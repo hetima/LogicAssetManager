@@ -28,6 +28,7 @@
 
 }
 
+
 + (NSString*)defaultIconGroupName
 {
     return @"BasicSetOther";
@@ -79,11 +80,13 @@
     return self;
 }
 
+
 - (void)appWillTerminate:(NSNotification*)note
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self saveSetting];
 }
+
 
 - (void)loadSetting
 {
@@ -141,6 +144,7 @@
     [dic writeToFile:self.settingFilePath atomically:YES];
 }
 
+
 -(void)awakeFromNib
 {
     if (!_awaken) {
@@ -175,6 +179,7 @@
     return nil;
 }
 
+
 - (NSString*)uniqueIconName:(NSString*)name
 {
     NSString* fileName=[name lastPathComponent];
@@ -192,6 +197,7 @@
     
     return nil;
 }
+
 
 /*!
  使われていない imageId を探す
@@ -212,6 +218,7 @@
     
     return 0;
 }
+
 
 - (void)addIconWithFile:(NSString*)filePath group:(NSString*)groupName
 {
@@ -252,6 +259,7 @@
 
 }
 
+
 - (NSDictionary*)groupWithName:(NSString*)name
 {
     NSArray* result=[self.iconGroups filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name==%@", name]];
@@ -283,6 +291,7 @@
     //[[self mutableArrayValueForKey:@"iconGroups"]addObject:dic];
     [self.iconGroupsCtl addObject:dic];
 }
+
 
 -(NSMenu*)groupsListMenuWithExcludingGroup:(NSString*)name
 {
@@ -359,6 +368,7 @@
     
 }
 
+
 - (IBAction)actAddGroup:(id)sender
 {
     [self addGroupWithName:@"New Group"];
@@ -366,6 +376,7 @@
     [self.groupsTableView scrollRowToVisible:[self.groupsTableView selectedRow]];
     [self.groupNameField selectText:nil];
 }
+
 
 - (IBAction)actRemoveGroup:(id)sender
 {
@@ -401,6 +412,7 @@
     }
 
 }
+
 
 - (IBAction)actEndSheet:(id)sender
 {
@@ -449,6 +461,7 @@
     return nil;
 }
 
+
 - (BOOL)canAcceptFileDrop:(NSPasteboard *)pb
 {
     id files= [pb propertyListForType:NSFilenamesPboardType];
@@ -462,6 +475,7 @@
     }
     return NO;
 }
+
 
 - (NSArray*)imageFilesInDrop:(NSPasteboard *)pb
 {
@@ -663,6 +677,7 @@
     return NO;
 
 }
+
 
 - (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
 {

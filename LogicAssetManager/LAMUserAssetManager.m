@@ -29,11 +29,13 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     return self;
 }
 
+
 - (void)appWillTerminate:(NSNotification*)note
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self saveSetting];
 }
+
 
 - (void)loadSetting
 {
@@ -65,6 +67,7 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
         }
     }
 }
+
 
 - (void)saveSetting
 {
@@ -101,6 +104,7 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     return nil;
 }
 
+
 - (void)importFile:(NSString*)path
 {
     BOOL isDir;
@@ -134,7 +138,6 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     }
     
 }
-
 
 
 - (void)importFolder:(NSString*)folderPath asResources:(NSString*)resourcesName

@@ -13,6 +13,7 @@
     LAMResourcesCoordinator* _resourcesCoordinator;
 }
 
+
 + (NSString*)applicationSupportPath
 {
     NSString* path=[@"~/Library/Application Support/LogicAssetManager" stringByStandardizingPath];
@@ -22,6 +23,7 @@
 
     return path;
 }
+
 
 + (NSString*)applicationSupportSubDirectry:(NSString*)name
 {
