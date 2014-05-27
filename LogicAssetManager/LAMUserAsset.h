@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong)NSString* name;
 @property (nonatomic, strong)NSString* assetPath;
+@property (nonatomic) BOOL enabled;
+
 
 - (instancetype)initWithAssetPath:(NSString*)path;
 

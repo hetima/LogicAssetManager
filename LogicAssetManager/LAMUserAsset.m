@@ -14,6 +14,7 @@
 {
     self = [super init];
     if (self) {
+        _enabled=YES;
         _assetPath=path;
         _name=[[path lastPathComponent]stringByDeletingPathExtension];
     }

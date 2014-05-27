@@ -19,25 +19,66 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
 {
     self = [super init];
     if (self) {
+        _settingFilePath=[[LAMAppDelegate applicationSupportPath]stringByAppendingPathComponent:@"Assets.plist"];
         _userAssets=[[NSMutableArray alloc]init];
         _userAssetPath=[LAMAppDelegate applicationSupportSubDirectry:@"Assets"];
         [self loadSetting];
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(appWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
     }
     return self;
 }
 
+- (void)appWillTerminate:(NSNotification*)note
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self saveSetting];
+}
+
 - (void)loadSetting
 {
+    NSDictionary* dic=[[NSDictionary alloc]initWithContentsOfFile:_settingFilePath];
+    NSArray* assetDefinition=dic[@"assets"];
+    NSMutableArray* instantiatedAssets=[[NSMutableArray alloc]initWithCapacity:[assetDefinition count]];
+    for (NSDictionary* dic in assetDefinition) {
+        NSString* fileName=[dic[@"name"] stringByAppendingPathExtension:LAMUserAssetExtension];
+        NSString* assetPath=[_userAssetPath stringByAppendingPathComponent:fileName];
+        if ([[NSFileManager defaultManager]fileExistsAtPath:assetPath]) {
+            LAMUserAsset* asset=[[LAMUserAsset alloc]initWithAssetPath:assetPath];
+            asset.enabled=[dic[@"enabled"] boolValue];
+            [_userAssets addObject:asset];
+            [instantiatedAssets addObject:fileName];
+        }
+    }
+
     NSArray* files=[[NSFileManager defaultManager]contentsOfDirectoryAtPath:_userAssetPath error:nil];
     
     for (NSString* fileName in files) {
         if ([[fileName pathExtension]isEqualToString:LAMUserAssetExtension]) {
+            if ([instantiatedAssets containsObject:fileName]) {
+                continue;
+            }
             NSString* assetPath=[_userAssetPath stringByAppendingPathComponent:fileName];
             LAMUserAsset* asset=[[LAMUserAsset alloc]initWithAssetPath:assetPath];
+            asset.enabled=NO;
             [_userAssets addObject:asset];
         }
     }
 }
+
+- (void)saveSetting
+{
+    NSMutableArray* assetDefinition=[[NSMutableArray alloc]initWithCapacity:[self.userAssets count]];
+    NSArray* assets=self.userAssets;
+    for (LAMUserAsset* asset in assets) {
+        NSDictionary* dic=@{@"name": asset.name, @"enabled":@(asset.enabled)};
+        [assetDefinition addObject:dic];
+    }
+    NSDictionary* dic=@{@"assets": assetDefinition};
+    [dic writeToFile:self.settingFilePath atomically:YES];
+    
+}
+
 
 - (NSString*)uniqueAssetName:(NSString*)name
 {
