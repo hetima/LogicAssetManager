@@ -42,6 +42,9 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
         [self.userAssetsTable setDelegate:self];
         [self.userAssetsTable setDataSource:self];
         [self.userAssetsTable registerForDraggedTypes:@[_userAssetDragType, NSFilenamesPboardType]];
+        if ([self.userAssets count]) {
+            [self.userAssetsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+        }
     }
 }
 

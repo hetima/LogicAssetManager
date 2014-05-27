@@ -155,6 +155,9 @@
         [self.groupsTableView setDataSource:self];
         [self.iconsView registerForDraggedTypes:@[_iconDragType, NSFilenamesPboardType]];
         [self.groupsTableView registerForDraggedTypes:@[_groupDragType, _iconDragType, NSFilenamesPboardType]];
+        if ([self.iconGroups count]) {
+            [self.groupsTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+        }
     }
 }
 
