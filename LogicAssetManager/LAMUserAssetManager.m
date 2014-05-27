@@ -13,12 +13,17 @@
 NSString* const LAMUserAssetExtension=@"logicasset";
 NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
 
-@implementation LAMUserAssetManager
+@implementation LAMUserAssetManager{
+    NSString* _userAssetDragType;
+    BOOL _awaken;
+}
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
+        _userAssetDragType=[NSString stringWithFormat:@"LAMUserAssetManagerUserAsset_%p_pbType", self];
+
         _settingFilePath=[[LAMAppDelegate applicationSupportPath]stringByAppendingPathComponent:@"Assets.plist"];
         _userAssets=[[NSMutableArray alloc]init];
         _userAssetPath=[LAMAppDelegate applicationSupportSubDirectry:@"Assets"];
@@ -27,6 +32,17 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(appWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
     }
     return self;
+}
+
+
+-(void)awakeFromNib
+{
+    if (!_awaken) {
+        _awaken=YES;
+        [self.userAssetsTable setDelegate:self];
+        [self.userAssetsTable setDataSource:self];
+        [self.userAssetsTable registerForDraggedTypes:@[_userAssetDragType, NSFilenamesPboardType]];
+    }
 }
 
 
@@ -170,4 +186,89 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     return [tableView makeViewWithIdentifier:@"default" owner:nil];
 }
 
+
+
+- (NSDragOperation)tableView:(NSTableView*)tableView validateDrop:(id <NSDraggingInfo>)draggingInfo proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation;
+{
+    if (tableView != self.userAssetsTable) {
+        return NSDragOperationNone;
+    }
+    NSPasteboard *pb = [draggingInfo draggingPasteboard];
+    
+    if ([pb availableTypeFromArray:@[_userAssetDragType]]) {
+        NSInteger draggedRow = [[pb stringForType:_userAssetDragType]integerValue];
+        
+        if (operation == NSTableViewDropOn || row == draggedRow || row == draggedRow + 1)return NSDragOperationNone;
+        return NSDragOperationMove;
+        
+    }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]) {
+        if (operation == NSTableViewDropOn) {
+            return NSDragOperationNone;
+        }
+    }
+    
+    return NSDragOperationNone;
+}
+
+
+- (BOOL)tableView:(NSTableView*)tableView acceptDrop:(id <NSDraggingInfo>)draggingInfo row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
+{
+    if (tableView != self.userAssetsTable) {
+        return NO;
+    }
+    NSPasteboard *pb = [draggingInfo draggingPasteboard];
+    
+    if ([pb availableTypeFromArray:@[_userAssetDragType]]) {
+        NSInteger droppedIndex=-1;
+        NSInteger draggedIndex = [[pb stringForType:_userAssetDragType]integerValue];
+        if(draggedIndex==row) return NO;
+        
+        NSMutableArray* ary=[self mutableArrayValueForKey:@"userAssets"];
+        id target=[ary objectAtIndex:draggedIndex];
+        if (row < draggedIndex){
+            droppedIndex=row;
+        }else{
+            droppedIndex=row-1;
+        }
+        
+        NSInteger selectedRow=[tableView selectedRow];
+        if (selectedRow==draggedIndex) {
+            selectedRow=droppedIndex;
+        }else{
+            NSInteger shift=0;
+            if (selectedRow>draggedIndex){
+                shift--;
+            }
+            if (selectedRow>droppedIndex) {
+                shift++;
+            }
+            selectedRow+=shift;
+        }
+
+        [ary removeObjectAtIndex:draggedIndex];
+        [ary insertObject:target atIndex:droppedIndex];
+        
+        [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
+        return YES;
+ 
+    }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]){
+        return NO;
+    }
+    return NO;
+    
+}
+
+
+- (BOOL)tableView:(NSTableView *)tableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
+{
+    if (tableView != self.userAssetsTable) {
+        return NO;
+    }
+    if([rowIndexes count]>1)    return NO;
+    NSInteger idx=[rowIndexes firstIndex];
+    
+    [pboard setString:[NSString stringWithFormat: @"%ld", idx] forType:_userAssetDragType];
+    return YES;
+    
+}
 @end

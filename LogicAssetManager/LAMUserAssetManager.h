@@ -11,11 +11,12 @@
 extern NSString * const LAMUserAssetExtension;
 extern NSString * const LAMUserAssetInfoFile;
 
-@interface LAMUserAssetManager : NSObject
+@interface LAMUserAssetManager : NSObject <NSTableViewDelegate, NSTableViewDataSource>
 
 @property (nonatomic,strong) NSMutableArray* userAssets;
 @property (nonatomic,strong) IBOutlet NSArrayController* userAssetsCtl;
 
+@property (nonatomic,weak) IBOutlet NSTableView* userAssetsTable;
 @property (nonatomic,weak) IBOutlet NSTableView* optionsTable;
 
 @property (nonatomic,strong) NSString* userAssetPath;

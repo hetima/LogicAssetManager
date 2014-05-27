@@ -1233,6 +1233,7 @@ Gw
             <connections>
                 <outlet property="optionsTable" destination="gzf-DA-RG2" id="Ivn-8z-UnI"/>
                 <outlet property="userAssetsCtl" destination="gcT-v0-ZOV" id="hJR-Vh-yz9"/>
+                <outlet property="userAssetsTable" destination="vSr-of-iVu" id="Suc-19-z3v"/>
             </connections>
         </customObject>
         <arrayController objectClassName="LAMUserAsset" id="gcT-v0-ZOV" userLabel="userAssetsCtl">
