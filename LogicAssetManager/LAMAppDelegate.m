@@ -9,9 +9,7 @@
 #import "LAMAppDelegate.h"
 #import "LAMResourcesCoordinator.h"
 
-@implementation LAMAppDelegate{
-    LAMResourcesCoordinator* _resourcesCoordinator;
-}
+@implementation LAMAppDelegate
 
 
 + (NSString*)applicationSupportPath
@@ -48,16 +46,10 @@
 
 #pragma mark -
 
-+ (NSString*)mergedMAResourcesPath
-{
-    return [self mergedResourcesPathForName:@"MAResources"];
-}
-
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-    _resourcesCoordinator=[[LAMResourcesCoordinator alloc]init];
 
 }
 

@@ -16,6 +16,5 @@
 + (NSString*)applicationSupportSubDirectry:(NSString*)name;
 
 + (NSString*)mergedResourcesPathForName:(NSString*)name;
-+ (NSString*)mergedMAResourcesPath;
 
 @end

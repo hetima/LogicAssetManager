@@ -11,27 +11,76 @@
 
 @implementation LAMResourcesCoordinator
 
-
-+ (NSString*)logicResourcesPath
++ (instancetype)MAResourcesCoordinator
 {
-    return @"/Applications/Logic Pro X.app/Contents/Frameworks/MAResources.framework/Versions/A/Resources";
+    static LAMMAResourcesCoordinator* MAResourcesCdntr=nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        MAResourcesCdntr=[[LAMMAResourcesCoordinator alloc]initWithResourcesName:@"MAResources" mappingFileName:@"MAResourcesMapping.plist"];
+    });
+    return MAResourcesCdntr;
 }
 
 
-+ (NSString*)logicMAResourcesMappingPath
++ (instancetype)MAResourcesPlugInsSharedCoordinator
 {
-    return [[self logicResourcesPath]stringByAppendingPathComponent:@"MAResourcesMapping.plist"];
+    static LAMResourcesCoordinator* MAResourcesPlugInsSharedCdntr=nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        MAResourcesPlugInsSharedCdntr=[[LAMResourcesCoordinator alloc]initWithResourcesName:@"MAResourcesPlugInsShared" mappingFileName:@"MAResourcesPlugInsSharedMapping.plist"];
+    });
+    return MAResourcesPlugInsSharedCdntr;
 }
 
 
-- (instancetype)init
++ (instancetype)MAResourcesLgCoordinator
+{
+    static LAMResourcesCoordinator* MAResourcesLgCdntr=nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        MAResourcesLgCdntr=[[LAMResourcesCoordinator alloc]initWithResourcesName:@"MAResourcesLg" mappingFileName:@"MAResourcesLgMapping.plist"];
+    });
+    return MAResourcesLgCdntr;
+}
+
+
++ (instancetype)MAResourcesGBCoordinator
+{
+    static LAMResourcesCoordinator* MAResourcesGBCdntr=nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        MAResourcesGBCdntr=[[LAMResourcesCoordinator alloc]initWithResourcesName:@"MAResourcesGB" mappingFileName:@"MAResourcesGBMapping.plist"];
+    });
+    return MAResourcesGBCdntr;
+}
+
+
++ (NSString*)logicFrameworkPathForName:(NSString*)name
+{
+    return [NSString stringWithFormat:@"/Applications/Logic Pro X.app/Contents/Frameworks/%@.framework", name];
+}
+
+
+- (NSString*)originalMappingPath
+{
+    return [_originalResourcesPath stringByAppendingPathComponent:_mappingFileName];
+}
+
+
+- (instancetype)initWithResourcesName:(NSString*)resourcesName mappingFileName:(NSString*)mappingFileName
 {
     self = [super init];
     if (self) {
+        NSString* frameworkPath=[LAMResourcesCoordinator logicFrameworkPathForName:resourcesName];
         _excludesRetinaImage=NO;
-        _originalResourcesMapping=[[NSDictionary alloc]initWithContentsOfFile:[LAMResourcesCoordinator logicMAResourcesMappingPath]];
-        _mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[LAMResourcesCoordinator logicMAResourcesMappingPath]];
-        _outputDirectory=[LAMAppDelegate mergedMAResourcesPath];
+        _mappingFileName=mappingFileName;
+        _resourcesName=resourcesName;
+        _originalResourcesPath=[frameworkPath stringByAppendingPathComponent:@"Versions/A/Resources"];
+        _resourcesLinkPath=[frameworkPath stringByAppendingPathComponent:@"Resources"];
+        
+        _originalResourcesMapping=[[NSDictionary alloc]initWithContentsOfFile:[self originalMappingPath]];
+        _mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[self originalMappingPath]];
+        _outputDirectory=[LAMAppDelegate mergedResourcesPathForName:_resourcesName];
     }
     return self;
 }
@@ -56,25 +105,26 @@
         return success;
     }
     
-    self.mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[LAMResourcesCoordinator logicMAResourcesMappingPath]];
+    //FIXME: icon 消えちゃう
+    self.mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[self originalMappingPath]];
 
     
     //extract original contents
-    [self extractFromResourcesPath:[LAMResourcesCoordinator logicResourcesPath]];
+    [self extractFromResourcesPath:self.originalResourcesPath];
     
     //extract each asset
     for (NSString* assetPath in assetPaths) {
-        NSString* resourcesPath=[assetPath stringByAppendingPathComponent:@"MAResources"];
+        NSString* resourcesPath=[assetPath stringByAppendingPathComponent:self.resourcesName];
         [self extractFromResourcesPath:resourcesPath];
         
-        NSString* plistPath=[resourcesPath stringByAppendingPathComponent:@"MAResourcesMapping.plist"];
+        NSString* plistPath=[resourcesPath stringByAppendingPathComponent:self.mappingFileName];
         if ([[NSFileManager defaultManager]fileExistsAtPath:plistPath]) {
             [self mergeMappingFile:plistPath];
         }
     }
     
     //merged MAResourcesMapping.plist
-    success=[self.mergedResourcesMapping writeToFile:[self.outputDirectory stringByAppendingPathComponent:@"MAResourcesMapping.plist"] atomically:YES];
+    success=[self.mergedResourcesMapping writeToFile:[self.outputDirectory stringByAppendingPathComponent:self.mappingFileName] atomically:YES];
     
     return success;
 }
@@ -94,7 +144,7 @@
     
     
     for (NSString* fileName in files) {
-        if ([fileName hasPrefix:@"."] || [fileName isEqualToString:@"MAResourcesMapping.plist"]) {
+        if ([fileName hasPrefix:@"."] || [fileName isEqualToString:self.mappingFileName]) {
             continue;
         }
         if (self.excludesRetinaImage && [[fileName stringByDeletingLastPathComponent]hasSuffix:@"@2x"]) {
@@ -185,6 +235,14 @@
     NSMutableDictionary* dict=[[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
     [self mergeMappingDictionary:dict];
 }
+
+
+@end
+
+
+
+
+@implementation LAMMAResourcesCoordinator
 
 
 - (void)addInstrumentIcon:(NSString*)name id:(NSInteger)imageId group:(NSString*)group
