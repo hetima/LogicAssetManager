@@ -154,5 +154,17 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     
 }
 
+#pragma mark - delegate
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    if (tableView==self.optionsTable) {
+        LAMUserAsset* asset=[[self.userAssetsCtl selectedObjects]firstObject];
+        NSDictionary* option=[asset.options objectAtIndex:row];
+        return [tableView makeViewWithIdentifier:option[@"type"] owner:nil];
+    }
+
+    return [tableView makeViewWithIdentifier:@"default" owner:nil];
+}
 
 @end

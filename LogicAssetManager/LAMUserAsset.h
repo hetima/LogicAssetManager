@@ -12,8 +12,14 @@
 
 @property (nonatomic, strong)NSString* name;
 @property (nonatomic, strong)NSString* assetPath;
+@property (nonatomic, strong)NSMutableArray* assets;
+@property (nonatomic, strong)NSMutableArray* options;
 @property (nonatomic) BOOL enabled;
 
+@property (nonatomic, strong)NSString* description;
+@property (nonatomic, strong)NSString* author;
+@property (nonatomic, strong)NSString* version;
+@property (nonatomic, strong)NSString* webSite;
 
 - (instancetype)initWithAssetPath:(NSString*)path;
 
