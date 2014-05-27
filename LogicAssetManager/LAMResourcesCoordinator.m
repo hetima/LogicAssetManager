@@ -9,20 +9,18 @@
 #import "LAMResourcesCoordinator.h"
 #import "LAMAppDelegate.h"
 
-@implementation LAMResourcesCoordinator{
-    NSInteger _checkCount;
-    NSInteger _hitCount;
-    id _parentKey;
-}
+@implementation LAMResourcesCoordinator
 
-+ (NSString*)resourcesPath
+
++ (NSString*)logicResourcesPath
 {
     return @"/Applications/Logic Pro X.app/Contents/Frameworks/MAResources.framework/Versions/A/Resources";
 }
 
-+ (NSString*)MAResourcesMappingPath
+
++ (NSString*)logicMAResourcesMappingPath
 {
-    return @"/Applications/Logic Pro X.app/Contents/Frameworks/MAResources.framework/Versions/A/Resources/MAResourcesMapping.plist";
+    return [[self logicResourcesPath]stringByAppendingPathComponent:@"MAResourcesMapping.plist"];
 }
 
 
@@ -31,8 +29,8 @@
     self = [super init];
     if (self) {
         _excludesRetinaImage=NO;
-        _originalResourcesMapping=[[NSDictionary alloc]initWithContentsOfFile:[LAMResourcesCoordinator MAResourcesMappingPath]];
-        _mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[LAMResourcesCoordinator MAResourcesMappingPath]];
+        _originalResourcesMapping=[[NSDictionary alloc]initWithContentsOfFile:[LAMResourcesCoordinator logicMAResourcesMappingPath]];
+        _mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[LAMResourcesCoordinator logicMAResourcesMappingPath]];
         _outputDirectory=[LAMAppDelegate mergedMAResourcesPath];
     }
     return self;
@@ -58,11 +56,11 @@
         return success;
     }
     
-    self.mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[LAMResourcesCoordinator MAResourcesMappingPath]];
+    self.mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[LAMResourcesCoordinator logicMAResourcesMappingPath]];
 
     
     //extract original contents
-    [self extractFromResourcesPath:[LAMResourcesCoordinator resourcesPath]];
+    [self extractFromResourcesPath:[LAMResourcesCoordinator logicResourcesPath]];
     
     //extract each asset
     for (NSString* assetPath in assetPaths) {
@@ -127,7 +125,6 @@
     }
     
     for (NSString* key in base) {
-        _checkCount++;
         id dicObj=[dic objectForKey:key];
         if (!dicObj) {
             continue;
@@ -169,7 +166,6 @@
             
         }else if(![dicObj isEqualTo:baseObj]){
             [merged setObject:dicObj forKey:key];
-            _hitCount++;
         }
     }
     
