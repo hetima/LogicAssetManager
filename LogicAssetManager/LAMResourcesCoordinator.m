@@ -39,14 +39,61 @@
 }
 
 
-- (void)extractOriginalFiles
+- (BOOL)extractFromAssetPaths:(NSArray*)assetPaths
 {
+    BOOL success=NO;
     if (!self.outputDirectory) {
+        return success;
+    }
+    
+    //clean up
+    if ([[NSFileManager defaultManager]fileExistsAtPath:self.outputDirectory]) {
+        success=[[NSFileManager defaultManager]removeItemAtPath:self.outputDirectory error:nil];
+        if (!success) {
+            return success;
+        }
+    }
+    success=[[NSFileManager defaultManager]createDirectoryAtPath:self.outputDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    if (!success) {
+        return success;
+    }
+    
+    self.mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[LAMResourcesCoordinator MAResourcesMappingPath]];
+
+    
+    //extract original contents
+    [self extractFromResourcesPath:[LAMResourcesCoordinator resourcesPath]];
+    
+    //extract each asset
+    for (NSString* assetPath in assetPaths) {
+        NSString* resourcesPath=[assetPath stringByAppendingPathComponent:@"MAResources"];
+        [self extractFromResourcesPath:resourcesPath];
+        
+        NSString* plistPath=[resourcesPath stringByAppendingPathComponent:@"MAResourcesMapping.plist"];
+        if ([[NSFileManager defaultManager]fileExistsAtPath:plistPath]) {
+            [self mergeMappingFile:plistPath];
+        }
+    }
+    
+    //merged MAResourcesMapping.plist
+    success=[self.mergedResourcesMapping writeToFile:[self.outputDirectory stringByAppendingPathComponent:@"MAResourcesMapping.plist"] atomically:YES];
+    
+    return success;
+}
+
+
+- (void)extractFromResourcesPath:(NSString*)resourcesPath
+{
+    BOOL isDir;
+    [[NSFileManager defaultManager]fileExistsAtPath:resourcesPath isDirectory:&isDir];
+    
+    if (!self.outputDirectory || !isDir) {
         return;
     }
-    NSString* resourcesPath=[LAMResourcesCoordinator resourcesPath];
+    
+    
     NSArray* files=[[NSFileManager defaultManager]contentsOfDirectoryAtPath:resourcesPath error:nil];
-
+    
     
     for (NSString* fileName in files) {
         if ([fileName hasPrefix:@"."] || [fileName isEqualToString:@"MAResourcesMapping.plist"]) {
@@ -66,7 +113,7 @@
         [[NSFileManager defaultManager]createSymbolicLinkAtPath:linkPath withDestinationPath:destPath error:&err];
         
     }
-    [self.mergedResourcesMapping writeToFile:[self.outputDirectory stringByAppendingPathComponent:@"MAResourcesMapping.plist"] atomically:YES];
+    
 }
 
 

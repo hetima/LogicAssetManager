@@ -15,7 +15,7 @@
 @property (nonatomic) BOOL excludesRetinaImage;
 
 
-- (void)extractOriginalFiles;
+- (BOOL)extractFromAssetPaths:(NSArray*)assetPaths;
 - (void)mergeMappingFile:(NSString*)plistPath;
 - (void)addInstrumentIcon:(NSString*)name id:(NSInteger)imageId group:(NSString*)group;
 
