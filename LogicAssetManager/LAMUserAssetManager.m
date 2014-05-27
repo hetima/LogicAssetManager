@@ -169,8 +169,13 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     }
     NSString* assetPath=[self.userAssetPath stringByAppendingPathComponent:fileName];
     NSString* resourcesPath=[assetPath stringByAppendingPathComponent:resourcesName];
+    NSString* infoPath=[assetPath stringByAppendingPathComponent:LAMUserAssetInfoFile];
+    NSDictionary* info=@{@"name": [folderPath lastPathComponent],
+                         @"assets":@[@{@"directory":resourcesName, @"name":@"base", @"type":@"default"}]};
+    
     [[NSFileManager defaultManager]createDirectoryAtPath:assetPath withIntermediateDirectories:YES attributes:nil error:nil];
     if([[NSFileManager defaultManager]copyItemAtPath:folderPath toPath:resourcesPath error:nil]){
+        [info writeToFile:infoPath atomically:YES];
         LAMUserAsset* asset=[[LAMUserAsset alloc]initWithAssetPath:assetPath];
         [self.userAssetsCtl addObject:asset];
     }
