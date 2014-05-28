@@ -804,8 +804,8 @@
                                                                                     <font key="font" metaFont="system"/>
                                                                                 </buttonCell>
                                                                                 <connections>
-                                                                                    <binding destination="ceE-W8-ySx" name="title" keyPath="objectValue.name" id="5hc-dP-qpH"/>
                                                                                     <binding destination="ceE-W8-ySx" name="value" keyPath="objectValue.enabled" id="C2d-7C-noV"/>
+                                                                                    <binding destination="ceE-W8-ySx" name="title" keyPath="objectValue.name" id="5hc-dP-qpH"/>
                                                                                 </connections>
                                                                             </button>
                                                                         </subviews>
@@ -831,7 +831,7 @@
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="KqO-0u-ykD" id="L3O-mN-B69">
                                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                                                    <font key="font" metaFont="system"/>
+                                                                                    <font key="font" metaFont="menu"/>
                                                                                     <menu key="menu" title="OtherViews" id="q8v-AE-S3x">
                                                                                         <items>
                                                                                             <menuItem title="Item 1" state="on" id="KqO-0u-ykD"/>
@@ -841,8 +841,8 @@
                                                                                     </menu>
                                                                                 </popUpButtonCell>
                                                                                 <connections>
-                                                                                    <binding destination="QIU-Zd-Pws" name="contentValues" keyPath="objectValue.variantNames" id="hzo-bZ-CWn"/>
                                                                                     <binding destination="QIU-Zd-Pws" name="selectedValue" keyPath="objectValue.selectedName" previousBinding="hzo-bZ-CWn" id="7NZ-uG-OcR"/>
+                                                                                    <binding destination="QIU-Zd-Pws" name="contentValues" keyPath="objectValue.variantNames" id="hzo-bZ-CWn"/>
                                                                                 </connections>
                                                                             </popUpButton>
                                                                         </subviews>
@@ -1077,6 +1077,18 @@
                                             <connections>
                                                 <action selector="actRemoveGroup:" target="FqK-Cd-cJA" id="xde-kT-KjG"/>
                                                 <binding destination="Z0H-RM-ewo" name="enabled" keyPath="selection.canDelete" id="PGG-T9-Hdk"/>
+                                            </connections>
+                                        </button>
+                                        <button toolTip="Remove Selected Group" verticalHuggingPriority="750" id="bmI-Uw-O46">
+                                            <rect key="frame" x="144" y="6" width="22" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Glp-Gl-dLy">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="actRemoveIcon:" target="FqK-Cd-cJA" id="WH4-2n-OQc"/>
+                                                <binding destination="fgo-zt-Eop" name="enabled" keyPath="canRemove" id="4ZR-GK-Pl7"/>
                                             </connections>
                                         </button>
                                     </subviews>

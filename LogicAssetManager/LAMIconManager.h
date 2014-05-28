@@ -34,6 +34,7 @@
 - (IBAction)actRenameGroup:(id)sender;
 - (IBAction)actAddGroup:(id)sender;
 - (IBAction)actRemoveGroup:(id)sender;
+- (IBAction)actRemoveIcon:(id)sender;
 
 - (IBAction)actEndSheet:(id)sender;
 

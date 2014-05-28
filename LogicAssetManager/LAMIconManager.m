@@ -324,6 +324,13 @@
 }
 
 
+- (IBAction)actRemoveIcon:(id)sender
+{
+    NSMutableDictionary* selectedIcon=[[self.allIconsCtl selectedObjects]firstObject];
+    [self removeIcon:selectedIcon];
+}
+
+
 -(void)renameGroup:(NSMutableDictionary*)group to:(NSString*)name
 {
     NSPredicate* predi=[NSPredicate predicateWithFormat:@"group==%@", group[@"name"]];
