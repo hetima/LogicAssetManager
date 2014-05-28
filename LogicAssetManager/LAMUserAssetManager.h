@@ -22,4 +22,6 @@ extern NSString * const LAMUserAssetInfoFile;
 @property (nonatomic,strong) NSString* userAssetPath;
 @property (nonatomic,strong) NSString* settingFilePath;
 
+- (NSArray*)enabledAssetPaths;
+
 @end

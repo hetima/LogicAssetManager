@@ -103,6 +103,21 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
 }
 
 
+- (NSArray*)enabledAssetPaths
+{
+    NSArray* userAssets=self.userAssets;
+    NSMutableArray* result=[[NSMutableArray alloc]initWithCapacity:[userAssets count]];
+    for (LAMUserAsset* userAsset in userAssets) {
+        NSArray* enabledAssetPaths=[userAsset enabledAssetPaths];
+        if ([enabledAssetPaths count]) {
+            [result addObjectsFromArray:enabledAssetPaths];
+        }
+    }
+    
+    return result;
+}
+
+
 - (NSString*)uniqueAssetName:(NSString*)name
 {
     NSString* fileName=[name lastPathComponent];
