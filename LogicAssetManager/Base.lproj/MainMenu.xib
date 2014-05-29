@@ -897,7 +897,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="TBy-3Y-gX5">
-                                                        <rect key="frame" x="43" y="8" width="355" height="46"/>
+                                                        <rect key="frame" x="42" y="8" width="356" height="46"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="description" id="1Er-Yd-LhE">
                                                             <font key="font" metaFont="system"/>
@@ -909,7 +909,7 @@
                                                         </connections>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DgQ-lI-GhX">
-                                                        <rect key="frame" x="43" y="61" width="355" height="22"/>
+                                                        <rect key="frame" x="42" y="60" width="356" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="k8D-TY-l21">
                                                             <font key="font" metaFont="system" size="18"/>
@@ -929,7 +929,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Icon" identifier="2" id="WHr-uw-46d">
-                                <view key="view" id="BX9-cI-wMH">
+                                <view key="view" id="BX9-cI-wMH" customClass="LAMBackdropView">
                                     <rect key="frame" x="10" y="33" width="676" height="298"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -1102,6 +1102,7 @@
         <customObject id="FqK-Cd-cJA" customClass="LAMIconManager">
             <connections>
                 <outlet property="allIconsCtl" destination="fgo-zt-Eop" id="KhD-Lf-TUz"/>
+                <outlet property="backdropView" destination="BX9-cI-wMH" id="XxH-WT-rWy"/>
                 <outlet property="groupNameField" destination="36w-CA-kIq" id="QWA-Ht-SIc"/>
                 <outlet property="groupsTableView" destination="RPy-qi-rnA" id="sS1-pY-xbi"/>
                 <outlet property="iconGroupsCtl" destination="Z0H-RM-ewo" id="kzH-zW-fqd"/>

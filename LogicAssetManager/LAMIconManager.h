@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class LAMBackdropView;
+
 @interface LAMIconManager : NSObject <NSCollectionViewDelegate, NSTableViewDelegate, NSTableViewDataSource>
 
 @property (nonatomic,strong) NSMutableArray* allIcons;
@@ -25,6 +27,8 @@
 @property (nonatomic,strong) IBOutlet NSWindow* removeGroupConfirmSheet;
 @property (nonatomic,weak) IBOutlet NSTextField* removeGroupConfirmField;
 @property (nonatomic,weak) IBOutlet NSPopUpButton* removeGroupConfirmPopUp;
+
+@property (nonatomic,weak) IBOutlet LAMBackdropView* backdropView;
 
 + (NSArray*)defaultIconGroups;
 

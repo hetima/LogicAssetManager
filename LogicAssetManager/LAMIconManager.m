@@ -8,6 +8,7 @@
 
 #import "LAMIconManager.h"
 #import "LAMAppDelegate.h"
+#import "LAMBackdropView.h"
 
 #define kImageIdMin 1000
 #define kImageIdMax 4000
@@ -26,6 +27,12 @@
 {
     return @[@"png", @"tif", @"tiff", @"icns"];
 
+}
+
+
++ (NSArray*)importableExtensions
+{
+    return @[@"png", @"tif", @"tiff", @"icns", @"app"];
 }
 
 
@@ -71,11 +78,6 @@
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(appWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
 
-
-        //test
-        [self addGroupWithName:@"tes"];
-        [self addGroupWithName:@"tes1"];
-        [self addGroupWithName:@"tes2"];
     }
     return self;
 }
@@ -107,6 +109,7 @@
 
         NSInteger imageId=[dic[@"id"] integerValue];
 
+        //ファイルが削除されている、id がおかしいのは無視
         if(!iconPath || imageId<kImageIdMin) continue;
         
         iconPath=[_imageFolderPath stringByAppendingPathComponent:iconPath];
@@ -153,11 +156,16 @@
         [self.iconsView setDelegate:self];
         [self.groupsTableView setDelegate:self];
         [self.groupsTableView setDataSource:self];
-        [self.iconsView registerForDraggedTypes:@[_iconDragType, NSFilenamesPboardType]];
+        [self.iconsView registerForDraggedTypes:@[_iconDragType]];
         [self.groupsTableView registerForDraggedTypes:@[_groupDragType, _iconDragType, NSFilenamesPboardType]];
         if ([self.iconGroups count]) {
             [self.groupsTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
         }
+        __weak LAMIconManager* wself=self;
+        [self.backdropView registerForFileExtensions:[LAMIconManager importableExtensions] acceptsFolder:NO completion:^BOOL(NSArray *files)
+         {
+             return [wself importFiles:files];
+         }];
     }
 }
 
@@ -223,8 +231,32 @@
 }
 
 
-- (void)addIconWithFile:(NSString*)filePath group:(NSString*)groupName
+- (BOOL)importFiles:(NSArray*)paths
 {
+    NSDictionary* group=[[self.iconGroupsCtl selectedObjects]firstObject];
+    NSString* groupName=group[@"name"];
+    BOOL anyFileImported=NO;
+    for (NSString* file in paths) {
+        if([self addIconWithFile:file group:groupName]){
+            anyFileImported=YES;
+        }
+        
+    }
+    
+    return anyFileImported;
+}
+
+
+- (BOOL)addIconWithFile:(NSString*)filePath group:(NSString*)groupName
+{
+    if([[filePath pathExtension]isEqualToString:@"app"]){
+        filePath=[self appIconPathInApplication:filePath];
+    }
+    
+    if (![filePath length]) {
+        return NO;
+    }
+    
     if (![groupName length]) {
         groupName=[LAMIconManager defaultIconGroupName];
     }
@@ -241,7 +273,7 @@
     NSImage* image=[[NSImage alloc]initWithContentsOfFile:iconPath];
     
     if (!iconPath||!image) {
-        return;
+        return NO;
     }
     
     //imageid
@@ -249,7 +281,7 @@
 
     if (imageId<kImageIdMin) {
         //
-        return;
+        return NO;
     }
     icon[@"name"]=iconName;
     icon[@"path"]=iconPath;
@@ -259,6 +291,8 @@
     NSMutableArray* ary=[self mutableArrayValueForKey:@"allIcons"];
     [ary addObject:icon];
     [_imageIdIndexSet addIndex:imageId];
+    
+    return YES;
 
 }
 
@@ -475,11 +509,9 @@
 - (BOOL)canAcceptFileDrop:(NSPasteboard *)pb
 {
     id files= [pb propertyListForType:NSFilenamesPboardType];
-    NSArray* alloedExt=[LAMIconManager imageExtensions];
+    NSArray* alloedExt=[LAMIconManager importableExtensions];
     for (NSString* path in files) {
         if ([alloedExt containsObject:[path pathExtension]]) {
-            return YES;
-        }else if([[path pathExtension]isEqualToString:@"app"]){
             return YES;
         }
     }
@@ -491,15 +523,10 @@
 {
     id files= [pb propertyListForType:NSFilenamesPboardType];
     NSMutableArray* allowedFiles=[[NSMutableArray alloc]init];
-    NSArray* alloedExt=[LAMIconManager imageExtensions];
+    NSArray* alloedExt=[LAMIconManager importableExtensions];
     for (NSString* path in files) {
         if ([alloedExt containsObject:[path pathExtension]]) {
             [allowedFiles addObject:path];
-        }else if([[path pathExtension]isEqualToString:@"app"]){
-            NSString* appIconPath=[self appIconPathInApplication:path];
-            if (appIconPath) {
-                [allowedFiles addObject:appIconPath];
-            }
         }
     }
     return allowedFiles;
@@ -528,14 +555,10 @@
     if ([pb availableTypeFromArray:@[_iconDragType]]) {
         NSInteger draggedRow = [[pb stringForType:_iconDragType]integerValue];
 
-        if (*proposedDropOperation == NSTableViewDropOn || *proposedDropIndex == draggedRow || *proposedDropIndex == draggedRow + 1)
+        if (*proposedDropOperation == NSTableViewDropOn || *proposedDropIndex == draggedRow || *proposedDropIndex == draggedRow + 1){
             return NSDragOperationNone;
+        }
         return NSDragOperationMove;
-        
-    }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]) {
-        if ([self canAcceptFileDrop:pb]) {
-            return NSDragOperationCopy;
-        };
     }
     
     return NSDragOperationNone;
@@ -571,16 +594,6 @@
         [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
         //[self.allIconsCtl rearrangeObjects];
         return YES;
-    }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]){
-        NSDictionary* group=[[self.iconGroupsCtl selectedObjects]firstObject];
-        NSString* groupName=group[@"name"];
-        NSArray* draggedImages=[self imageFilesInDrop:pb];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            for (NSString* filePath in draggedImages) {
-                [self addIconWithFile:filePath group:groupName];
-            }
-        });
-        return YES;
     }
     
     return NO;
@@ -601,7 +614,9 @@
         }
         NSInteger draggedRow = [[pb stringForType:_groupDragType]integerValue];
         
-        if (operation == NSTableViewDropOn || row == draggedRow || row == draggedRow + 1)return NSDragOperationNone;
+        if (operation == NSTableViewDropOn || row == draggedRow || row == draggedRow + 1){
+            return NSDragOperationNone;
+        }
         return NSDragOperationMove;
         
     }else if ([pb availableTypeFromArray:@[_iconDragType]]) {
@@ -609,7 +624,7 @@
     }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]) {
         if (operation == NSTableViewDropOn && [self canAcceptFileDrop:pb]) {
             return NSDragOperationCopy;
-        };
+        }
         
     }
     
