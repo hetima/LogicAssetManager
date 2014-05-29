@@ -103,14 +103,14 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
 }
 
 
-- (NSArray*)enabledAssetPaths
+- (NSArray*)enabledSubsetPaths
 {
     NSArray* userAssets=self.userAssets;
     NSMutableArray* result=[[NSMutableArray alloc]initWithCapacity:[userAssets count]];
     for (LAMUserAsset* userAsset in userAssets) {
-        NSArray* enabledAssetPaths=[userAsset enabledAssetPaths];
-        if ([enabledAssetPaths count]) {
-            [result addObjectsFromArray:enabledAssetPaths];
+        NSArray* enabledSubsetPaths=[userAsset enabledSubsetPaths];
+        if ([enabledSubsetPaths count]) {
+            [result addObjectsFromArray:enabledSubsetPaths];
         }
     }
     
@@ -214,7 +214,7 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     // /assetname.logicasset/UserAssetInfo.plist
     NSString* infoPath=[assetPath stringByAppendingPathComponent:LAMUserAssetInfoFile];
     NSDictionary* info=@{@"name": [folderPath lastPathComponent],
-                         @"assets":@[@{@"directory":subsetName, @"name":subsetName, @"type":@"default"}]};
+                         @"subsets":@[@{@"directory":subsetName, @"name":subsetName, @"type":@"default"}]};
     
     [[NSFileManager defaultManager]createDirectoryAtPath:assetPath withIntermediateDirectories:YES attributes:nil error:nil];
     if([[NSFileManager defaultManager]copyItemAtPath:folderPath toPath:resourcesPath error:nil]){

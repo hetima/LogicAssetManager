@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong)NSString* name;
 @property (nonatomic, strong)NSString* assetPath;
-@property (nonatomic, strong)NSMutableArray* assets;
+@property (nonatomic, strong)NSMutableArray* subsets;
 @property (nonatomic, strong)NSMutableArray* options;
 @property (nonatomic) BOOL enabled;
 
@@ -26,6 +26,6 @@
 - (void)applySetting:(NSDictionary*)setting;
 - (NSDictionary*)setting;
 
-- (NSArray*)enabledAssetPaths;
+- (NSArray*)enabledSubsetPaths;
 
 @end

@@ -88,9 +88,9 @@
     _author=info[@"author"];
     _version=info[@"version"];
     _webSite=info[@"webSite"];
-    _assets=info[@"assets"];
+    _subsets=info[@"subsets"];
     
-    for (NSMutableDictionary* asset in _assets) {
+    for (NSMutableDictionary* asset in _subsets) {
         NSString* type=asset[@"type"];
         if ([type isEqualToString:@"variants"]){
             NSMutableArray* variants=asset[@"variants"];
@@ -126,7 +126,7 @@
 /*!
  Return full path or nil. Do not check exists.
  */
-- (NSString*)pathForAsset:(NSDictionary*)asset
+- (NSString*)pathForSubset:(NSDictionary*)asset
 {
     NSString* directory=asset[@"directory"];
     if (![directory length]) {
@@ -136,12 +136,12 @@
 }
 
 
-- (NSDictionary*)variantWithName:(NSString*)name forAsset:(NSDictionary*)asset
+- (NSDictionary*)variantWithName:(NSString*)name forSubset:(NSDictionary*)subset
 {
     if (![name length]) {
         return nil;
     }
-    NSArray* variants=asset[@"variants"];
+    NSArray* variants=subset[@"variants"];
     for (NSMutableDictionary* variant in variants) {
         
         if ([name isEqualToString:variant[@"name"]]) {
@@ -155,33 +155,33 @@
 /*!
  Return array of full path or nil. Do not check exists.
  */
-- (NSArray*)enabledAssetPaths
+- (NSArray*)enabledSubsetPaths
 {
     if (!self.enabled) {
         return nil;
     }
     
-    NSArray* assets=self.assets;
-    NSMutableArray* result=[[NSMutableArray alloc]initWithCapacity:[assets count]];
+    NSArray* subsets=self.subsets;
+    NSMutableArray* result=[[NSMutableArray alloc]initWithCapacity:[subsets count]];
     NSDictionary* setting=[self setting];
     
-    for (NSDictionary* asset in assets) {
+    for (NSDictionary* subset in subsets) {
         NSString* directoryName=nil;
-        if ([asset[@"type"] isEqualToString:@"option"]) {
-            NSString* key=[NSString stringWithFormat:@"%@.enabled", asset[@"name"]];
+        if ([subset[@"type"] isEqualToString:@"option"]) {
+            NSString* key=[NSString stringWithFormat:@"%@.enabled", subset[@"name"]];
             BOOL enabled=[setting[key] boolValue];
             if (enabled) {
-                directoryName=[self pathForAsset:asset];
+                directoryName=[self pathForSubset:subset];
             }
-        }else if([asset[@"type"] isEqualToString:@"variants"]){
-            NSString* key=[NSString stringWithFormat:@"%@.selectedName", asset[@"name"]];
+        }else if([subset[@"type"] isEqualToString:@"variants"]){
+            NSString* key=[NSString stringWithFormat:@"%@.selectedName", subset[@"name"]];
             NSString* selectedName=setting[key];
-            NSDictionary* selectedVariant=[self variantWithName:selectedName forAsset:asset];
+            NSDictionary* selectedVariant=[self variantWithName:selectedName forSubset:subset];
             if (selectedVariant) {
-                directoryName=[self pathForAsset:asset];
+                directoryName=[self pathForSubset:subset];
             }
         }else{
-            directoryName=[self pathForAsset:asset];
+            directoryName=[self pathForSubset:subset];
         }
         
         if (directoryName) {
