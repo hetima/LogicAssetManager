@@ -140,6 +140,21 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
 }
 
 
+- (NSString*)expectResourceType:(NSString*)directoryPath
+{
+    NSArray* candidates=@[@"MAResources", @"MAResourcesPlugInsShared", @"MAResourcesLg", @"MAResourcesGB"];
+    
+    for (NSString* name in candidates) {
+        NSString* plistPath=[directoryPath stringByAppendingPathComponent:[name stringByAppendingString:@"Mapping.plist"]];
+        if ([[NSFileManager defaultManager]fileExistsAtPath:plistPath]) {
+            return name;
+        }
+    }
+    
+    return nil;
+}
+
+
 - (void)importFile:(NSString*)path
 {
     BOOL isDir;
@@ -151,7 +166,12 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     if ([[path pathExtension]isEqualToString:LAMUserAssetExtension]) {
         [self importAsset:path];
     }else{
-        [self importFolder:path asResources:@"MAResources"];
+        NSString* resourceType=[self expectResourceType:path];
+        if (!resourceType) {
+            //とりあえず
+            resourceType=@"MAResources";
+        }
+        [self importFolder:path asResources:resourceType];
     }
 }
 
