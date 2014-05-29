@@ -23,6 +23,7 @@
 		AA85379F19306F6900064DE2 /* LogicAssetManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA85379E19306F6900064DE2 /* LogicAssetManagerTests.m */; };
 		AA8537AA19306F9500064DE2 /* LAMResourcesCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8537A919306F9500064DE2 /* LAMResourcesCoordinator.m */; };
 		AA8537AD1931762000064DE2 /* LAMIconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8537AC1931762000064DE2 /* LAMIconManager.m */; };
+		AAE940EF1937005800BBECC5 /* LAMBackdropView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE940EE1937005800BBECC5 /* LAMBackdropView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,8 @@
 		AA8537A919306F9500064DE2 /* LAMResourcesCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAMResourcesCoordinator.m; sourceTree = "<group>"; };
 		AA8537AB1931762000064DE2 /* LAMIconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAMIconManager.h; sourceTree = "<group>"; };
 		AA8537AC1931762000064DE2 /* LAMIconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAMIconManager.m; sourceTree = "<group>"; };
+		AAE940ED1937005800BBECC5 /* LAMBackdropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAMBackdropView.h; sourceTree = "<group>"; };
+		AAE940EE1937005800BBECC5 /* LAMBackdropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAMBackdropView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +147,8 @@
 				AA7EDDEA19335504004BD7D7 /* LAMUserAssetManager.m */,
 				AA7EDDEC1933550E004BD7D7 /* LAMUserAsset.h */,
 				AA7EDDED1933550E004BD7D7 /* LAMUserAsset.m */,
+				AAE940ED1937005800BBECC5 /* LAMBackdropView.h */,
+				AAE940EE1937005800BBECC5 /* LAMBackdropView.m */,
 				AA85378719306F6800064DE2 /* MainMenu.xib */,
 				AA85378A19306F6800064DE2 /* Images.xcassets */,
 				AA85377819306F6800064DE2 /* Supporting Files */,
@@ -285,6 +290,7 @@
 			files = (
 				AA7EDDEE1933550E004BD7D7 /* LAMUserAsset.m in Sources */,
 				AA85378019306F6800064DE2 /* main.m in Sources */,
+				AAE940EF1937005800BBECC5 /* LAMBackdropView.m in Sources */,
 				AA7EDDEB19335504004BD7D7 /* LAMUserAssetManager.m in Sources */,
 				AA8537AD1931762000064DE2 /* LAMIconManager.m in Sources */,
 				AA8537AA19306F9500064DE2 /* LAMResourcesCoordinator.m in Sources */,

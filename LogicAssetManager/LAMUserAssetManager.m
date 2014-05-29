@@ -9,6 +9,7 @@
 #import "LAMUserAssetManager.h"
 #import "LAMAppDelegate.h"
 #import "LAMUserAsset.h"
+#import "LAMBackdropView.h"
 
 NSString* const LAMUserAssetExtension=@"logicasset";
 NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
@@ -41,10 +42,16 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
         _awaken=YES;
         [self.userAssetsTable setDelegate:self];
         [self.userAssetsTable setDataSource:self];
-        [self.userAssetsTable registerForDraggedTypes:@[_userAssetDragType, NSFilenamesPboardType]];
+        [self.userAssetsTable registerForDraggedTypes:@[_userAssetDragType]];
         if ([self.userAssets count]) {
             [self.userAssetsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
         }
+        
+        __weak LAMUserAssetManager* wself=self;
+        [self.backdropView registerForFileExtensions:@[LAMUserAssetExtension] acceptsFolder:YES completion:^BOOL(NSArray *files)
+        {
+            return [wself importFiles:files];
+        }];
     }
 }
 
@@ -118,6 +125,9 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
 }
 
 
+#pragma mark - import
+
+
 - (NSString*)uniqueAssetName:(NSString*)name
 {
     NSString* fileName=[name lastPathComponent];
@@ -151,16 +161,33 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
         }
     }
     
-    return nil;
+    if ([[directoryPath pathExtension]length]) {
+        return nil;
+    }
+    
+    //とりあえず
+    return @"MAResources";
 }
 
+- (BOOL)importFiles:(NSArray*)paths
+{
+    BOOL anyFileImported=NO;
+    for (NSString* file in paths) {
+        if([self importFile:file]){
+            anyFileImported=YES;
+        }
 
-- (void)importFile:(NSString*)path
+    }
+    
+    return anyFileImported;
+}
+
+- (BOOL)importFile:(NSString*)path
 {
     BOOL isDir;
     [[NSFileManager defaultManager]fileExistsAtPath:path isDirectory:&isDir];
     if (!isDir) {
-        return;
+        return NO;
     }
     
     if ([[path pathExtension]isEqualToString:LAMUserAssetExtension]) {
@@ -168,11 +195,11 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     }else{
         NSString* resourceType=[self expectResourceType:path];
         if (!resourceType) {
-            //とりあえず
-            resourceType=@"MAResources";
+            return NO;
         }
         [self importFolder:path asResources:resourceType];
     }
+    return YES;
 }
 
 
@@ -208,15 +235,18 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     // /assetname.logicasset
     NSString* assetPath=[self.userAssetPath stringByAppendingPathComponent:fileName];
     
+    // /assetname.logicasset/subsetName
+    NSString* subsetPath=[assetPath stringByAppendingPathComponent:subsetName];
+    
     // /assetname.logicasset/subsetName/resourcesName
-    NSString* resourcesPath=[[assetPath stringByAppendingPathComponent:subsetName]stringByAppendingPathComponent:resourcesName];
+    NSString* resourcesPath=[subsetPath stringByAppendingPathComponent:resourcesName];
     
     // /assetname.logicasset/UserAssetInfo.plist
     NSString* infoPath=[assetPath stringByAppendingPathComponent:LAMUserAssetInfoFile];
     NSDictionary* info=@{@"name": [folderPath lastPathComponent],
                          @"subsets":@[@{@"directory":subsetName, @"name":subsetName, @"type":@"default"}]};
     
-    [[NSFileManager defaultManager]createDirectoryAtPath:assetPath withIntermediateDirectories:YES attributes:nil error:nil];
+    [[NSFileManager defaultManager]createDirectoryAtPath:subsetPath withIntermediateDirectories:YES attributes:nil error:nil];
     if([[NSFileManager defaultManager]copyItemAtPath:folderPath toPath:resourcesPath error:nil]){
         [info writeToFile:infoPath atomically:YES];
         LAMUserAsset* asset=[[LAMUserAsset alloc]initWithAssetPath:assetPath];
@@ -323,4 +353,6 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     return YES;
     
 }
+
+
 @end

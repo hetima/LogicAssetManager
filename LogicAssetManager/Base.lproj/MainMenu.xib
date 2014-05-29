@@ -682,7 +682,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Asset" identifier="1" id="jZA-3j-kzx">
-                                <view key="view" id="yT4-P4-qux">
+                                <view key="view" id="yT4-P4-qux" customClass="LAMBackdropView">
                                     <rect key="frame" x="10" y="33" width="676" height="298"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -897,7 +897,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="TBy-3Y-gX5">
-                                                        <rect key="frame" x="43" y="16" width="355" height="37"/>
+                                                        <rect key="frame" x="43" y="8" width="355" height="46"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="description" id="1Er-Yd-LhE">
                                                             <font key="font" metaFont="system"/>
@@ -1249,6 +1249,7 @@ Gw
         </window>
         <customObject id="IVQ-DD-q9l" userLabel="UserAssetManager" customClass="LAMUserAssetManager">
             <connections>
+                <outlet property="backdropView" destination="yT4-P4-qux" id="Dh0-KB-w2R"/>
                 <outlet property="optionsTable" destination="gzf-DA-RG2" id="Ivn-8z-UnI"/>
                 <outlet property="userAssetsCtl" destination="gcT-v0-ZOV" id="hJR-Vh-yz9"/>
                 <outlet property="userAssetsTable" destination="vSr-of-iVu" id="Suc-19-z3v"/>
