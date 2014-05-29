@@ -202,11 +202,19 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     if (!fileName) {
         return;
     }
+    
+    NSString* subsetName=@"base";
+    
+    // /assetname.logicasset
     NSString* assetPath=[self.userAssetPath stringByAppendingPathComponent:fileName];
-    NSString* resourcesPath=[assetPath stringByAppendingPathComponent:resourcesName];
+    
+    // /assetname.logicasset/subsetName/resourcesName
+    NSString* resourcesPath=[[assetPath stringByAppendingPathComponent:subsetName]stringByAppendingPathComponent:resourcesName];
+    
+    // /assetname.logicasset/UserAssetInfo.plist
     NSString* infoPath=[assetPath stringByAppendingPathComponent:LAMUserAssetInfoFile];
     NSDictionary* info=@{@"name": [folderPath lastPathComponent],
-                         @"assets":@[@{@"directory":resourcesName, @"name":@"base", @"type":@"default"}]};
+                         @"assets":@[@{@"directory":subsetName, @"name":subsetName, @"type":@"default"}]};
     
     [[NSFileManager defaultManager]createDirectoryAtPath:assetPath withIntermediateDirectories:YES attributes:nil error:nil];
     if([[NSFileManager defaultManager]copyItemAtPath:folderPath toPath:resourcesPath error:nil]){
