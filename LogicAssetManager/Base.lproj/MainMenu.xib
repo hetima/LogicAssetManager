@@ -115,15 +115,16 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
-                            <menuItem title="Page Setup…" keyEquivalent="P" id="qIS-W8-SiK">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                            <menuItem title="Open Assets Folder" id="2ef-3u-1wD">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="runPageLayout:" target="-1" id="Din-rz-gC5"/>
+                                    <action selector="actOpenUserAssetsDirectory:" target="Voe-Tx-rLC" id="DDL-Vj-YS5"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Print…" keyEquivalent="p" id="aTl-1u-JFS">
+                            <menuItem title="Open Icons Folder" id="3iy-cz-kbF">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="print:" target="-1" id="qaZ-4w-aoO"/>
+                                    <action selector="actOpenUserIconsDirectory:" target="Voe-Tx-rLC" id="4P3-kv-Mzd"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -994,12 +995,12 @@ yyyy</string>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <connections>
+                                                            <binding destination="gcT-v0-ZOV" name="value" keyPath="selection.author" id="kGh-1q-SgZ"/>
                                                             <binding destination="gcT-v0-ZOV" name="hidden" keyPath="selection.author" id="vlI-kI-Ci2">
                                                                 <dictionary key="options">
                                                                     <string key="NSValueTransformerName">NSIsNil</string>
                                                                 </dictionary>
                                                             </binding>
-                                                            <binding destination="gcT-v0-ZOV" name="value" keyPath="selection.author" id="kGh-1q-SgZ"/>
                                                         </connections>
                                                     </textField>
                                                 </subviews>

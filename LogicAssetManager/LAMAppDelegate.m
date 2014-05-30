@@ -79,4 +79,25 @@
 }
 
 
+- (IBAction)actOpenUserAssetsDirectory:(id)sender
+{
+    NSString* path=[LAMAppDelegate applicationSupportSubDirectry:@"Assets"];
+    [[NSWorkspace sharedWorkspace]openFile:path];
+}
+
+
+- (IBAction)actOpenUserIconsDirectory:(id)sender
+{
+    NSString* path=[LAMAppDelegate applicationSupportSubDirectry:@"Icons"];
+    [[NSWorkspace sharedWorkspace]openFile:path];
+}
+
+
+- (IBAction)actOpenApplicationSupportDirectory:(id)sender
+{
+    NSString* path=[LAMAppDelegate applicationSupportPath];
+    [[NSWorkspace sharedWorkspace]openFile:path];
+}
+
+
 @end

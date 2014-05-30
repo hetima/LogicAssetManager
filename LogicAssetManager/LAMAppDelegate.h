@@ -19,4 +19,8 @@
 
 + (NSString*)mergedResourcesPathForName:(NSString*)name;
 
+- (IBAction)actOpenUserAssetsDirectory:(id)sender;
+- (IBAction)actOpenUserIconsDirectory:(id)sender;
+- (IBAction)actOpenApplicationSupportDirectory:(id)sender;
+
 @end
