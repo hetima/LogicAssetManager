@@ -255,6 +255,50 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     
 }
 
+
+- (void)removeUserAsset:(LAMUserAsset*)asset
+{
+    if ([[NSFileManager defaultManager]fileExistsAtPath:asset.assetPath]) {
+        NSURL* url=[NSURL fileURLWithPath:asset.assetPath];
+        [[NSFileManager defaultManager]trashItemAtURL:url resultingItemURL:nil error:nil];
+    }
+    
+    [self.userAssetsCtl removeObject:asset];
+}
+
+
+- (IBAction)actUninstallUserAsset:(LAMUserAsset*)sender
+{
+    if ([sender isKindOfClass:[LAMUserAsset class]]) {
+        NSString* messageText=[NSString stringWithFormat:@"Uninstall \"%@\"", sender.name];
+        NSString* informativeText=[NSString stringWithFormat:@"\"%@\" is moved to trash. Be sure to update after uninstall.", [sender.assetPath lastPathComponent]];
+
+        NSAlert* alert=[[NSAlert alloc]init];
+        [alert setMessageText:messageText];
+        [alert setInformativeText:informativeText];
+        [alert addButtonWithTitle:@"Uninstall"];
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert beginSheetModalForWindow:[[NSApp delegate]window] completionHandler:^(NSModalResponse returnCode) {
+            if (returnCode==NSAlertFirstButtonReturn) {
+                [self removeUserAsset:sender];
+            }
+        }];
+    }
+}
+
+
+- (IBAction)actOpenWebSiteUserAsset:(LAMUserAsset*)sender;
+{
+    if ([sender isKindOfClass:[LAMUserAsset class]]) {
+        NSString* urlString=sender.webSite;
+        NSURL* url=[NSURL URLWithString:urlString];
+        if (url) {
+            [[NSWorkspace sharedWorkspace]openURL:url];
+        }
+    }
+}
+
+
 #pragma mark - delegate
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
