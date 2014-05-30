@@ -13,6 +13,8 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="Voe-Tx-rLC" customClass="LAMAppDelegate">
             <connections>
+                <outlet property="tabView" destination="nKZ-og-LhL" id="306-Jf-2oM"/>
+                <outlet property="toolbar" destination="sc9-S8-Aub" id="bBA-8B-PZU"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -677,24 +679,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <tabView id="nKZ-og-LhL">
-                        <rect key="frame" x="-8" y="10" width="696" height="344"/>
+                        <rect key="frame" x="-8" y="36" width="696" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
-                            <tabViewItem label="Asset" identifier="1" id="jZA-3j-kzx">
+                            <tabViewItem label="Assets" identifier="Assets" id="jZA-3j-kzx">
                                 <view key="view" id="yT4-P4-qux" customClass="LAMBackdropView">
-                                    <rect key="frame" x="10" y="33" width="676" height="298"/>
+                                    <rect key="frame" x="10" y="33" width="676" height="321"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="rx8-p7-pcB">
-                                            <rect key="frame" x="17" y="16" width="244" height="269"/>
+                                            <rect key="frame" x="17" y="16" width="244" height="279"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="3WO-3O-qK4">
-                                                <rect key="frame" x="1" y="1" width="242" height="267"/>
+                                                <rect key="frame" x="1" y="1" width="242" height="277"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" id="vSr-of-iVu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="242" height="267"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="242" height="277"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -766,14 +768,14 @@
                                             </scroller>
                                         </scrollView>
                                         <scrollView autohidesScrollers="YES" horizontalLineScroll="30" horizontalPageScroll="10" verticalLineScroll="30" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="MOc-dU-Vsb">
-                                            <rect key="frame" x="260" y="16" width="400" height="178"/>
+                                            <rect key="frame" x="260" y="16" width="400" height="188"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="eoa-fv-ZDU">
-                                                <rect key="frame" x="1" y="1" width="398" height="176"/>
+                                                <rect key="frame" x="1" y="1" width="398" height="186"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="28" rowSizeStyle="automatic" viewBased="YES" id="gzf-DA-RG2">
-                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="176"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="186"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -890,7 +892,7 @@
                                             </scroller>
                                         </scrollView>
                                         <box autoresizesSubviews="NO" title="Box" boxType="custom" borderType="line" titlePosition="noTitle" id="IPG-3k-gCN">
-                                            <rect key="frame" x="260" y="193" width="400" height="92"/>
+                                            <rect key="frame" x="260" y="203" width="400" height="92"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <view key="contentView">
                                                 <rect key="frame" x="1" y="1" width="398" height="90"/>
@@ -1008,9 +1010,9 @@ yyyy</string>
                                     </subviews>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Icon" identifier="2" id="WHr-uw-46d">
+                            <tabViewItem label="Icons" identifier="Icons" id="WHr-uw-46d">
                                 <view key="view" id="BX9-cI-wMH" customClass="LAMBackdropView">
-                                    <rect key="frame" x="10" y="33" width="676" height="298"/>
+                                    <rect key="frame" x="10" y="33" width="676" height="321"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="V1d-4f-XeC">
@@ -1178,6 +1180,30 @@ yyyy</string>
                     </tabView>
                 </subviews>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="82BE8189-94EA-4522-8E74-ADDBCD8170E2" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="sc9-S8-Aub">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="95F-TY-TdK"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="eP3-g2-ih9"/>
+                    <toolbarItem implicitItemIdentifier="F9C26AB1-365A-4F16-A5D0-1317C4A8563D" explicitItemIdentifier="Assets" label="Assets" paletteLabel="Assets" tag="-1" image="ToolbarPkg" id="xG5-ET-rKn">
+                        <connections>
+                            <action selector="actToolbarClick:" target="Voe-Tx-rLC" id="lDB-PQ-rjm"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="5A88DD07-609E-47B8-AF3D-C7DD17222F1D" explicitItemIdentifier="Icons" label="Instrument Icons" paletteLabel="Instrument Icons" tag="-1" image="ToolbarIcon" id="8ZM-Fo-a3f">
+                        <connections>
+                            <action selector="actToolbarClick:" target="Voe-Tx-rLC" id="zEf-Nh-zCu"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="95F-TY-TdK"/>
+                    <toolbarItem reference="xG5-ET-rKn"/>
+                    <toolbarItem reference="8ZM-Fo-a3f"/>
+                </defaultToolbarItems>
+                <connections>
+                    <outlet property="delegate" destination="Voe-Tx-rLC" id="x6e-mx-2sv"/>
+                </connections>
+            </toolbar>
         </window>
         <customObject id="FqK-Cd-cJA" customClass="LAMIconManager">
             <connections>
@@ -1346,5 +1372,7 @@ Gw
         <image name="NSAddTemplate" width="8" height="8"/>
         <image name="NSCaution" width="32" height="32"/>
         <image name="NSRemoveTemplate" width="8" height="8"/>
+        <image name="ToolbarIcon" width="32" height="32"/>
+        <image name="ToolbarPkg" width="32" height="32"/>
     </resources>
 </document>

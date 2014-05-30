@@ -11,6 +11,8 @@
 @interface LAMAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
+@property (nonatomic, weak) IBOutlet NSToolbar* toolbar;
+@property (nonatomic, weak) IBOutlet NSTabView* tabView;
 
 + (NSString*)applicationSupportPath;
 + (NSString*)applicationSupportSubDirectry:(NSString*)name;

@@ -44,6 +44,7 @@
     return path;
 }
 
+
 #pragma mark -
 
 
@@ -55,8 +56,27 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
-
+    [self.tabView selectTabViewItemWithIdentifier:@"Assets"];
+    [self.toolbar setSelectedItemIdentifier:@"Assets"];
 }
+
+
+#pragma mark -
+
+
+- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar
+{
+    return @[@"Assets", @"Icons"];
+}
+
+
+- (IBAction)actToolbarClick:(id)sender
+{
+    NSString* idn=[sender itemIdentifier];
+
+    [self.tabView selectTabViewItemWithIdentifier:idn];
+    [self.toolbar setSelectedItemIdentifier:idn];
+}
+
 
 @end
