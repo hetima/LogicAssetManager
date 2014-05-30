@@ -101,6 +101,7 @@
     
     //icon
     NSArray* icons=dic[@"icons"];
+    NSMutableArray* instantiatedIcons=[[NSMutableArray alloc]initWithCapacity:[icons count]];
     for (NSDictionary* dic in icons) {
 
         NSString* iconName=dic[@"name"];
@@ -122,6 +123,30 @@
         icon[@"path"]=iconPath;
         icon[@"image"]=image;
         icon[@"group"]=groupName;
+        icon[@"id"]=@(imageId);
+        [_allIcons addObject:icon];
+        [_imageIdIndexSet addIndex:imageId];
+        [instantiatedIcons addObject:iconName];
+    }
+    
+    //管理下にないファイルがあれば追加
+    NSArray* files=[[NSFileManager defaultManager]contentsOfDirectoryAtPath:_imageFolderPath error:nil];
+    files=[files pathsMatchingExtensions:[LAMIconManager imageExtensions]];
+    for (NSString* fileName in files) {
+        if ([instantiatedIcons containsObject:fileName]) {
+            continue;
+        }
+        
+        NSString* iconPath=[_imageFolderPath stringByAppendingPathComponent:fileName];
+        NSImage* image=[[NSImage alloc]initWithContentsOfFile:iconPath];
+        if(!image) continue;
+        NSInteger imageId=[self vacantImageId];
+        
+        NSMutableDictionary* icon=[[NSMutableDictionary alloc]initWithCapacity:5];
+        icon[@"name"]=fileName;
+        icon[@"path"]=iconPath;
+        icon[@"image"]=image;
+        icon[@"group"]=[LAMIconManager defaultIconGroupName];
         icon[@"id"]=@(imageId);
         [_allIcons addObject:icon];
         [_imageIdIndexSet addIndex:imageId];
