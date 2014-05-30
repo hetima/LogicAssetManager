@@ -27,6 +27,7 @@ extern NSString * const LAMUserAssetInfoFile;
 
 - (NSArray*)enabledSubsetPaths;
 
+- (IBAction)reload:(id)sender;
 - (IBAction)actUninstallUserAsset:(id)sender;
 - (IBAction)actOpenWebSiteUserAsset:(id)sender;
 

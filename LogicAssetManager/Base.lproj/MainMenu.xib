@@ -121,6 +121,13 @@
                                     <action selector="actOpenUserAssetsDirectory:" target="Voe-Tx-rLC" id="DDL-Vj-YS5"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Reload Assets" id="ink-Gx-X56">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="reload:" target="IVQ-DD-q9l" id="3Aw-M8-NNX"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="hZV-fj-hhx"/>
                             <menuItem title="Open Icons Folder" id="3iy-cz-kbF">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

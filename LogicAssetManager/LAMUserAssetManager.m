@@ -63,6 +63,16 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
 }
 
 
+- (IBAction)reload:(id)sender
+{
+    [self willChangeValueForKey:@"userAssets"];
+    [self saveSetting];
+    [_userAssets removeAllObjects];
+    [self loadSetting];
+    [self didChangeValueForKey:@"userAssets"];
+}
+
+
 - (void)loadSetting
 {
     NSDictionary* dic=[[NSDictionary alloc]initWithContentsOfFile:_settingFilePath];
@@ -71,6 +81,9 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     for (NSDictionary* dic in assetDefinition) {
         NSString* fileName=[dic[@"name"] stringByAppendingPathExtension:LAMUserAssetExtension];
         NSString* assetPath=[_userAssetPath stringByAppendingPathComponent:fileName];
+        if ([instantiatedAssets containsObject:fileName]) {
+            continue;
+        }
         if ([[NSFileManager defaultManager]fileExistsAtPath:assetPath]) {
             LAMUserAsset* asset=[[LAMUserAsset alloc]initWithAssetPath:assetPath];
             [asset applySetting:dic[@"setting"]];
