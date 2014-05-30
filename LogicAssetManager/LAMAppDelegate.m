@@ -36,8 +36,8 @@
 
 + (NSString*)mergedResourcesPathForName:(NSString*)name
 {
-    NSString* path=[self applicationSupportSubDirectry:name];
-    path=[path stringByAppendingPathComponent:@"Resources"];
+    NSString* path=[self applicationSupportSubDirectry:@"Merged"];
+    path=[path stringByAppendingPathComponent:name];
     if (![[NSFileManager defaultManager]fileExistsAtPath:path]) {
         [[NSFileManager defaultManager]createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
     }
