@@ -81,17 +81,16 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     }
 
     NSArray* files=[[NSFileManager defaultManager]contentsOfDirectoryAtPath:_userAssetPath error:nil];
+    files=[files pathsMatchingExtensions:@[LAMUserAssetExtension]];
     
     for (NSString* fileName in files) {
-        if ([[fileName pathExtension]isEqualToString:LAMUserAssetExtension]) {
-            if ([instantiatedAssets containsObject:fileName]) {
-                continue;
-            }
-            NSString* assetPath=[_userAssetPath stringByAppendingPathComponent:fileName];
-            LAMUserAsset* asset=[[LAMUserAsset alloc]initWithAssetPath:assetPath];
-            asset.enabled=NO;
-            [_userAssets addObject:asset];
+        if ([instantiatedAssets containsObject:fileName]) {
+            continue;
         }
+        NSString* assetPath=[_userAssetPath stringByAppendingPathComponent:fileName];
+        LAMUserAsset* asset=[[LAMUserAsset alloc]initWithAssetPath:assetPath];
+        asset.enabled=NO;
+        [_userAssets addObject:asset];
     }
 }
 
