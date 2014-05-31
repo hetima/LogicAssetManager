@@ -1200,6 +1200,271 @@ yyyy</string>
                                     </subviews>
                                 </view>
                             </tabViewItem>
+                            <tabViewItem label="Information" identifier="Information" id="6XY-x1-jlm">
+                                <view key="view" id="1JJ-ZA-gND">
+                                    <rect key="frame" x="10" y="33" width="676" height="321"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <box autoresizesSubviews="NO" cornerRadius="4" title="Resources Destination" borderType="line" id="bmA-fW-oln">
+                                            <rect key="frame" x="13" y="5" width="649" height="299"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <view key="contentView">
+                                                <rect key="frame" x="1" y="1" width="647" height="280"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="WHp-kJ-Gks">
+                                                        <rect key="frame" x="54" y="204" width="338" height="17"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="MAResourcesPlugInsShared.framework" id="AOX-wd-yGR">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="LND-Kz-egy">
+                                                        <rect key="frame" x="54" y="154" width="338" height="17"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="MAResourcesLg.framework" id="y8W-aw-rnq">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="K4k-g5-iLe">
+                                                        <rect key="frame" x="54" y="104" width="338" height="17"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="MAResourcesGB.framework" id="1gP-H4-uVZ">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="QTs-CZ-R8P">
+                                                        <rect key="frame" x="72" y="240" width="562" height="14"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" title="MAResources/ResourcesPath" id="GW1-4A-Dbb">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" red="0.25" green="0.25" blue="0.25" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="value" keyPath="MAResourcesCoordinator.resourcesLinkDestination" id="aDb-iU-CoD"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="s6v-Hm-Yr4">
+                                                        <rect key="frame" x="72" y="190" width="562" height="14"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" title="MAResourcesPlugInsShared/ResourcesPath" id="yIy-2i-W58">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" red="0.25" green="0.25" blue="0.25" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="value" keyPath="MAResourcesPlugInsSharedCoordinator.resourcesLinkDestination" id="O6H-Su-t0Q"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="0l6-pE-rdz">
+                                                        <rect key="frame" x="72" y="140" width="562" height="14"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" title="MAResourcesLg/ResourcesPath" id="0HD-k0-CRc">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" red="0.25" green="0.25" blue="0.25" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="value" keyPath="MAResourcesLgCoordinator.resourcesLinkDestination" id="X8K-es-dM5"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="m4G-de-cNc">
+                                                        <rect key="frame" x="72" y="90" width="562" height="14"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" title="MAResourcesGB/ResourcesPath" id="c6h-A7-3qQ">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" red="0.25" green="0.25" blue="0.25" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="value" keyPath="MAResourcesGBCoordinator.resourcesLinkDestination" id="zr7-UO-ZRU"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <button toolTip="Open Resources Folder" id="olT-t7-fNc">
+                                                        <rect key="frame" x="16" y="240" width="32" height="32"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="ToolbarFramework" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="VOO-Lu-f3G">
+                                                            <behavior key="behavior" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="argument" keyPath="MAResourcesCoordinator" id="Gg3-8U-gUT">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actFrameworkIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                            <binding destination="Voe-Tx-rLC" name="target" keyPath="self" previousBinding="Gg3-8U-gUT" id="eRt-mi-3AD">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actFrameworkIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                        </connections>
+                                                    </button>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2r8-UL-QNB">
+                                                        <rect key="frame" x="54" y="254" width="338" height="17"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="MAResources.framework" id="49f-dW-VMh">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <button toolTip="Open Resources Folder" id="ORq-Dd-3sB">
+                                                        <rect key="frame" x="16" y="190" width="32" height="32"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="ToolbarFramework" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="4kf-2l-olP">
+                                                            <behavior key="behavior" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="argument" keyPath="MAResourcesPlugInsSharedCoordinator" id="XhS-r4-7hY">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actFrameworkIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                            <binding destination="Voe-Tx-rLC" name="target" keyPath="self" previousBinding="XhS-r4-7hY" id="3E3-df-eP7">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actFrameworkIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                        </connections>
+                                                    </button>
+                                                    <button toolTip="Open Resources Folder" id="IRB-jq-Ant">
+                                                        <rect key="frame" x="16" y="140" width="32" height="32"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="ToolbarFramework" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="SQX-GI-1Aq">
+                                                            <behavior key="behavior" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="argument" keyPath="MAResourcesLgCoordinator" id="gKc-1z-PdG">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actFrameworkIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                            <binding destination="Voe-Tx-rLC" name="target" keyPath="self" previousBinding="gKc-1z-PdG" id="5kd-G5-PIi">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actFrameworkIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                        </connections>
+                                                    </button>
+                                                    <button toolTip="Open Resources Folder" id="afh-Kk-MP4">
+                                                        <rect key="frame" x="16" y="90" width="32" height="32"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="ToolbarFramework" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="K9r-rV-TzI">
+                                                            <behavior key="behavior" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="argument" keyPath="MAResourcesGBCoordinator" id="7eT-Zy-6uz">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actFrameworkIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                            <binding destination="Voe-Tx-rLC" name="target" keyPath="self" previousBinding="7eT-Zy-6uz" id="iLG-l9-EN4">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actFrameworkIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                        </connections>
+                                                    </button>
+                                                    <button toolTip="Open Current Destination" id="R8Y-oR-CYF">
+                                                        <rect key="frame" x="56" y="240" width="16" height="16"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="bevel" title="➜" bezelStyle="rounded" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="ugV-hr-Lon">
+                                                            <behavior key="behavior" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="argument" keyPath="MAResourcesCoordinator" id="ela-3d-D67">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actDestinationIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                            <binding destination="Voe-Tx-rLC" name="target" keyPath="self" previousBinding="ela-3d-D67" id="na6-yW-ezL">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actDestinationIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                        </connections>
+                                                    </button>
+                                                    <button toolTip="Open Current Destination" id="fSq-zs-gFs">
+                                                        <rect key="frame" x="56" y="190" width="16" height="16"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="bevel" title="➜" bezelStyle="rounded" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="myc-7I-kWj">
+                                                            <behavior key="behavior" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="argument" keyPath="MAResourcesPlugInsSharedCoordinator" id="kAP-E7-NOo">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actDestinationIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                            <binding destination="Voe-Tx-rLC" name="target" keyPath="self" previousBinding="kAP-E7-NOo" id="egW-X2-PQ7">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actDestinationIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                        </connections>
+                                                    </button>
+                                                    <button toolTip="Open Current Destination" id="0Ua-hH-xTb">
+                                                        <rect key="frame" x="56" y="140" width="16" height="16"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="bevel" title="➜" bezelStyle="rounded" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="4V1-JU-sYW">
+                                                            <behavior key="behavior" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="argument" keyPath="MAResourcesLgCoordinator" id="Ez3-zk-7G1">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actDestinationIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                            <binding destination="Voe-Tx-rLC" name="target" keyPath="self" previousBinding="Ez3-zk-7G1" id="EBm-06-SdF">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actDestinationIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                        </connections>
+                                                    </button>
+                                                    <button toolTip="Open Current Destination" id="qdQ-3b-SEn">
+                                                        <rect key="frame" x="56" y="90" width="16" height="16"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="bevel" title="➜" bezelStyle="rounded" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="M3i-TK-eif">
+                                                            <behavior key="behavior" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <binding destination="Voe-Tx-rLC" name="argument" keyPath="MAResourcesGBCoordinator" id="Wv5-73-aW9">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actDestinationIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                            <binding destination="Voe-Tx-rLC" name="target" keyPath="self" previousBinding="Wv5-73-aW9" id="uEO-5Q-oxe">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actDestinationIconClick:</string>
+                                                                </dictionary>
+                                                            </binding>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </view>
+                                            <color key="borderColor" red="0.45408163265306123" green="0.45408163265306123" blue="0.45408163265306123" alpha="0.5" colorSpace="calibratedRGB"/>
+                                            <color key="fillColor" white="0.0" alpha="0.02" colorSpace="calibratedWhite"/>
+                                            <font key="titleFont" metaFont="system"/>
+                                        </box>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
                         </tabViewItems>
                     </tabView>
                 </subviews>
@@ -1208,6 +1473,11 @@ yyyy</string>
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="95F-TY-TdK"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="eP3-g2-ih9"/>
+                    <toolbarItem implicitItemIdentifier="82DC0B17-E993-4566-81B9-EF49C29C3FD4" explicitItemIdentifier="Information" label="Information" paletteLabel="Information" tag="-1" image="ToolbarFramework" id="POZ-sT-eVI">
+                        <connections>
+                            <action selector="actToolbarClick:" target="Voe-Tx-rLC" id="Gq3-gu-CMo"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="F9C26AB1-365A-4F16-A5D0-1317C4A8563D" explicitItemIdentifier="Assets" label="Assets" paletteLabel="Assets" tag="-1" image="ToolbarPkg" id="xG5-ET-rKn">
                         <connections>
                             <action selector="actToolbarClick:" target="Voe-Tx-rLC" id="lDB-PQ-rjm"/>
@@ -1220,7 +1490,7 @@ yyyy</string>
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="95F-TY-TdK"/>
+                    <toolbarItem reference="POZ-sT-eVI"/>
                     <toolbarItem reference="xG5-ET-rKn"/>
                     <toolbarItem reference="8ZM-Fo-a3f"/>
                 </defaultToolbarItems>
@@ -1396,6 +1666,7 @@ Gw
         <image name="NSAddTemplate" width="8" height="8"/>
         <image name="NSCaution" width="32" height="32"/>
         <image name="NSRemoveTemplate" width="8" height="8"/>
+        <image name="ToolbarFramework" width="32" height="32"/>
         <image name="ToolbarIcon" width="32" height="32"/>
         <image name="ToolbarPkg" width="32" height="32"/>
     </resources>

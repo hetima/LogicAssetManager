@@ -77,7 +77,7 @@
 
 - (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar
 {
-    return @[@"Assets", @"Icons"];
+    return @[@"Assets", @"Icons", @"Information"];
 }
 
 
@@ -108,6 +108,20 @@
 {
     NSString* path=[LAMAppDelegate applicationSupportPath];
     [[NSWorkspace sharedWorkspace]openFile:path];
+}
+
+
+- (IBAction)actFrameworkIconClick:(id)sender
+{
+    LAMResourcesCoordinator* clickedCdntr=(LAMResourcesCoordinator*)sender;
+    [[NSWorkspace sharedWorkspace]openFile:clickedCdntr.originalResourcesPath];
+}
+
+
+- (IBAction)actDestinationIconClick:(id)sender
+{
+    LAMResourcesCoordinator* clickedCdntr=(LAMResourcesCoordinator*)sender;
+    [[NSWorkspace sharedWorkspace]openFile:clickedCdntr.resourcesLinkPath];
 }
 
 

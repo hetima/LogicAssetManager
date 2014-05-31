@@ -30,5 +30,7 @@
 - (IBAction)actOpenUserAssetsDirectory:(id)sender;
 - (IBAction)actOpenUserIconsDirectory:(id)sender;
 - (IBAction)actOpenApplicationSupportDirectory:(id)sender;
+- (IBAction)actFrameworkIconClick:(id)sender;
+- (IBAction)actDestinationIconClick:(id)sender;
 
 @end
