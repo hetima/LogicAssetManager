@@ -8,11 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class LAMResourcesCoordinator;
+
 @interface LAMAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (nonatomic, weak) IBOutlet NSToolbar* toolbar;
 @property (nonatomic, weak) IBOutlet NSTabView* tabView;
+
+@property (nonatomic, strong) LAMResourcesCoordinator* MAResourcesCoordinator;
+@property (nonatomic, strong) LAMResourcesCoordinator* MAResourcesPlugInsSharedCoordinator;
+@property (nonatomic, strong) LAMResourcesCoordinator* MAResourcesLgCoordinator;
+@property (nonatomic, strong) LAMResourcesCoordinator* MAResourcesGBCoordinator;
+
 
 + (NSString*)applicationSupportPath;
 + (NSString*)applicationSupportSubDirectry:(NSString*)name;

@@ -91,7 +91,7 @@
         
         _originalResourcesMapping=[[NSDictionary alloc]initWithContentsOfFile:[self originalMappingPath]];
         _mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[self originalMappingPath]];
-        _outputDirectory=[LAMAppDelegate mergedResourcesPathForName:_resourcesName];
+        _outputDirectory=nil;
     }
     return self;
 }

@@ -56,6 +56,17 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+#define instantiateResourcesCoordinator(rc) \
+    self.rc=[LAMResourcesCoordinator rc]; \
+    self.rc.outputDirectory=[LAMAppDelegate mergedResourcesPathForName:self.rc.resourcesName]
+
+    instantiateResourcesCoordinator(MAResourcesCoordinator);
+    instantiateResourcesCoordinator(MAResourcesPlugInsSharedCoordinator);
+    instantiateResourcesCoordinator(MAResourcesLgCoordinator);
+    instantiateResourcesCoordinator(MAResourcesGBCoordinator);
+    
+#undef instantiateResourcesCoordinator
+    
     [self.tabView selectTabViewItemWithIdentifier:@"Assets"];
     [self.toolbar setSelectedItemIdentifier:@"Assets"];
 }
