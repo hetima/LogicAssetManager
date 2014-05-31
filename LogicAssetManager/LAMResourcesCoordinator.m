@@ -8,6 +8,8 @@
 
 #import "LAMResourcesCoordinator.h"
 #import "LAMAppDelegate.h"
+#import "LAMUserAsset.h"
+#import "LAMUtilites.h"
 
 @implementation LAMResourcesCoordinator
 
@@ -77,6 +79,7 @@
         _resourcesName=resourcesName;
         _originalResourcesPath=[frameworkPath stringByAppendingPathComponent:@"Versions/A/Resources"];
         _resourcesLinkPath=[frameworkPath stringByAppendingPathComponent:@"Resources"];
+        _resourcesLinkDestination=[self currentLinkDestination];
         
         _originalResourcesMapping=[[NSDictionary alloc]initWithContentsOfFile:[self originalMappingPath]];
         _mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[self originalMappingPath]];
@@ -86,62 +89,111 @@
 }
 
 
-- (BOOL)extractFromAssetPaths:(NSArray*)assetPaths
+- (NSString*)currentLinkDestination
 {
-    BOOL success=NO;
+   return [[NSFileManager defaultManager]destinationOfSymbolicLinkAtPath:_resourcesLinkPath error:nil];
+}
+
+
+- (BOOL)extractAssets:(NSArray*)assets error:(NSError**)err
+{
+    //pre
     if (!self.outputDirectory) {
-        return success;
+        return NO;
     }
     
     //clean up
     if ([[NSFileManager defaultManager]fileExistsAtPath:self.outputDirectory]) {
-        success=[[NSFileManager defaultManager]removeItemAtPath:self.outputDirectory error:nil];
-        if (!success) {
-            return success;
+        if (![[NSFileManager defaultManager]removeItemAtPath:self.outputDirectory error:err]) {
+            return NO;
         }
     }
-    success=[[NSFileManager defaultManager]createDirectoryAtPath:self.outputDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-    if (!success) {
-        return success;
+    
+    if (![[NSFileManager defaultManager]createDirectoryAtPath:self.outputDirectory withIntermediateDirectories:YES attributes:nil error:err]) {
+        return NO;
     }
     
-    //FIXME: icon 消えちゃう
     self.mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[self originalMappingPath]];
-
     
     //extract original contents
-    [self extractFromResourcesPath:self.originalResourcesPath];
+    if (![self extractFromResourcesPath:self.originalResourcesPath error:err]) {
+        return NO;
+    }
     
     //extract each asset
+    for (LAMUserAsset* asset in assets) {
+        NSArray* subsets=[asset enabledSubsetPaths];
+        if (![self extractFromSubsetPaths:subsets error:err]) {
+            return NO;
+        }
+    }
+    
+    //post
+    return [self postExtractionWithError:err];
+}
+
+
+- (BOOL)postExtractionWithError:(NSError**)err
+{
+    BOOL success=NO;
+    
+    //write merged mapping.plist
+    success=[self.mergedResourcesMapping writeToFile:[self.outputDirectory stringByAppendingPathComponent:self.mappingFileName] atomically:YES];
+    
+    if (!success) {
+        if (err) {
+            NSError* err_=LAMErrorWithDescription([NSString stringWithFormat:@"can't create merged resources mapping (%@)", self.mappingFileName]);
+            *err=err_;
+        }
+        return NO;
+    }
+    
+    //replace symboliclink in app
+    NSString* currentLinkDestination=[self currentLinkDestination];
+    if (![currentLinkDestination isEqualToString:self.outputDirectory]) {
+        success=LAMSymlink(self.outputDirectory, self.resourcesLinkPath, err);
+        if (success) {
+            self.resourcesLinkDestination=[self currentLinkDestination];
+        }
+    }
+    
+    return success;
+}
+
+
+- (BOOL)extractFromSubsetPaths:(NSArray*)assetPaths error:(NSError**)err
+{
     for (NSString* assetPath in assetPaths) {
         NSString* resourcesPath=[assetPath stringByAppendingPathComponent:self.resourcesName];
-        [self extractFromResourcesPath:resourcesPath];
+        if (![self extractFromResourcesPath:resourcesPath error:err]) {
+            return NO;
+        }
         
         NSString* plistPath=[resourcesPath stringByAppendingPathComponent:self.mappingFileName];
         if ([[NSFileManager defaultManager]fileExistsAtPath:plistPath]) {
             [self mergeMappingFile:plistPath];
         }
     }
-    
-    //merged MAResourcesMapping.plist
-    success=[self.mergedResourcesMapping writeToFile:[self.outputDirectory stringByAppendingPathComponent:self.mappingFileName] atomically:YES];
-    
-    return success;
+    return YES;
 }
 
 
-- (void)extractFromResourcesPath:(NSString*)resourcesPath
+
+- (BOOL)extractFromResourcesPath:(NSString*)resourcesPath error:(NSError**)err
 {
+    
+    if (!self.outputDirectory) {
+        return NO;
+    }
+    
     BOOL isDir;
     [[NSFileManager defaultManager]fileExistsAtPath:resourcesPath isDirectory:&isDir];
-    
-    if (!self.outputDirectory || !isDir) {
-        return;
+    if (!isDir) {
+        return YES;
     }
     
     
     NSArray* files=[[NSFileManager defaultManager]contentsOfDirectoryAtPath:resourcesPath error:nil];
-    
     
     for (NSString* fileName in files) {
         if ([fileName hasPrefix:@"."] || [fileName isEqualToString:self.mappingFileName]) {
@@ -153,15 +205,13 @@
         
         NSString* destPath=[resourcesPath stringByAppendingPathComponent:fileName];
         NSString* linkPath=[self.outputDirectory stringByAppendingPathComponent:fileName];
-        NSError* err;
         
-        if ([[NSFileManager defaultManager]fileExistsAtPath:linkPath]) {
-            [[NSFileManager defaultManager]removeItemAtPath:linkPath error:nil];
+        if(!LAMSymlink(destPath, linkPath, err)){
+            return NO;
         }
-        [[NSFileManager defaultManager]createSymbolicLinkAtPath:linkPath withDestinationPath:destPath error:&err];
-        
     }
     
+    return YES;
 }
 
 
@@ -243,6 +293,15 @@
 
 
 @implementation LAMMAResourcesCoordinator
+
+
+- (BOOL)postExtractionWithError:(NSError**)err
+{
+    //icon
+    
+    
+    return [super postExtractionWithError:err];
+}
 
 
 - (void)addInstrumentIcon:(NSString*)name id:(NSInteger)imageId group:(NSString*)group

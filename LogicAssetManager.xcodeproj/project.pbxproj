@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA7073231939ADF700068DB5 /* LAMUtilites.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7073221939ADF700068DB5 /* LAMUtilites.m */; };
 		AA7EDDE81931EBE6004BD7D7 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7EDDE71931EBE5004BD7D7 /* Quartz.framework */; };
 		AA7EDDEB19335504004BD7D7 /* LAMUserAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7EDDEA19335504004BD7D7 /* LAMUserAssetManager.m */; };
 		AA7EDDEE1933550E004BD7D7 /* LAMUserAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7EDDED1933550E004BD7D7 /* LAMUserAsset.m */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA7073211939ADF700068DB5 /* LAMUtilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAMUtilites.h; sourceTree = "<group>"; };
+		AA7073221939ADF700068DB5 /* LAMUtilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAMUtilites.m; sourceTree = "<group>"; };
 		AA7EDDE71931EBE5004BD7D7 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		AA7EDDE919335504004BD7D7 /* LAMUserAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAMUserAssetManager.h; sourceTree = "<group>"; };
 		AA7EDDEA19335504004BD7D7 /* LAMUserAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAMUserAssetManager.m; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				AA7EDDED1933550E004BD7D7 /* LAMUserAsset.m */,
 				AAE940ED1937005800BBECC5 /* LAMBackdropView.h */,
 				AAE940EE1937005800BBECC5 /* LAMBackdropView.m */,
+				AA7073211939ADF700068DB5 /* LAMUtilites.h */,
+				AA7073221939ADF700068DB5 /* LAMUtilites.m */,
 				AA85378719306F6800064DE2 /* MainMenu.xib */,
 				AA85378A19306F6800064DE2 /* Images.xcassets */,
 				AA85377819306F6800064DE2 /* Supporting Files */,
@@ -293,6 +298,7 @@
 				AAE940EF1937005800BBECC5 /* LAMBackdropView.m in Sources */,
 				AA7EDDEB19335504004BD7D7 /* LAMUserAssetManager.m in Sources */,
 				AA8537AD1931762000064DE2 /* LAMIconManager.m in Sources */,
+				AA7073231939ADF700068DB5 /* LAMUtilites.m in Sources */,
 				AA8537AA19306F9500064DE2 /* LAMResourcesCoordinator.m in Sources */,
 				AA85378619306F6800064DE2 /* LAMAppDelegate.m in Sources */,
 			);

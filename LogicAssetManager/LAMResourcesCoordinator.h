@@ -18,13 +18,14 @@
 @property (nonatomic, strong) NSString* mappingFileName;
 @property (nonatomic, strong) NSString* originalResourcesPath;
 @property (nonatomic, strong) NSString* resourcesLinkPath;
+@property (nonatomic, strong) NSString* resourcesLinkDestination;
 
 + (instancetype)MAResourcesCoordinator;
 + (instancetype)MAResourcesPlugInsSharedCoordinator;
 + (instancetype)MAResourcesLgCoordinator;
 + (instancetype)MAResourcesGBCoordinator;
 
-- (BOOL)extractFromAssetPaths:(NSArray*)assetPaths;
+- (BOOL)extractAssets:(NSArray*)assets error:(NSError**)err;
 - (void)mergeMappingFile:(NSString*)plistPath;
 
 @end
