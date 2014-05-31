@@ -9,6 +9,7 @@
 #import "LAMResourcesCoordinator.h"
 #import "LAMAppDelegate.h"
 #import "LAMUserAsset.h"
+#import "LAMIconManager.h"
 #import "LAMUtilites.h"
 
 @implementation LAMResourcesCoordinator
@@ -69,6 +70,13 @@
 }
 
 
+- (NSString*)originalResourcesLinkDestination
+{
+    //relative path
+    return @"Versions/Current/Resources";
+}
+
+
 - (instancetype)initWithResourcesName:(NSString*)resourcesName mappingFileName:(NSString*)mappingFileName
 {
     self = [super init];
@@ -97,23 +105,50 @@
 
 - (BOOL)extractAssets:(NSArray*)assets error:(NSError**)err
 {
+    self.extracted=NO;
+    
     //pre
     if (!self.outputDirectory) {
         return NO;
     }
     
-    //clean up
+    //clean up outputDirectory
     if ([[NSFileManager defaultManager]fileExistsAtPath:self.outputDirectory]) {
         if (![[NSFileManager defaultManager]removeItemAtPath:self.outputDirectory error:err]) {
             return NO;
         }
     }
-    
     if (![[NSFileManager defaultManager]createDirectoryAtPath:self.outputDirectory withIntermediateDirectories:YES attributes:nil error:err]) {
         return NO;
     }
     
+    //clean up mergedResourcesMapping
     self.mergedResourcesMapping=[[NSMutableDictionary alloc]initWithContentsOfFile:[self originalMappingPath]];
+    
+    if (![self preExtractionWithError:err]){
+        return NO;
+    }
+    
+    //
+    NSMutableArray* subsetsForMe=[[NSMutableArray alloc]init];
+    for (LAMUserAsset* asset in assets) {
+        NSArray* subsetPaths=[asset enabledSubsetPaths];
+        for (NSString* subsetPath in subsetPaths) {
+            NSString* resourcesPath=[subsetPath stringByAppendingPathComponent:self.resourcesName];
+            BOOL isDir;
+            [[NSFileManager defaultManager]fileExistsAtPath:resourcesPath isDirectory:&isDir];
+            if (isDir) {
+                [subsetsForMe addObject:subsetPath];
+            }
+            
+        }
+    }
+    
+    //nothing to merge
+    if ([subsetsForMe count]==0 && !self.extracted) {
+        return YES;
+    }
+    
     
     //extract original contents
     if (![self extractFromResourcesPath:self.originalResourcesPath error:err]) {
@@ -121,15 +156,29 @@
     }
     
     //extract each asset
-    for (LAMUserAsset* asset in assets) {
-        NSArray* subsets=[asset enabledSubsetPaths];
-        if (![self extractFromSubsetPaths:subsets error:err]) {
-            return NO;
-        }
+    if (![self extractFromSubsetPaths:subsetsForMe error:err]) {
+        return NO;
     }
     
     //post
     return [self postExtractionWithError:err];
+}
+
+
+- (BOOL)preExtractionWithError:(NSError**)err
+{
+    BOOL success=YES;
+    
+    //restore symboliclink in app
+    NSString* currentLinkDestination=[self currentLinkDestination];
+    if (![currentLinkDestination isEqualToString:self.originalResourcesPath]) {
+        success=LAMSymlink([self originalResourcesLinkDestination], self.resourcesLinkPath, err);
+        if (success) {
+            self.resourcesLinkDestination=[self currentLinkDestination];
+        }
+    }
+    
+    return success;
 }
 
 
@@ -161,10 +210,10 @@
 }
 
 
-- (BOOL)extractFromSubsetPaths:(NSArray*)assetPaths error:(NSError**)err
+- (BOOL)extractFromSubsetPaths:(NSArray*)subsetPaths error:(NSError**)err
 {
-    for (NSString* assetPath in assetPaths) {
-        NSString* resourcesPath=[assetPath stringByAppendingPathComponent:self.resourcesName];
+    for (NSString* subsetPath in subsetPaths) {
+        NSString* resourcesPath=[subsetPath stringByAppendingPathComponent:self.resourcesName];
         if (![self extractFromResourcesPath:resourcesPath error:err]) {
             return NO;
         }
@@ -181,11 +230,7 @@
 
 - (BOOL)extractFromResourcesPath:(NSString*)resourcesPath error:(NSError**)err
 {
-    
-    if (!self.outputDirectory) {
-        return NO;
-    }
-    
+
     BOOL isDir;
     [[NSFileManager defaultManager]fileExistsAtPath:resourcesPath isDirectory:&isDir];
     if (!isDir) {
@@ -294,23 +339,65 @@
 
 @implementation LAMMAResourcesCoordinator
 
+- (BOOL)extractInstrumentIconWithError:(NSError**)err
+{
+    if (!self.iconManager) {
+        return YES;
+    }
+    
+    NSArray* allIcons=self.iconManager.allIcons;
+    
+    for (NSDictionary* icon in allIcons) {
+        NSString* group=icon[@"group"];
+        if (![group length]) {
+            continue;
+        }
+        
+        NSString* iconPath=icon[@"path"];
+        if (![[NSFileManager defaultManager]fileExistsAtPath:iconPath]) {
+            continue;
+        }
+        
+        NSInteger imageId=[icon[@"id"] integerValue];
+        NSString* iconKey=[NSString stringWithFormat:@"InstrumentIcon_%04ld", imageId];
+        if([self addInstrumentIcon:iconKey id:imageId group:group]){
+            NSString* linkName=[iconKey stringByAppendingPathExtension:[iconPath pathExtension]];
+            NSString* linkPath=[self.outputDirectory stringByAppendingPathComponent:linkName];
+            if (LAMSymlink(iconPath, linkPath, err)) {
+                self.extracted=YES;
+            }else{
+                return NO;
+            }
+        }
+    }
+    return YES;
+}
+
+
+
+- (BOOL)preExtractionWithError:(NSError**)err
+{
+    if (![super preExtractionWithError:err]) {
+        return NO;
+    }
+    //icon
+    return [self extractInstrumentIconWithError:err];
+}
+
 
 - (BOOL)postExtractionWithError:(NSError**)err
 {
-    //icon
-    
-    
     return [super postExtractionWithError:err];
 }
 
 
-- (void)addInstrumentIcon:(NSString*)name id:(NSInteger)imageId group:(NSString*)group
+- (BOOL)addInstrumentIcon:(NSString*)name id:(NSInteger)imageId group:(NSString*)group
 {
     if (imageId<1000 || imageId>=4096) {
-        return;
+        return NO;
     }
     if (![group length]) {
-        group=@"BasicSetOther";
+        return NO;
     }
     
     NSString* iconKey=[NSString stringWithFormat:@"InstrumentIcon_%04ld", imageId];
@@ -325,6 +412,7 @@
     NSString* assetRef=[NSString stringWithFormat:@"AssetRef:InstrumentIcons.AllInstrumentIcons.%@", iconKey];
     [groupArray addObject:assetRef];
     
+    return YES;
 }
 
 

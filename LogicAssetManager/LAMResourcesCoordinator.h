@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class LAMIconManager;
+
 @interface LAMResourcesCoordinator : NSObject
 @property (nonatomic, strong) NSString* outputDirectory;
 @property (nonatomic, strong) NSDictionary* originalResourcesMapping;
@@ -19,6 +21,8 @@
 @property (nonatomic, strong) NSString* originalResourcesPath;
 @property (nonatomic, strong) NSString* resourcesLinkPath;
 @property (nonatomic, strong) NSString* resourcesLinkDestination;
+
+@property (nonatomic) BOOL extracted;
 
 + (instancetype)MAResourcesCoordinator;
 + (instancetype)MAResourcesPlugInsSharedCoordinator;
@@ -34,6 +38,6 @@
 
 @interface LAMMAResourcesCoordinator : LAMResourcesCoordinator
 
-- (void)addInstrumentIcon:(NSString*)name id:(NSInteger)imageId group:(NSString*)group;
+@property (nonatomic, weak) LAMIconManager* iconManager;
 
 @end
