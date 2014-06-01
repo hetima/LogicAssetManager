@@ -11,6 +11,7 @@
 		AA7EDDE81931EBE6004BD7D7 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7EDDE71931EBE5004BD7D7 /* Quartz.framework */; };
 		AA7EDDEB19335504004BD7D7 /* LAMUserAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7EDDEA19335504004BD7D7 /* LAMUserAssetManager.m */; };
 		AA7EDDEE1933550E004BD7D7 /* LAMUserAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7EDDED1933550E004BD7D7 /* LAMUserAsset.m */; };
+		AA833089193B5ADC007B3F6B /* LAMRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA833088193B5ADC007B3F6B /* LAMRenamer.m */; };
 		AA85377219306F6800064DE2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA85377119306F6800064DE2 /* Cocoa.framework */; };
 		AA85377E19306F6800064DE2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA85377C19306F6800064DE2 /* InfoPlist.strings */; };
 		AA85378019306F6800064DE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA85377F19306F6800064DE2 /* main.m */; };
@@ -45,6 +46,8 @@
 		AA7EDDEA19335504004BD7D7 /* LAMUserAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAMUserAssetManager.m; sourceTree = "<group>"; };
 		AA7EDDEC1933550E004BD7D7 /* LAMUserAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAMUserAsset.h; sourceTree = "<group>"; };
 		AA7EDDED1933550E004BD7D7 /* LAMUserAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAMUserAsset.m; sourceTree = "<group>"; };
+		AA833087193B5ADC007B3F6B /* LAMRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAMRenamer.h; sourceTree = "<group>"; };
+		AA833088193B5ADC007B3F6B /* LAMRenamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAMRenamer.m; sourceTree = "<group>"; };
 		AA85376E19306F6800064DE2 /* LogicAssetManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogicAssetManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA85377119306F6800064DE2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AA85377419306F6800064DE2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -154,6 +157,8 @@
 				AAE940EE1937005800BBECC5 /* LAMBackdropView.m */,
 				AA7073211939ADF700068DB5 /* LAMUtilites.h */,
 				AA7073221939ADF700068DB5 /* LAMUtilites.m */,
+				AA833087193B5ADC007B3F6B /* LAMRenamer.h */,
+				AA833088193B5ADC007B3F6B /* LAMRenamer.m */,
 				AA85378719306F6800064DE2 /* MainMenu.xib */,
 				AA85378A19306F6800064DE2 /* Images.xcassets */,
 				AA85377819306F6800064DE2 /* Supporting Files */,
@@ -301,6 +306,7 @@
 				AA7073231939ADF700068DB5 /* LAMUtilites.m in Sources */,
 				AA8537AA19306F9500064DE2 /* LAMResourcesCoordinator.m in Sources */,
 				AA85378619306F6800064DE2 /* LAMAppDelegate.m in Sources */,
+				AA833089193B5ADC007B3F6B /* LAMRenamer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

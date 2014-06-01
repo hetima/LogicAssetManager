@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class LAMBackdropView;
+@class LAMBackdropView, LAMRenamer;
 
 @interface LAMIconManager : NSObject <NSCollectionViewDelegate, NSTableViewDelegate, NSTableViewDataSource>
 
@@ -22,13 +22,13 @@
 
 @property (nonatomic,weak) IBOutlet NSTableView* groupsTableView;
 @property (nonatomic,weak) IBOutlet NSCollectionView* iconsView;
-@property (nonatomic,weak) IBOutlet NSTextField* groupNameField;
 
 @property (nonatomic,strong) IBOutlet NSWindow* removeGroupConfirmSheet;
 @property (nonatomic,weak) IBOutlet NSTextField* removeGroupConfirmField;
 @property (nonatomic,weak) IBOutlet NSPopUpButton* removeGroupConfirmPopUp;
 
 @property (nonatomic,weak) IBOutlet LAMBackdropView* backdropView;
+@property (nonatomic,strong) IBOutlet LAMRenamer* renamer;
 
 + (NSArray*)defaultIconGroups;
 

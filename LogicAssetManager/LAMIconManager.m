@@ -9,6 +9,7 @@
 #import "LAMIconManager.h"
 #import "LAMAppDelegate.h"
 #import "LAMBackdropView.h"
+#import "LAMRenamer.h"
 
 #define kImageIdMin 1000
 #define kImageIdMax 4000
@@ -419,21 +420,16 @@
         return;
     }
     NSString* currentName=selectedGroup[@"name"];
-    NSString* newName=[self.groupNameField stringValue];
-    newName=[newName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    newName=[[newName componentsSeparatedByString:@"\n"]firstObject];
     
-    if ([newName isEqualToString:currentName]) {
-        return;
-    }
-    if (![newName length] || [self groupWithName:newName]) {
-        NSBeep();
-        return;
-    }
-    
-    [self renameGroup:selectedGroup to:newName];
-    
-    //表示の更新しなくても矛盾はしない
+    [self.renamer renameWithOldName:currentName sheetParentWindow:[sender window] completion:^(NSString *newName) {
+        if (![newName length] || [self groupWithName:newName]) {
+            NSBeep();
+            return;
+        }
+        [self renameGroup:selectedGroup to:newName];
+        //表示の更新しなくても矛盾はしない
+        
+    }];
     
 }
 
@@ -441,9 +437,7 @@
 - (IBAction)actAddGroup:(id)sender
 {
     [self addGroupWithName:@"New Group"];
-    
     [self.groupsTableView scrollRowToVisible:[self.groupsTableView selectedRow]];
-    [self.groupNameField selectText:nil];
 }
 
 
@@ -497,11 +491,10 @@
     NSString* groupName=selectedGroup[@"name"];
     if ([groupName length]) {
         NSPredicate* predi=[NSPredicate predicateWithFormat:@"group==%@", groupName];
+        [self.allIconsCtl setFilterPredicate:nil];
         [self.allIconsCtl setFilterPredicate:predi];
-        [self.groupNameField setStringValue:groupName];
     }else{
         [self.allIconsCtl setFilterPredicate:nil];
-        [self.groupNameField setStringValue:@""];
     }
 }
 
@@ -645,7 +638,7 @@
         return NSDragOperationMove;
         
     }else if ([pb availableTypeFromArray:@[_iconDragType]]) {
-        if (operation == NSTableViewDropOn)return NSDragOperationCopy;
+        if (row!=0 && operation == NSTableViewDropOn)return NSDragOperationCopy;
     }else if ([pb availableTypeFromArray:@[NSFilenamesPboardType]]) {
         if (operation == NSTableViewDropOn && [self canAcceptFileDrop:pb]) {
             return NSDragOperationCopy;

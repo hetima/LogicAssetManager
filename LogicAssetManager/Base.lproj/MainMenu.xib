@@ -1126,14 +1126,14 @@ IA
                                             </scroller>
                                         </scrollView>
                                         <scrollView appearanceType="lightContent" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="OV1-rM-Xfv">
-                                            <rect key="frame" x="144" y="26" width="515" height="235"/>
+                                            <rect key="frame" x="144" y="26" width="515" height="269"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="kbb-td-HYh">
-                                                <rect key="frame" x="1" y="1" width="513" height="233"/>
+                                                <rect key="frame" x="1" y="1" width="513" height="267"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <collectionView selectable="YES" id="9tU-bl-4UM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="513" height="233"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="513" height="267"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <connections>
@@ -1154,27 +1154,6 @@ IA
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
-                                        <textField verticalHuggingPriority="750" id="36w-CA-kIq">
-                                            <rect key="frame" x="144" y="269" width="437" height="22"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="gkX-ah-hUX">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <button verticalHuggingPriority="750" id="p76-DM-tgc">
-                                            <rect key="frame" x="584" y="264" width="80" height="28"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="push" title="Rename" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RKF-ee-RYY">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="smallSystem"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="actRenameGroup:" target="FqK-Cd-cJA" id="lcZ-xx-iWF"/>
-                                                <binding destination="Z0H-RM-ewo" name="enabled" keyPath="selection.canDelete" id="1Nz-so-MiP"/>
-                                            </connections>
-                                        </button>
                                         <button toolTip="Add New Group" verticalHuggingPriority="750" id="dnk-ca-I2L">
                                             <rect key="frame" x="8" y="6" width="22" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1226,6 +1205,18 @@ IA
                                                 </binding>
                                             </connections>
                                         </textField>
+                                        <button toolTip="Remove Selected Group" verticalHuggingPriority="750" id="ngX-dJ-kqh">
+                                            <rect key="frame" x="50" y="6" width="86" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="smallSquare" title="Rename" bezelStyle="smallSquare" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SsD-Hm-FIb">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="actRenameGroup:" target="FqK-Cd-cJA" id="ODh-DJ-uQX"/>
+                                                <binding destination="Z0H-RM-ewo" name="enabled" keyPath="selection.canDelete" id="pef-8f-DZ1"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -1571,13 +1562,13 @@ IA
             <connections>
                 <outlet property="allIconsCtl" destination="fgo-zt-Eop" id="KhD-Lf-TUz"/>
                 <outlet property="backdropView" destination="BX9-cI-wMH" id="XxH-WT-rWy"/>
-                <outlet property="groupNameField" destination="36w-CA-kIq" id="QWA-Ht-SIc"/>
                 <outlet property="groupsTableView" destination="RPy-qi-rnA" id="sS1-pY-xbi"/>
                 <outlet property="iconGroupsCtl" destination="Z0H-RM-ewo" id="kzH-zW-fqd"/>
                 <outlet property="iconsView" destination="9tU-bl-4UM" id="HyO-Zt-W4R"/>
                 <outlet property="removeGroupConfirmField" destination="W8D-WV-V3R" id="2GX-f0-1Js"/>
                 <outlet property="removeGroupConfirmPopUp" destination="OB2-mq-CjR" id="2bh-Th-dzq"/>
                 <outlet property="removeGroupConfirmSheet" destination="grL-5t-oaI" id="Ztw-a8-afc"/>
+                <outlet property="renamer" destination="u5h-Ic-TKo" id="met-HR-sam"/>
             </connections>
         </customObject>
         <arrayController id="Z0H-RM-ewo" userLabel="GroupsAC">
@@ -1729,6 +1720,73 @@ Gw
                 <binding destination="IVQ-DD-q9l" name="contentArray" keyPath="userAssets" id="X4S-Xs-TRh"/>
             </connections>
         </arrayController>
+        <window title="Rename" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="QZx-b5-G1G">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="328" height="137"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <view key="contentView" id="85U-U4-Ieu">
+                <rect key="frame" x="0.0" y="0.0" width="328" height="137"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" id="cSE-nn-gZe">
+                        <rect key="frame" x="20" y="49" width="288" height="22"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="ts1-AW-Uut">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" tag="1000" id="14G-KK-xoD">
+                        <rect key="frame" x="223" y="13" width="91" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Rename" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h8L-gZ-Az5">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actEndSheet:" target="u5h-Ic-TKo" id="4ej-0v-wtU"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" tag="1001" id="dcP-aj-tmg">
+                        <rect key="frame" x="141" y="13" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="li7-Qf-cqR">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actEndSheet:" target="u5h-Ic-TKo" id="Yaq-DY-Hik"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="lf7-pX-ZFZ">
+                        <rect key="frame" x="18" y="83" width="283" height="34"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="V7h-vI-gJ9">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">aa
+aa</string>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+        </window>
+        <customObject id="u5h-Ic-TKo" customClass="LAMRenamer">
+            <connections>
+                <outlet property="nameField" destination="cSE-nn-gZe" id="8tr-mQ-yDw"/>
+                <outlet property="noteField" destination="lf7-pX-ZFZ" id="Odz-cG-Tey"/>
+                <outlet property="sheet" destination="QZx-b5-G1G" id="YeO-hH-5da"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="8" height="8"/>
