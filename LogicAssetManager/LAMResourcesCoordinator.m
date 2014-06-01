@@ -129,8 +129,8 @@
 
 - (BOOL)extractAssets:(NSArray*)assets error:(NSError**)err
 {
-    BOOL success=[self extractAssetsInside:assets error:err];
     self.extracted=NO;
+    BOOL success=[self extractAssetsInside:assets error:err];
     
     
     //update symbolic link
