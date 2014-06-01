@@ -11,7 +11,7 @@
 extern NSString * const LAMUserAssetExtension;
 extern NSString * const LAMUserAssetInfoFile;
 
-@class LAMBackdropView;
+@class LAMBackdropView, LAMRenamer;
 
 @interface LAMUserAssetManager : NSObject <NSTableViewDelegate, NSTableViewDataSource>
 
@@ -21,6 +21,7 @@ extern NSString * const LAMUserAssetInfoFile;
 @property (nonatomic,weak) IBOutlet NSTableView* userAssetsTable;
 @property (nonatomic,weak) IBOutlet NSTableView* optionsTable;
 @property (nonatomic,weak) IBOutlet LAMBackdropView* backdropView;
+@property (nonatomic,strong) IBOutlet LAMRenamer* renamer;
 
 @property (nonatomic,strong) NSString* userAssetPath;
 @property (nonatomic,strong) NSString* settingFilePath;

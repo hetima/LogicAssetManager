@@ -699,18 +699,17 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="rx8-p7-pcB">
-                                            <rect key="frame" x="17" y="16" width="244" height="279"/>
+                                            <rect key="frame" x="17" y="29" width="244" height="266"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="3WO-3O-qK4">
-                                                <rect key="frame" x="1" y="1" width="242" height="277"/>
+                                                <rect key="frame" x="1" y="1" width="242" height="264"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" id="vSr-of-iVu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="242" height="277"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="242" height="264"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
                                                             <tableColumn width="239" minWidth="40" maxWidth="1000" id="a0K-OC-tFZ">
@@ -778,14 +777,14 @@
                                             </scroller>
                                         </scrollView>
                                         <scrollView autohidesScrollers="YES" horizontalLineScroll="30" horizontalPageScroll="10" verticalLineScroll="30" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="MOc-dU-Vsb">
-                                            <rect key="frame" x="260" y="16" width="400" height="188"/>
+                                            <rect key="frame" x="260" y="29" width="400" height="175"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="eoa-fv-ZDU">
-                                                <rect key="frame" x="1" y="1" width="398" height="186"/>
+                                                <rect key="frame" x="1" y="1" width="398" height="173"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="28" rowSizeStyle="automatic" viewBased="YES" id="gzf-DA-RG2">
-                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="186"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="173"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1044,6 +1043,17 @@ IA
                                             <color key="borderColor" red="0.74117648601531982" green="0.74117648601531982" blue="0.74117648601531982" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="fillColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </box>
+                                        <button verticalHuggingPriority="750" id="auZ-j6-ESP">
+                                            <rect key="frame" x="17" y="9" width="70" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="smallSquare" title="Rename" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ruy-Nb-tGO">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="actRenameUserAsset:" target="IVQ-DD-q9l" id="Fo0-jl-psb"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -1711,6 +1721,7 @@ Gw
             <connections>
                 <outlet property="backdropView" destination="yT4-P4-qux" id="Dh0-KB-w2R"/>
                 <outlet property="optionsTable" destination="gzf-DA-RG2" id="Ivn-8z-UnI"/>
+                <outlet property="renamer" destination="u5h-Ic-TKo" id="W0D-rt-QD4"/>
                 <outlet property="userAssetsCtl" destination="gcT-v0-ZOV" id="hJR-Vh-yz9"/>
                 <outlet property="userAssetsTable" destination="vSr-of-iVu" id="Suc-19-z3v"/>
             </connections>

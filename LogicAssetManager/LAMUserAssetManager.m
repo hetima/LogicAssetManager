@@ -11,6 +11,7 @@
 #import "LAMUserAsset.h"
 #import "LAMBackdropView.h"
 #import "LAMUtilites.h"
+#import "LAMRenamer.h"
 
 NSString* const LAMUserAssetExtension=@"logicasset";
 NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
@@ -320,6 +321,35 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     }
 }
 
+
+- (IBAction)actRenameUserAsset:(id)sender
+{
+    LAMUserAsset* selectedUserAsset=[[self.userAssetsCtl selectedObjects]firstObject];
+
+    NSString* currentName=selectedUserAsset.name;
+    
+    [self.renamer renameWithOldName:currentName sheetParentWindow:[sender window] completion:^(NSString *newName) {
+        if (![newName length]) {
+            NSBeep();
+            return;
+        }
+        
+        NSString* fileName=[self uniqueAssetName:[newName stringByAppendingPathExtension:LAMUserAssetExtension]];
+        NSString* uniqueName=[fileName stringByDeletingPathExtension];
+        if (!fileName || ![uniqueName isEqualToString:newName]) {
+            NSBeep();
+            return;
+        }
+        
+        NSString* newPath=[[selectedUserAsset.assetPath stringByDeletingLastPathComponent]stringByAppendingPathComponent:fileName];
+
+        if([[NSFileManager defaultManager]moveItemAtPath:selectedUserAsset.assetPath toPath:newPath error:nil]){
+            selectedUserAsset.assetPath=newPath;
+            selectedUserAsset.name=newName;
+        }
+    }];
+    
+}
 
 #pragma mark - delegate
 
