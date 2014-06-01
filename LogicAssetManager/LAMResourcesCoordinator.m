@@ -493,13 +493,13 @@
 
 - (NSMutableArray*)authoringIconCategories
 {
-    return [[self assetSet:@"InstrumentIconGroups" fromFamily:@"InstrumentIcons"]objectForKey:@"AuthoringIconCategories"];
+    return [[self assetSet:@"Categories" fromFamily:@"IconPicker"]objectForKey:@"AuthoringIconCategories"];
 }
 
 
 - (NSMutableArray*)sortedIconCategories
 {
-    return [[self assetSet:@"InstrumentIconGroups" fromFamily:@"InstrumentIcons"]objectForKey:@"SortedIconCategories"];
+    return [[self assetSet:@"Categories" fromFamily:@"IconPicker"]objectForKey:@"SortedIconCategories"];
 }
 
 
