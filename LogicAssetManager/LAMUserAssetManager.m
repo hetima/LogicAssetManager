@@ -122,6 +122,13 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
 }
 
 
+- (NSArray*)enabledAssets
+{
+    NSArray* result=[self.userAssets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"enabled==%@", @(YES)]];
+    return result;
+}
+
+
 - (NSArray*)enabledSubsetPaths
 {
     NSArray* userAssets=self.userAssets;

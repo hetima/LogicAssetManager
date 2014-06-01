@@ -25,6 +25,9 @@ extern NSString * const LAMUserAssetInfoFile;
 @property (nonatomic,strong) NSString* userAssetPath;
 @property (nonatomic,strong) NSString* settingFilePath;
 
+- (void)saveSetting;
+
+- (NSArray*)enabledAssets;
 - (NSArray*)enabledSubsetPaths;
 
 - (IBAction)reload:(id)sender;

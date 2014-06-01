@@ -24,7 +24,7 @@
 
 @property (nonatomic) BOOL extracted;
 
-+ (instancetype)MAResourcesCoordinator;
++ (id)MAResourcesCoordinator;
 + (instancetype)MAResourcesPlugInsSharedCoordinator;
 + (instancetype)MAResourcesLgCoordinator;
 + (instancetype)MAResourcesGBCoordinator;

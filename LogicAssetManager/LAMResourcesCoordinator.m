@@ -14,7 +14,7 @@
 
 @implementation LAMResourcesCoordinator
 
-+ (instancetype)MAResourcesCoordinator
++ (id)MAResourcesCoordinator
 {
     static LAMMAResourcesCoordinator* MAResourcesCdntr=nil;
     static dispatch_once_t onceToken;

@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class LAMResourcesCoordinator;
+@class LAMResourcesCoordinator, LAMUserAssetManager, LAMIconManager, LAMMAResourcesCoordinator;
 
 @interface LAMAppDelegate : NSObject <NSApplicationDelegate>
 
@@ -16,11 +16,15 @@
 @property (nonatomic, weak) IBOutlet NSToolbar* toolbar;
 @property (nonatomic, weak) IBOutlet NSTabView* tabView;
 
-@property (nonatomic, strong) LAMResourcesCoordinator* MAResourcesCoordinator;
+@property (nonatomic, strong) IBOutlet LAMUserAssetManager* userAssetManager;
+@property (nonatomic, strong) IBOutlet LAMIconManager* iconManager;
+
+@property (nonatomic, strong) LAMMAResourcesCoordinator* MAResourcesCoordinator;
 @property (nonatomic, strong) LAMResourcesCoordinator* MAResourcesPlugInsSharedCoordinator;
 @property (nonatomic, strong) LAMResourcesCoordinator* MAResourcesLgCoordinator;
 @property (nonatomic, strong) LAMResourcesCoordinator* MAResourcesGBCoordinator;
 
+@property (nonatomic) BOOL operationIsRunning;
 
 + (NSString*)applicationSupportPath;
 + (NSString*)applicationSupportSubDirectry:(NSString*)name;
@@ -32,5 +36,8 @@
 - (IBAction)actOpenApplicationSupportDirectory:(id)sender;
 - (IBAction)actFrameworkIconClick:(id)sender;
 - (IBAction)actDestinationIconClick:(id)sender;
+
+- (IBAction)actRestore:(id)sender;
+- (IBAction)actApply:(id)sender;
 
 @end

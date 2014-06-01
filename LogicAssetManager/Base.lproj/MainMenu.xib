@@ -13,8 +13,10 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="Voe-Tx-rLC" customClass="LAMAppDelegate">
             <connections>
+                <outlet property="iconManager" destination="FqK-Cd-cJA" id="pUw-Q3-FpB"/>
                 <outlet property="tabView" destination="nKZ-og-LhL" id="306-Jf-2oM"/>
                 <outlet property="toolbar" destination="sc9-S8-Aub" id="bBA-8B-PZU"/>
+                <outlet property="userAssetManager" destination="IVQ-DD-q9l" id="vm0-Lm-8gh"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -1205,7 +1207,7 @@ yyyy</string>
                                     <rect key="frame" x="10" y="33" width="676" height="321"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <box autoresizesSubviews="NO" cornerRadius="4" title="Resources Destination" borderType="line" id="bmA-fW-oln">
+                                        <box autoresizesSubviews="NO" title="Resources Destination" borderType="line" id="bmA-fW-oln">
                                             <rect key="frame" x="13" y="5" width="649" height="299"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <view key="contentView">
@@ -1458,8 +1460,8 @@ yyyy</string>
                                                     </button>
                                                 </subviews>
                                             </view>
-                                            <color key="borderColor" red="0.45408163265306123" green="0.45408163265306123" blue="0.45408163265306123" alpha="0.5" colorSpace="calibratedRGB"/>
-                                            <color key="fillColor" white="0.0" alpha="0.02" colorSpace="calibratedWhite"/>
+                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <font key="titleFont" metaFont="system"/>
                                         </box>
                                     </subviews>
@@ -1468,13 +1470,44 @@ yyyy</string>
                         </tabViewItems>
                     </tabView>
                     <button verticalHuggingPriority="750" id="V9a-Vg-jea">
-                        <rect key="frame" x="582" y="6" width="82" height="32"/>
+                        <rect key="frame" x="585" y="6" width="76" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VG4-Ns-sDi">
+                        <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VG4-Ns-sDi">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="actApply:" target="Voe-Tx-rLC" id="Iyl-zc-yvd"/>
+                            <binding destination="Voe-Tx-rLC" name="enabled" keyPath="operationIsRunning" id="ToE-Hx-rGK">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
                     </button>
+                    <button verticalHuggingPriority="750" id="NM7-PA-pqB">
+                        <rect key="frame" x="495" y="6" width="87" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Restore" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fOj-ZF-UNM">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actRestore:" target="Voe-Tx-rLC" id="LA6-Zd-Mjo"/>
+                            <binding destination="Voe-Tx-rLC" name="enabled" keyPath="operationIsRunning" id="jD2-4d-QaW">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </button>
+                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="uwy-lA-f6C">
+                        <rect key="frame" x="465" y="15" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <connections>
+                            <binding destination="Voe-Tx-rLC" name="animate" keyPath="operationIsRunning" id="6xN-te-crq"/>
+                        </connections>
+                    </progressIndicator>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="82BE8189-94EA-4522-8E74-ADDBCD8170E2" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="sc9-S8-Aub">
