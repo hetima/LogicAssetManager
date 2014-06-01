@@ -81,6 +81,9 @@ NSString* LAMDigIfDirectoryHasOneSubDirectoryOnly(NSString* path)
         [[NSFileManager defaultManager]fileExistsAtPath:fullPath isDirectory:&isDir];
         if (isDir) {
             subDirectory=fullPath;
+        }else{
+            subDirectory=nil;
+            break;
         }
     }
     
