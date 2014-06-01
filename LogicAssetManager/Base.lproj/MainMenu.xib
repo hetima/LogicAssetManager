@@ -919,7 +919,22 @@ yyyy</string>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <connections>
-                                                            <binding destination="gcT-v0-ZOV" name="value" keyPath="selection.description" id="xPx-ag-Oek"/>
+                                                            <binding destination="gcT-v0-ZOV" name="value" keyPath="selection.description" id="19g-4K-nPp">
+                                                                <dictionary key="options">
+                                                                    <string key="NSMultipleValuesPlaceholder" base64-UTF8="YES">
+IA
+</string>
+                                                                    <string key="NSNoSelectionPlaceholder" base64-UTF8="YES">
+IA
+</string>
+                                                                    <string key="NSNotApplicablePlaceholder" base64-UTF8="YES">
+IA
+</string>
+                                                                    <string key="NSNullPlaceholder" base64-UTF8="YES">
+IA
+</string>
+                                                                </dictionary>
+                                                            </binding>
                                                         </connections>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DgQ-lI-GhX">
@@ -962,14 +977,18 @@ yyyy</string>
                                                             <font key="font" metaFont="smallSystem"/>
                                                         </buttonCell>
                                                         <connections>
+                                                            <binding destination="gcT-v0-ZOV" name="hidden" keyPath="selection.webSite" id="fqV-N6-dan">
+                                                                <dictionary key="options">
+                                                                    <integer key="NSMultipleValuesPlaceholder" value="1"/>
+                                                                    <integer key="NSNoSelectionPlaceholder" value="1"/>
+                                                                    <integer key="NSNotApplicablePlaceholder" value="1"/>
+                                                                    <integer key="NSNullPlaceholder" value="1"/>
+                                                                    <string key="NSValueTransformerName">NSIsNil</string>
+                                                                </dictionary>
+                                                            </binding>
                                                             <binding destination="gcT-v0-ZOV" name="argument" keyPath="selection.self" id="tGg-zm-p9e">
                                                                 <dictionary key="options">
                                                                     <string key="NSSelectorName">actOpenWebSiteUserAsset:</string>
-                                                                </dictionary>
-                                                            </binding>
-                                                            <binding destination="gcT-v0-ZOV" name="hidden" keyPath="selection.webSite" id="a7G-h0-YID">
-                                                                <dictionary key="options">
-                                                                    <string key="NSValueTransformerName">NSIsNil</string>
                                                                 </dictionary>
                                                             </binding>
                                                             <binding destination="IVQ-DD-q9l" name="target" keyPath="self" previousBinding="tGg-zm-p9e" id="20R-hP-Krw">
@@ -988,8 +1007,12 @@ yyyy</string>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <connections>
-                                                            <binding destination="gcT-v0-ZOV" name="hidden" keyPath="selection.author" id="4dZ-Li-HGq">
+                                                            <binding destination="gcT-v0-ZOV" name="hidden" keyPath="selection.author" id="px3-T0-A32">
                                                                 <dictionary key="options">
+                                                                    <integer key="NSMultipleValuesPlaceholder" value="1"/>
+                                                                    <integer key="NSNoSelectionPlaceholder" value="1"/>
+                                                                    <integer key="NSNotApplicablePlaceholder" value="1"/>
+                                                                    <integer key="NSNullPlaceholder" value="1"/>
                                                                     <string key="NSValueTransformerName">NSIsNil</string>
                                                                 </dictionary>
                                                             </binding>
@@ -1004,12 +1027,16 @@ yyyy</string>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <connections>
-                                                            <binding destination="gcT-v0-ZOV" name="value" keyPath="selection.author" id="kGh-1q-SgZ"/>
-                                                            <binding destination="gcT-v0-ZOV" name="hidden" keyPath="selection.author" id="vlI-kI-Ci2">
+                                                            <binding destination="gcT-v0-ZOV" name="hidden" keyPath="selection.author" id="pLx-iI-mm1">
                                                                 <dictionary key="options">
+                                                                    <integer key="NSMultipleValuesPlaceholder" value="1"/>
+                                                                    <integer key="NSNoSelectionPlaceholder" value="1"/>
+                                                                    <integer key="NSNotApplicablePlaceholder" value="1"/>
+                                                                    <integer key="NSNullPlaceholder" value="1"/>
                                                                     <string key="NSValueTransformerName">NSIsNil</string>
                                                                 </dictionary>
                                                             </binding>
+                                                            <binding destination="gcT-v0-ZOV" name="value" keyPath="selection.author" id="kGh-1q-SgZ"/>
                                                         </connections>
                                                     </textField>
                                                 </subviews>
