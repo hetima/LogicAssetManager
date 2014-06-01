@@ -103,6 +103,30 @@
 }
 
 
+- (BOOL)restoreWithError:(NSError**)err
+{
+    BOOL success=YES;
+    //clean up outputDirectory
+    if ([[NSFileManager defaultManager]fileExistsAtPath:self.outputDirectory]) {
+        if (![[NSFileManager defaultManager]removeItemAtPath:self.outputDirectory error:err]) {
+            return NO;
+        }
+    }
+    
+    //restore symbolic link
+    NSString* linkPath=[self originalResourcesLinkDestination];
+    NSString* currentLinkDestination=[self currentLinkDestination];
+    if (![currentLinkDestination isEqualToString:linkPath]) {
+        success=LAMSymlink(linkPath, self.resourcesLinkPath, err);
+        if (success) {
+            self.resourcesLinkDestination=[self currentLinkDestination];
+        }
+    }
+    
+    return success;
+}
+
+
 - (BOOL)extractAssets:(NSArray*)assets error:(NSError**)err
 {
     self.extracted=NO;

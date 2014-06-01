@@ -29,6 +29,7 @@
 + (instancetype)MAResourcesLgCoordinator;
 + (instancetype)MAResourcesGBCoordinator;
 
+- (BOOL)restoreWithError:(NSError**)err;
 - (BOOL)extractAssets:(NSArray*)assets error:(NSError**)err;
 - (void)mergeMappingFile:(NSString*)plistPath;
 
