@@ -54,3 +54,40 @@ BOOL LAMSymlink(NSString* fromPath, NSString* linkPath, NSError **error)
     
     return YES;
 }
+
+
+NSString* LAMDigIfDirectoryHasOneSubDirectoryOnly(NSString* path)
+{
+    NSArray* files=[[NSFileManager defaultManager]contentsOfDirectoryAtPath:path error:nil];
+    if (![files count]) {
+        return path;
+    }
+    
+    NSString* subDirectory=nil;
+    NSArray* ignoredExtensions=@[@"txt", @"rtf", @"rtfd", @"md", @"app"];
+    for (NSString* name in files) {
+        //ignore some file types
+        if ([name hasPrefix:@"."] || [ignoredExtensions containsObject:[name pathExtension]]) {
+            continue;
+        }
+        
+        if (subDirectory) {
+            subDirectory=nil;
+            break;
+        }
+        
+        BOOL isDir;
+        NSString* fullPath=[path stringByAppendingPathComponent:name];
+        [[NSFileManager defaultManager]fileExistsAtPath:fullPath isDirectory:&isDir];
+        if (isDir) {
+            subDirectory=fullPath;
+        }
+    }
+    
+    if (subDirectory) {
+        return subDirectory;
+    }
+    
+    return path;
+
+}

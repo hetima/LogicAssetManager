@@ -10,3 +10,5 @@
 
 NSError* LAMErrorWithDescription(NSString* text);
 BOOL LAMSymlink(NSString* fromPath, NSString* linkPath, NSError **error);
+
+NSString* LAMDigIfDirectoryHasOneSubDirectoryOnly(NSString* path);

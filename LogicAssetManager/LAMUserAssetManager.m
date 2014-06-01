@@ -10,6 +10,7 @@
 #import "LAMAppDelegate.h"
 #import "LAMUserAsset.h"
 #import "LAMBackdropView.h"
+#import "LAMUtilites.h"
 
 NSString* const LAMUserAssetExtension=@"logicasset";
 NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
@@ -212,11 +213,13 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
     if ([[path pathExtension]isEqualToString:LAMUserAssetExtension]) {
         [self importAsset:path];
     }else{
+        NSString* name=[path lastPathComponent];
+        path=LAMDigIfDirectoryHasOneSubDirectoryOnly(path);
         NSString* resourceType=[self expectResourceType:path];
         if (!resourceType) {
             return NO;
         }
-        [self importFolder:path asResources:resourceType];
+        [self importFolder:path name:name asResources:resourceType];
     }
     return YES;
 }
@@ -241,9 +244,9 @@ NSString* const LAMUserAssetInfoFile=@"UserAssetInfo.plist";
 }
 
 
-- (void)importFolder:(NSString*)folderPath asResources:(NSString*)resourcesName
+- (void)importFolder:(NSString*)folderPath name:(NSString*)name asResources:(NSString*)resourcesName
 {
-    NSString* assetName=[[folderPath lastPathComponent]stringByAppendingPathExtension:LAMUserAssetExtension];
+    NSString* assetName=[name stringByAppendingPathExtension:LAMUserAssetExtension];
     NSString* fileName=[self uniqueAssetName:assetName];
     if (!fileName) {
         return;
