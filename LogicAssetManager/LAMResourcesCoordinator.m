@@ -129,6 +129,31 @@
 
 - (BOOL)extractAssets:(NSArray*)assets error:(NSError**)err
 {
+    BOOL success=[self extractAssetsInside:assets error:err];
+    self.extracted=NO;
+    
+    
+    //update symbolic link
+    NSString* linkPath;
+    if (success && self.extracted) {
+        linkPath=self.outputDirectory;
+    }else{
+        linkPath=[self originalResourcesLinkDestination];
+    }
+    NSString* currentLinkDestination=[self currentLinkDestination];
+    if (![currentLinkDestination isEqualToString:linkPath]) {
+        success=LAMSymlink(linkPath, self.resourcesLinkPath, err);
+        if (success) {
+            self.resourcesLinkDestination=[self currentLinkDestination];
+        }
+    }
+    
+    return success;
+}
+
+
+- (BOOL)extractAssetsInside:(NSArray*)assets error:(NSError**)err
+{
     self.extracted=NO;
     
     //pre
@@ -191,24 +216,17 @@
 
 - (BOOL)preExtractionWithError:(NSError**)err
 {
-    BOOL success=YES;
-    
-    //restore symboliclink in app
-    NSString* currentLinkDestination=[self currentLinkDestination];
-    if (![currentLinkDestination isEqualToString:self.originalResourcesPath]) {
-        success=LAMSymlink([self originalResourcesLinkDestination], self.resourcesLinkPath, err);
-        if (success) {
-            self.resourcesLinkDestination=[self currentLinkDestination];
-        }
-    }
-    
-    return success;
+    return YES;
 }
 
 
 - (BOOL)postExtractionWithError:(NSError**)err
 {
     BOOL success=NO;
+    
+    if (!self.extracted) {
+        return YES;
+    }
     
     //write merged mapping.plist
     success=[self.mergedResourcesMapping writeToFile:[self.outputDirectory stringByAppendingPathComponent:self.mappingFileName] atomically:YES];
@@ -219,15 +237,6 @@
             *err=err_;
         }
         return NO;
-    }
-    
-    //replace symboliclink in app
-    NSString* currentLinkDestination=[self currentLinkDestination];
-    if (![currentLinkDestination isEqualToString:self.outputDirectory]) {
-        success=LAMSymlink(self.outputDirectory, self.resourcesLinkPath, err);
-        if (success) {
-            self.resourcesLinkDestination=[self currentLinkDestination];
-        }
     }
     
     return success;
@@ -245,6 +254,7 @@
         NSString* plistPath=[resourcesPath stringByAppendingPathComponent:self.mappingFileName];
         if ([[NSFileManager defaultManager]fileExistsAtPath:plistPath]) {
             [self mergeMappingFile:plistPath];
+            self.extracted=YES;
         }
     }
     return YES;
@@ -277,6 +287,8 @@
         
         if(!LAMSymlink(destPath, linkPath, err)){
             return NO;
+        }else{
+            self.extracted=YES;
         }
     }
     
