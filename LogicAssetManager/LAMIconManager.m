@@ -190,6 +190,10 @@
         __weak LAMIconManager* wself=self;
         [self.backdropView registerForFileExtensions:[LAMIconManager importableExtensions] acceptsFolder:NO completion:^BOOL(NSArray *files)
          {
+             if ([self.replaceIconSheet sheetParent]) {
+                 NSString* filePath=[files firstObject];
+                 return [wself setReplaceIconCandidate:filePath];
+             }
              return [wself importFiles:files];
          }];
         
@@ -204,21 +208,7 @@
         [self.replaceIconSheetBackdropView registerForFileExtensions:[LAMIconManager importableExtensions] acceptsFolder:NO completion:^BOOL(NSArray *files)
          {
              NSString* filePath=[files firstObject];
-             if([[filePath pathExtension]isEqualToString:@"app"]){
-                 filePath=[wself appIconPathInApplication:filePath];
-             }
-             
-             if (![filePath length]) {
-                 return NO;
-             }
-             
-             NSImage* image=[[NSImage alloc]initWithContentsOfFile:filePath];
-             if (!image) {
-                 return NO;
-             }
-             wself.replaceIconSheetBackdropView.transientLounge=filePath;
-             [wself.replaceIconNewImageView setImage:image];
-             return YES;
+             return [wself setReplaceIconCandidate:filePath];
          }];
         
     }
@@ -559,6 +549,25 @@
         [self.replaceIconNewImageView setImage:nil];
     }];
     
+}
+
+- (BOOL)setReplaceIconCandidate:(NSString*)filePath
+{
+    if([[filePath pathExtension]isEqualToString:@"app"]){
+        filePath=[self appIconPathInApplication:filePath];
+    }
+    
+    if (![filePath length]) {
+        return NO;
+    }
+    
+    NSImage* image=[[NSImage alloc]initWithContentsOfFile:filePath];
+    if (!image) {
+        return NO;
+    }
+    self.replaceIconSheetBackdropView.transientLounge=filePath;
+    [self.replaceIconNewImageView setImage:image];
+    return YES;
 }
 
 
