@@ -9,6 +9,10 @@ LogicAssetManager is resource switcher for Logic Pro X.
 - Variant options in single theme
 - Customizing instrument icons
 
+##Details
+LogicAssetManager replaces resources by switching symbolic link destination in each framework. So original resources are not modified.  
+`MAResources.framework/Resources` points to `./Versions/Current/Resources` by default. LogicAssetManager changes this destination to own compiled directory.
+
 ##System Requirements
 
 - OS X 10.9
