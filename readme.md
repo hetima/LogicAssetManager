@@ -1,6 +1,13 @@
 #LogicAssetManager
 
-under construction
+LogicAssetManager is resource switcher for Logic Pro X.
+
+##Features
+
+- No needs backup original files
+- Loads multiple theme together
+- Variant options in single theme
+- Customizing instrument icons
 
 ##System Requirements
 
