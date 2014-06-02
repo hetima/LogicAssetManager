@@ -13,6 +13,8 @@ typedef BOOL (^LAMBackdropViewFileDropped)(NSArray* files);
 
 @interface LAMBackdropView : NSView
 
+@property (nonatomic, strong) id transientLounge;
+
 - (void)registerForFileExtensions:(NSArray*)extensions acceptsFolder:(BOOL)acceptsFolder completion:(LAMBackdropViewFileDropped)blk;
 
 @end

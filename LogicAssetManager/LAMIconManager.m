@@ -192,6 +192,35 @@
          {
              return [wself importFiles:files];
          }];
+        
+        //replacing icon UI
+        [self.replaceIconCurrentImageView setImage:nil];
+        [self.replaceIconNewImageView setImage:nil];
+        
+        //let drag events go through image view
+        [self.replaceIconNewImageView unregisterDraggedTypes];
+        [self.replaceIconCurrentImageView unregisterDraggedTypes];
+        
+        [self.replaceIconSheetBackdropView registerForFileExtensions:[LAMIconManager importableExtensions] acceptsFolder:NO completion:^BOOL(NSArray *files)
+         {
+             NSString* filePath=[files firstObject];
+             if([[filePath pathExtension]isEqualToString:@"app"]){
+                 filePath=[wself appIconPathInApplication:filePath];
+             }
+             
+             if (![filePath length]) {
+                 return NO;
+             }
+             
+             NSImage* image=[[NSImage alloc]initWithContentsOfFile:filePath];
+             if (!image) {
+                 return NO;
+             }
+             wself.replaceIconSheetBackdropView.transientLounge=filePath;
+             [wself.replaceIconNewImageView setImage:image];
+             return YES;
+         }];
+        
     }
 }
 
@@ -474,6 +503,62 @@
         [self removeGroup:selectedGroup];
     }
 
+}
+
+-(BOOL)replaceIcon:(NSMutableDictionary*)icon withFile:(NSString*)filePath
+{
+    
+    NSString* iconName=[self uniqueIconName:filePath];
+    NSString* iconPath=[self.imageFolderPath stringByAppendingPathComponent:iconName];
+    if (![[NSFileManager defaultManager]fileExistsAtPath:self.imageFolderPath]) {
+        [[NSFileManager defaultManager]createDirectoryAtPath:self.imageFolderPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    if(![[NSFileManager defaultManager]copyItemAtPath:filePath toPath:iconPath error:nil]){
+        return NO;
+    }
+    NSImage* image=[[NSImage alloc]initWithContentsOfFile:iconPath];
+    if (!iconPath||!image) {
+        return NO;
+    }
+    
+    NSString* oldconPath=icon[@"path"];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:oldconPath]) {
+        [[NSFileManager defaultManager]removeItemAtPath:oldconPath error:nil];
+    }
+    
+    icon[@"name"]=iconName;
+    icon[@"path"]=iconPath;
+    icon[@"image"]=image;
+    
+    [self saveSetting];
+
+    return YES;
+}
+
+- (IBAction)actReplaceIcon:(id)sender
+{
+    NSMutableDictionary* selectedIcon=[[self.allIconsCtl selectedObjects]firstObject];
+    if (!selectedIcon) {
+        return;
+    }
+    NSImage* image=[[NSImage alloc]initWithContentsOfFile:selectedIcon[@"path"]];
+    if (!image) {
+        return;
+    }
+    
+    [self.replaceIconCurrentImageView setImage:image];
+
+    [[sender window] beginSheet:self.replaceIconSheet completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode==NSAlertFirstButtonReturn) {
+            NSString* imagePath=self.replaceIconSheetBackdropView.transientLounge;
+            LOG(@"%@", imagePath);
+            [self replaceIcon:selectedIcon withFile:imagePath];
+        }
+        self.replaceIconSheetBackdropView.transientLounge=nil;
+        [self.replaceIconCurrentImageView setImage:nil];
+        [self.replaceIconNewImageView setImage:nil];
+    }];
+    
 }
 
 

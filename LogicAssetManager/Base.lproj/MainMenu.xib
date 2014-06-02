@@ -684,6 +684,11 @@ IA
                                                             <font key="font" metaFont="smallSystem"/>
                                                         </buttonCell>
                                                         <connections>
+                                                            <binding destination="gcT-v0-ZOV" name="argument" keyPath="selection.self" id="tGg-zm-p9e">
+                                                                <dictionary key="options">
+                                                                    <string key="NSSelectorName">actOpenWebSiteUserAsset:</string>
+                                                                </dictionary>
+                                                            </binding>
                                                             <binding destination="gcT-v0-ZOV" name="hidden" keyPath="selection.webSite" id="fqV-N6-dan">
                                                                 <dictionary key="options">
                                                                     <integer key="NSMultipleValuesPlaceholder" value="1"/>
@@ -691,11 +696,6 @@ IA
                                                                     <integer key="NSNotApplicablePlaceholder" value="1"/>
                                                                     <integer key="NSNullPlaceholder" value="1"/>
                                                                     <string key="NSValueTransformerName">NSIsNil</string>
-                                                                </dictionary>
-                                                            </binding>
-                                                            <binding destination="gcT-v0-ZOV" name="argument" keyPath="selection.self" id="tGg-zm-p9e">
-                                                                <dictionary key="options">
-                                                                    <string key="NSSelectorName">actOpenWebSiteUserAsset:</string>
                                                                 </dictionary>
                                                             </binding>
                                                             <binding destination="IVQ-DD-q9l" name="target" keyPath="self" previousBinding="tGg-zm-p9e" id="20R-hP-Krw">
@@ -734,6 +734,7 @@ IA
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <connections>
+                                                            <binding destination="gcT-v0-ZOV" name="value" keyPath="selection.author" id="kGh-1q-SgZ"/>
                                                             <binding destination="gcT-v0-ZOV" name="hidden" keyPath="selection.author" id="pLx-iI-mm1">
                                                                 <dictionary key="options">
                                                                     <integer key="NSMultipleValuesPlaceholder" value="1"/>
@@ -743,7 +744,6 @@ IA
                                                                     <string key="NSValueTransformerName">NSIsNil</string>
                                                                 </dictionary>
                                                             </binding>
-                                                            <binding destination="gcT-v0-ZOV" name="value" keyPath="selection.author" id="kGh-1q-SgZ"/>
                                                         </connections>
                                                     </textField>
                                                 </subviews>
@@ -908,7 +908,7 @@ IA
                                             </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="e4Q-Y6-WgP">
-                                            <rect key="frame" x="249" y="16" width="411" height="14"/>
+                                            <rect key="frame" x="271" y="16" width="389" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="bgz-SQ-zMs">
                                                 <font key="font" metaFont="smallSystem"/>
@@ -933,6 +933,18 @@ IA
                                             <connections>
                                                 <action selector="actRenameGroup:" target="FqK-Cd-cJA" id="ODh-DJ-uQX"/>
                                                 <binding destination="Z0H-RM-ewo" name="enabled" keyPath="selection.canDelete" id="pef-8f-DZ1"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" id="4yQ-JD-WQN">
+                                            <rect key="frame" x="178" y="12" width="86" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="smallSquare" title="Replace Icon" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IMc-xj-9pl">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="actReplaceIcon:" target="FqK-Cd-cJA" id="LCc-wF-dhO"/>
+                                                <binding destination="fgo-zt-Eop" name="enabled" keyPath="canRemove" id="ddQ-yX-jfx"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -1277,6 +1289,11 @@ IA
             </toolbar>
             <contentBorderThickness minY="48"/>
         </window>
+        <collectionViewItem id="gPI-V8-8j4">
+            <connections>
+                <outlet property="view" destination="b5z-nX-YBC" id="fCh-My-SOk"/>
+            </connections>
+        </collectionViewItem>
         <customObject id="FqK-Cd-cJA" customClass="LAMIconManager">
             <connections>
                 <outlet property="allIconsCtl" destination="fgo-zt-Eop" id="KhD-Lf-TUz"/>
@@ -1288,18 +1305,12 @@ IA
                 <outlet property="removeGroupConfirmPopUp" destination="OB2-mq-CjR" id="2bh-Th-dzq"/>
                 <outlet property="removeGroupConfirmSheet" destination="grL-5t-oaI" id="Ztw-a8-afc"/>
                 <outlet property="renamer" destination="u5h-Ic-TKo" id="met-HR-sam"/>
+                <outlet property="replaceIconCurrentImageView" destination="gUO-27-4Yn" id="Qgs-UM-m6P"/>
+                <outlet property="replaceIconNewImageView" destination="EWg-T6-1pD" id="Rku-eR-F8r"/>
+                <outlet property="replaceIconSheet" destination="OPe-u4-xyF" id="ORg-go-boB"/>
+                <outlet property="replaceIconSheetBackdropView" destination="LcO-lK-dBf" id="eay-lr-G7y"/>
             </connections>
         </customObject>
-        <arrayController id="Z0H-RM-ewo" userLabel="GroupsAC">
-            <connections>
-                <binding destination="FqK-Cd-cJA" name="contentArray" keyPath="iconGroups" id="Q4e-ew-FWi"/>
-            </connections>
-        </arrayController>
-        <collectionViewItem id="gPI-V8-8j4">
-            <connections>
-                <outlet property="view" destination="b5z-nX-YBC" id="fCh-My-SOk"/>
-            </connections>
-        </collectionViewItem>
         <arrayController id="fgo-zt-Eop" userLabel="IconsAC">
             <connections>
                 <binding destination="FqK-Cd-cJA" name="contentArray" keyPath="allIcons" id="xLc-MF-Hd5"/>
@@ -1426,6 +1437,11 @@ Gw
                 </subviews>
             </view>
         </window>
+        <arrayController id="Z0H-RM-ewo" userLabel="GroupsAC">
+            <connections>
+                <binding destination="FqK-Cd-cJA" name="contentArray" keyPath="iconGroups" id="Q4e-ew-FWi"/>
+            </connections>
+        </arrayController>
         <customObject id="IVQ-DD-q9l" userLabel="UserAssetManager" customClass="LAMUserAssetManager">
             <connections>
                 <outlet property="backdropView" destination="yT4-P4-qux" id="Dh0-KB-w2R"/>
@@ -1508,9 +1524,87 @@ aa</string>
                 <outlet property="sheet" destination="QZx-b5-G1G" id="YeO-hH-5da"/>
             </connections>
         </customObject>
+        <window title="ReplaceIcon" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="OPe-u4-xyF">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="379" height="205"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <view key="contentView" id="LcO-lK-dBf" customClass="LAMBackdropView">
+                <rect key="frame" x="0.0" y="0.0" width="379" height="205"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="gUO-27-4Yn">
+                        <rect key="frame" x="25" y="58" width="100" height="100"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" image="NSApplicationIcon" id="53R-sb-lNt"/>
+                    </imageView>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="EWg-T6-1pD">
+                        <rect key="frame" x="254" y="58" width="100" height="100"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" image="NSApplicationIcon" id="p5Y-dh-AND"/>
+                    </imageView>
+                    <button verticalHuggingPriority="750" tag="1000" id="cvT-63-q0r">
+                        <rect key="frame" x="276" y="13" width="89" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Replace" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CoY-Xu-W0v">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actEndSheet:" target="FqK-Cd-cJA" id="2cB-4s-RlE"/>
+                            <binding destination="FqK-Cd-cJA" name="enabled" keyPath="replaceIconNewImageView.image" id="hqk-Ij-TYS">
+                                <dictionary key="options">
+                                    <integer key="NSMultipleValuesPlaceholder" value="0"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="0"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="0"/>
+                                    <integer key="NSNullPlaceholder" value="0"/>
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" tag="1001" id="nPa-yY-QeC">
+                        <rect key="frame" x="194" y="13" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zuu-yr-5df">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="actEndSheet:" target="FqK-Cd-cJA" id="4k5-SZ-uQ8"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="7Xp-zy-OEU">
+                        <rect key="frame" x="157" y="61" width="64" height="87"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="⇢" id="4NZ-wE-bfw">
+                            <font key="font" size="60" name="AppleGothic"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="tkV-c3-vfX">
+                        <rect key="frame" x="18" y="163" width="335" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Drop Image File You Want to Replace." id="dME-zI-aMC">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+        </window>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="8" height="8"/>
+        <image name="NSApplicationIcon" width="128" height="128"/>
         <image name="NSCaution" width="32" height="32"/>
         <image name="NSRemoveTemplate" width="8" height="8"/>
         <image name="ToolbarFramework" width="32" height="32"/>

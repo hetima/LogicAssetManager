@@ -27,6 +27,11 @@
 @property (nonatomic,weak) IBOutlet NSTextField* removeGroupConfirmField;
 @property (nonatomic,weak) IBOutlet NSPopUpButton* removeGroupConfirmPopUp;
 
+@property (nonatomic,strong) IBOutlet NSWindow* replaceIconSheet;
+@property (nonatomic,weak) IBOutlet LAMBackdropView* replaceIconSheetBackdropView;
+@property (nonatomic,weak) IBOutlet NSImageView* replaceIconCurrentImageView;
+@property (nonatomic,weak) IBOutlet NSImageView* replaceIconNewImageView;
+
 @property (nonatomic,weak) IBOutlet LAMBackdropView* backdropView;
 @property (nonatomic,strong) IBOutlet LAMRenamer* renamer;
 
@@ -40,6 +45,5 @@
 - (IBAction)actRemoveGroup:(id)sender;
 - (IBAction)actRemoveIcon:(id)sender;
 
-- (IBAction)actEndSheet:(id)sender;
 
 @end
